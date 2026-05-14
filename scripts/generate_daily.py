@@ -98,7 +98,8 @@ def build_knowledge_context(reflections: list[dict]) -> str:
 
 
 def get_github_feedback(repo_name: str, token: str) -> list[dict]:
-    g = Github(token)
+    from github import Auth
+    g = Github(auth=Auth.Token(token))
     repo = g.get_repo(repo_name)
     feedback = []
     for issue in repo.get_issues(state="open"):
@@ -112,7 +113,8 @@ def get_github_feedback(repo_name: str, token: str) -> list[dict]:
 
 
 def close_issues(repo_name: str, token: str, issue_numbers: list[int]):
-    g = Github(token)
+    from github import Auth
+    g = Github(auth=Auth.Token(token))
     repo = g.get_repo(repo_name)
     for num in issue_numbers:
         issue = repo.get_issue(num)
@@ -261,7 +263,7 @@ def update_readme(day_info: dict, doc_path: Path):
 
 
 def main():
-    gh_token = os.environ.get("GH_PAT") or os.environ.get("GITHUB_TOKEN")
+    gh_token = (os.environ.get("GH_PAT") or os.environ.get("GITHUB_TOKEN", "")).strip().lstrip('﻿')
     repo_name = os.environ.get("GITHUB_REPOSITORY", "hello-he/android-memory-expert")
 
     progress = load_progress()
