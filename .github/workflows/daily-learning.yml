@@ -1,0 +1,45 @@
+name: Daily Android Memory Learning
+
+on:
+  schedule:
+    # 每天北京时间 08:00（UTC 00:00）触发
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+    # 支持手动触发，方便测试
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_PAT }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install anthropic PyGithub
+
+      - name: Generate today's document
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GH_PAT: ${{ secrets.GH_PAT }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python scripts/generate_daily.py
+
+      - name: Commit and push
+        run: |
+          git config user.name "android-memory-bot"
+          git config user.email "bot@android-memory-expert.dev"
+          git add -A
+          git diff --staged --quiet || git commit -m "Day $(cat progress.json | python3 -c 'import sys,json; p=json.load(sys.stdin); print(p[\"current_day\"]-1)') - $(cat progress.json | python3 -c 'import sys,json; p=json.load(sys.stdin); d=p[\"current_day\"]-1; print(next(x[\"title\"] for x in p[\"curriculum\"] if x[\"day\"]==d))')"
+          git push
