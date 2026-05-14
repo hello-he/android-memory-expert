@@ -130,7 +130,7 @@ def generate_document_and_reflection(
 
     feedback_section = ""
     if feedback:
-        lines = ["用户反馈（自然融入文章，不单列"用户反馈"节）："]
+        lines = ['用户反馈（自然融入文章，不单列「用户反馈」节）：']
         for item in feedback:
             lines.append(f"- {item['title']}: {item['body'][:200]}")
         feedback_section = "\n".join(lines)
