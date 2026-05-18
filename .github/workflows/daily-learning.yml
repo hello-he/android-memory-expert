@@ -1,11 +1,9 @@
-name: Daily Android Memory Learning
+name: Legacy Anthropic Android Memory Learning
 
 on:
-  schedule:
-    # 每天北京时间 08:00（UTC 00:00）触发
-    - cron: '0 0 * * *'
   workflow_dispatch:
-    # 支持手动触发，方便测试
+    # 旧版 Anthropic 生成器的手动触发入口。
+    # 每日定时任务已迁移到 Codex 自动化，避免缺少 ANTHROPIC_API_KEY 时定时失败。
 
 jobs:
   generate:

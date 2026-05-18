@@ -2,7 +2,7 @@
 
 每天自动生成一篇深度技术文档，60 天系统覆盖 Android 内存核心知识体系。
 
-由 GitHub Actions + Claude API 驱动，无需手动操作，每天北京时间 08:00 自动更新。
+由 Codex 自动化任务驱动，无需手动操作，每天北京时间 08:00 自动更新。
 
 **有想法？在这里开一个 [Issue](../../issues/new)，第二天的文档会融入你的反馈。**
 
@@ -78,7 +78,7 @@
 ## 系统架构
 
 ```
-GitHub Actions (每天 08:00 北京时间)
+Codex 自动化任务 (每天 08:00 北京时间)
     ↓
 读取 progress.json → 今日主题
     ↓
@@ -86,7 +86,7 @@ GitHub Actions (每天 08:00 北京时间)
     ↓
 读取 open Issues → 用户反馈
     ↓
-Claude API 生成深度文档 + 自我反思记录
+Codex 生成深度文档 + 自我反思记录
     ↓
 commit & push → 关闭已处理 Issues
 ```
