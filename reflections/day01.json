@@ -1,0 +1,26 @@
+{
+  "day": 1,
+  "title": "Java 堆结构：Young/Old Generation 在 ART 上的实现",
+  "key_conclusions": [
+    "ART 的 Java Heap 不是单一连续内存，而是由多个 space 组合而成；理解 space 才能把内存现象说清楚。",
+    "在 ART 里把 moving space（如 bump pointer/region）映射为“更接近年轻代”的承载，把 non-moving/LOS/zygote/image 映射为“更接近老年代或特殊对象”的承载更可操作，但这只是经验映射。",
+    "类似“晋升”的现象在 ART 中表现为对象在不同 space 之间迁移，其触发条件由收集器、对象大小与可移动性共同决定，不是固定规则。",
+    "LOS 的分配与碎片/连续性约束使得“大对象 OOM”不等价于 Java Heap 总量耗尽，排查必须把 Java/Native/Graphics 分开看。"
+  ],
+  "shallow_points": [
+    "不同 Android 版本与不同收集器（如 Concurrent Copying、CMS）对各类 space 的使用差异与演进细节",
+    "LOS 的阈值、分配策略与回收路径在源码中的具体实现位置与关键条件"
+  ],
+  "discovered_connections": [
+    "space 结构决定了后续 GC 章节的叙述入口：先讲 space，再讲 collector 的标记/复制/清理策略。",
+    "大对象与 LOS 的讨论会直接连接到后续 Bitmap、JNI、mmap 章节的 OOM 场景拆解。"
+  ],
+  "suggest_future_topics": [
+    "结合 `dumpsys meminfo` 输出字段，建立“空间/统计口径/现象”的对照表，减少排查时的口径误差。",
+    "在后续 GC 算法篇补充：Concurrent Copying 如何选择 evacuation 区域，以及它与 region space 的关系。"
+  ],
+  "knowledge_gaps": [
+    "需要按 Android 版本梳理：哪些版本默认启用哪些 ART GC 收集器，以及这些收集器对应的 space 组合。",
+    "需要进一步阅读 AOSP 源码确认：对象从 moving 迁移到 non-moving 的具体条件与触发点。"
+  ]
+}
