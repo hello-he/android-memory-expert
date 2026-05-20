@@ -1,8 +1,8 @@
 {
-  "current_day": 2,
+  "current_day": 3,
   "total_days": 60,
   "started_at": "2026-05-15",
-  "last_generated": "2026-05-19T08:49:56.511541",
+  "last_generated": "2026-05-20T22:56:45.244085",
   "curriculum": [
     {"day": 1, "week": 1, "slug": "art-heap-structure", "title": "Java 堆结构：Young/Old Generation 在 ART 上的实现"},
     {"day": 2, "week": 1, "slug": "art-vs-dalvik-memory", "title": "ART 与 Dalvik 的内存分配差异"},

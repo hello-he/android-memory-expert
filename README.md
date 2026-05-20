@@ -13,7 +13,7 @@
 | 文章 | 主题 | 状态 |
 |------|------|------|
 | Day 01 | Java 堆结构：Young/Old Generation 在 ART 上的实现 | ✅ [2026-05-19](docs/week-01/day01-art-heap-structure.md) |
-| Day 02 | ART 与 Dalvik 的内存分配差异 | ⏳ 待生成 |
+| Day 02 | ART 与 Dalvik 的内存分配差异 | ✅ [2026-05-20](docs/week-01/day02-art-vs-dalvik-memory.md) |
 | Day 03 | 对象分配路径：TLAB、bump pointer、Large Object Space | ⏳ 待生成 |
 | Day 04 | 栈内存与帧结构 | ⏳ 待生成 |
 | Day 05 | 方法区与元数据空间（Metaspace） | ⏳ 待生成 |

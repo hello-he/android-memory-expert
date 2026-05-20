@@ -1,0 +1,27 @@
+{
+  "day": 2,
+  "title": "ART 与 Dalvik 的内存分配差异",
+  "key_conclusions": [
+    "对比 Dalvik 与 ART 时，最有用的不是背“某个 GC 名称”，而是用“执行模型 → 堆组织 → 分配快路径 → 整理能力”四层框架把现象落到可验证的约束上。",
+    "Dalvik 语境里更容易把“分配失败”归因到连续性/碎片与通用 allocator 行为；ART 语境里更常需要沿着 space + collector 的组合去解释（例如大对象/非移动空间压力），并显式把 Java/Native/Graphics/Code 拆账。",
+    "在 ART 上看到 GC 频繁时，更高性价比的第一步是定位分配热源（Allocation）并削减短命对象洪峰；在旧语境里遇到“大对象失败但总量看似充足”，碎片/连续块不足会被放到更靠前的位置。",
+    "Day 1 的结论可以继续复用：不要用“Java Heap 还没满”否定 OOM 的可能性；要把问题拆到具体 space 或具体归因上，才能形成稳定的排障路径。"
+  ],
+  "shallow_points": [
+    "不同 Android 版本的 ART（AOT/JIT/混合编译）导致 code cache、oat/vdex、image 的占用差异，文章里只给了方法论，没有按版本展开。",
+    "Dalvik 各版本 GC/heap 细节差异较大（并发/整理能力/触发策略），本文只保留了对排障最有指导意义的对照，不足以作为“历史实现细节”资料。"
+  ],
+  "discovered_connections": [
+    "Day 2 的对照框架为 Day 3 的“对象分配路径”铺垫：一旦进入具体 allocator（TLAB/bump pointer/ROSAlloc/LOS），差异会从概念对比变成可定位的调用路径与对象尺寸分布。",
+    "把 Java/Native/Graphics/Code 拆账的习惯会直接连接到后续 dumpsys meminfo、/proc/<pid>/maps、以及 Bitmap/JNI/mmap 章节的证据链。"
+  ],
+  "suggest_future_topics": [
+    "在 Day 3 里把“分配快路径”写成可执行的排查清单：如何从 Allocation 视图与对象尺寸分布推断是否触发 LOS、是否存在短命对象洪峰。",
+    "补一篇“Code 归因快速识别”小节：升级/首次运行/热点编译导致的 code cache 波动，如何在 dumpsys/meminfo 与 maps 里对应起来。"
+  ],
+  "knowledge_gaps": [
+    "需要按 Android 大版本梳理：默认 collector 的变化与其对 space 的组合影响（尤其是何时更明显地体现出“可移动区整理”与“非移动区压力”的分界）。",
+    "需要进一步确认：大对象进入专用空间的阈值与策略在不同版本/不同配置上的差异，以及它在日志/统计中的可观测信号。"
+  ]
+}
+
