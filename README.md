@@ -91,6 +91,16 @@ Codex 生成深度文档 + 自我反思记录
 commit & push → 关闭已处理 Issues
 ```
 
+## 自我进化机制
+
+每次生成后都会写入 `reflections/dayXX.json`，并维护 `reflections/evolution-ledger.md`。后续任务必须先读取最近反思和进化账本，再生成下一篇文章。
+
+可见改进要求：
+
+- 每篇文章至少承接一个历史反思中的薄弱点、知识缺口或未来主题建议。
+- 每次反思必须写明 `applied_reflections`、`visible_changes` 和 `next_run_instructions`。
+- 不能确认的版本差异、厂商差异、Issue 权限问题，必须作为边界记录下来。
+
 ## 写作规范
 
 文档遵循 [gracker-writing](https://github.com/Gracker/gracker-writing) skill：工程师视角、技术精确、无 AI 套话、代码前后必须有说明句。

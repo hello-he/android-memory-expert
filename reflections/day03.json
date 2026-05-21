@@ -31,5 +31,17 @@
     "read_attempted": true,
     "read_success": false,
     "blocker": "GitHub CLI is not authenticated in this environment, so open Issues could not be read for Day 03."
-  }
+  },
+  "applied_reflections": [
+    "承接 Day 02 的 suggest_future_topics，把“分配快路径”写成了可观察的排查路径，覆盖 Allocation 视图、GC 日志、heap dump 和 meminfo。",
+    "承接 Day 01 对 Large Object Space 的浅层覆盖，补充了大对象分流、LOS 压力和大对象 OOM 的判断边界。"
+  ],
+  "visible_changes": [
+    "文章从概念解释推进到具体分配路径：TLAB、bump pointer、Large Object Space 和慢路径重试。",
+    "每个机制都补了对应观测方法，减少只讲运行时概念而缺少工程证据的问题。"
+  ],
+  "next_run_instructions": [
+    "Day 04 需要承接对象分配路径，解释栈帧中的局部引用如何影响 GC Roots 和对象可达性。",
+    "Day 04 必须区分 Java 栈、native 栈、JNI 调用边界和 managed heap 对象之间的关系。"
+  ]
 }
