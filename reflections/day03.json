@@ -1,0 +1,35 @@
+{
+  "day": 3,
+  "title": "对象分配路径：TLAB、bump pointer、Large Object Space",
+  "key_conclusions": [
+    "对象分配路径比单纯的堆大小更能解释 GC 频繁、分配失败和 OOM 前的行为。",
+    "TLAB 是线程本地分配优化，不是对象生命周期区域，也不是年轻代的同义词。",
+    "bump pointer 的优势来自顺序指针移动，但它依赖移动式 GC 或 region 管理提供规整空间。",
+    "Large Object Space 用于隔离大对象对普通空间的碎片和移动成本影响，大对象 OOM 不能只看 Java Heap 总量。",
+    "分配洪峰与泄漏要用 Allocation、GC 日志、heap dump 和 meminfo 组合判断。"
+  ],
+  "shallow_points": [
+    "TLAB refill 的具体触发条件和不同 Android 版本中的默认配置",
+    "Large Object Space 阈值在不同 ART 版本和设备配置中的差异",
+    "Concurrent Copying 与 region space 对 bump pointer 分配效率的影响"
+  ],
+  "discovered_connections": [
+    "TLAB 和 bump pointer 会连接到 Day 9 的 ART GC 算法，尤其是 Concurrent Copying 的搬迁过程",
+    "Large Object Space 会连接到 Week 6 的 Bitmap、大图加载和 BitmapRegionDecoder",
+    "分配洪峰的观测会连接到 Week 4 的 Allocation Tracker 和 Memory Profiler"
+  ],
+  "suggest_future_topics": [
+    "在 GC 触发时机篇补充 allocation GC 前后的分配重试路径",
+    "在 Bitmap 篇补充大对象路径与图片缓存策略之间的关系",
+    "在 profiling 篇补充如何用 Allocation 调用栈定位循环分配热点"
+  ],
+  "knowledge_gaps": [
+    "需要按 Android 大版本核对 TLAB、ROSAlloc、region space 的默认启用组合",
+    "需要进一步确认不同厂商 ROM 对 Large Object Space 参数的调整情况"
+  ],
+  "issue_feedback": {
+    "read_attempted": true,
+    "read_success": false,
+    "blocker": "GitHub CLI is not authenticated in this environment, so open Issues could not be read for Day 03."
+  }
+}
