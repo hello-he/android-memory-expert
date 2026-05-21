@@ -104,3 +104,10 @@ commit & push → 关闭已处理 Issues
 ## 写作规范
 
 文档遵循 [gracker-writing](https://github.com/Gracker/gracker-writing) skill：工程师视角、技术精确、无 AI 套话、代码前后必须有说明句。
+
+视觉表达优先：
+
+- 多图少文字；优先用 Mermaid 图、表格、流程清单解释结构、路径和判断过程。
+- 每篇文章至少包含 2 张 Mermaid 图，覆盖核心机制和排查路径。
+- 长段落要拆短，避免连续大段文字；文字只补充图里表达不清的边界、依据和版本差异。
+- 复杂流程优先画成 flowchart 或 sequence diagram，内存结构优先画成分层图或对照表。
