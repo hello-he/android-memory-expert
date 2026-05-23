@@ -15,6 +15,8 @@
 
 这篇文章只解决第一步：把 ART 堆空间的结构讲透，并给出“年轻 / 年老”的可操作映射。
 
+![ART 堆由多个 space 组成，而非一段连续内存](images/art-heap-spaces-overview.png)
+
 ## 核心机制
 
 ### 1）ART 的 “堆” 是一组 space 的组合，而不是一段连续内存
@@ -73,6 +75,8 @@ space 的实现集中在：
 - 对象是否被某些 native 结构长期持有（是否更倾向 non-moving）
 
 把 “晋升” 当成固定规则很容易误判。
+
+![对象从 moving space 分流到 non-moving 或 LOS 的示意](images/art-promotion-flow.png)
 
 ### 4）为什么这个结构对性能与 OOM 排查很关键
 
