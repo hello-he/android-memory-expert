@@ -78,6 +78,8 @@ space 的实现集中在：
 
 ![对象从 moving space 分流到 non-moving 或 LOS 的示意](images/art-promotion-flow.png)
 
+> 图中 “Young / Tenured” 是帮助理解生命周期分流的近似标注，不表示 ART 固定采用 HotSpot 式 Eden / Survivor / Tenured 三段布局。实际判断仍以 space、collector、对象大小和目标 Android 版本为准。
+
 ### 4）为什么这个结构对性能与 OOM 排查很关键
 
 1. **分配热点与 GC 压力**  

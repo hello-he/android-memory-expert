@@ -1,0 +1,44 @@
+{
+  "day": 4,
+  "title": "栈内存与帧结构（ART 视角）：从局部引用到 GC Roots",
+  "key_conclusions": [
+    "在 ART 语境下，GC Roots 不只来自 static/单例；线程栈帧中的引用（locals/regs/stack maps）与 JNI 引用表都可能让对象保持可达。",
+    "源码“作用域结束”不等于运行时“引用立刻消失”：编译/内联/异常路径/调试模式会影响引用在栈槽位与寄存器中停留的时间。",
+    "排障要把“栈持有”落到证据链：heap dump 的 dominator 路径 + 线程栈（kill -3）+（可选）GC 日志/分配热点。"
+  ],
+  "shallow_points": [
+    "不同 Android 版本/编译模式（AOT/JIT/解释）下 stack map 生成与 root 枚举的差异细节尚未按版本梳理。",
+    "IndirectRefTable 的容量、扩容与不同 ROM 调整策略尚未核对到具体 AOSP 版本/厂商实现。"
+  ],
+  "discovered_connections": [
+    "Day 03 的“分配路径”解释了对象怎么进堆；Day 04 的“栈/帧 root”补齐了对象为什么仍可达，两者合起来才构成稳定的 OOM/泄漏排障闭环。",
+    "后续讲 GC Roots（Day 10）时，可以把“线程栈/JNI refs”作为最常见且最容易被误判的 root 来源之一。"
+  ],
+  "suggest_future_topics": [
+    "按 Android 大版本整理：常见 collector/编译模式组合变化，并标注 root 枚举与日志标签的可观测差异。",
+    "补一篇 JNI 内存管理实战：LocalFrame、DeleteLocalRef、GlobalRef 生命周期与跨线程边界（与 Day 29 对齐）。"
+  ],
+  "knowledge_gaps": [
+    "需要进一步用 AOSP 源码核对：root 枚举入口在不同 collector 下的调用链（路径级证据）。",
+    "需要补充可操作的“调试/Profiler 对可达性的影响”证据（对比实验与稳定复现手册）。"
+  ],
+  "applied_reflections": [
+    "应用 Day 03 的 next_run_instructions：显式解释“栈帧局部引用如何成为 GC Roots”，并区分 Java 栈、Native 栈与 JNI 边界。",
+    "应用 evolution-ledger 的“多图少文”反馈：用结构图 + 排障决策流替代长段落解释，并把证据链落到可执行命令与检查点。"
+  ],
+  "visible_changes": [
+    "新增 Mermaid 结构图：Thread 栈/帧/JNI 引用表到 Managed Heap 的 root 扫描关系图（响应“多图少文”反馈）。",
+    "新增 Mermaid 排障决策流：怀疑“栈/帧持有导致不回收”时的决策路径（响应“多图少文”反馈）。",
+    "新增多张表格：Frame 类型对比表、误区边界表、现象到检查点映射表，用表替代长解释。"
+  ],
+  "next_run_instructions": [
+    "Day 05（方法区/元数据）继续保持“证据链”写法：把 dex/oat/vdex、class metadata 与 code cache 的可观测信号（meminfo/maps/日志）对齐到路径与检查点。",
+    "继续记录工具或权限阻塞：例如 gh 未认证导致无法读取 Issues，需要在 issue_feedback 与 automation memory 里明确写 blocker。",
+    "发布链路仍被阻塞：本环境执行 `git add` 失败（`E:/test-claude/android-memory-expert/.git/index.lock: Permission denied`），下次优先修复 .git 目录写权限/锁文件创建权限，再补做 commit & push。"
+  ],
+  "issue_feedback": {
+    "read_attempted": true,
+    "read_success": false,
+    "blocker": "GitHub CLI 未认证（提示运行 gh auth login 或设置 GH_TOKEN），本次无法读取 hello-he/android-memory-expert 的 open Issues。"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "day": 6,
+  "title": "String 常量池与 intern() 机制（ART 视角）",
+  "key_conclusions": [
+    "`intern()` 的核心是返回 InternTable 中的 canonical String，不是通用省内存开关。",
+    "只有高重复、有限集合、长生命周期的字符串才值得评估 canonical 化，低重复或无界输入直接 intern 可能增加长期内存压力。",
+    "判断 String 问题必须先走证据链：heap dump 的 String 数量、retained size、重复内容、持有链，以及 Allocation 创建热点。",
+    "调用 `s.intern()` 后必须使用返回值，否则原引用仍可能指向未 canonical 的对象。",
+    "Android/ART 的 String 对象布局和 backing storage 要按目标版本核对，不能直接套 HotSpot 的实现细节。"
+  ],
+  "shallow_points": [
+    "未按 Android 大版本核对 `String` backing storage 的具体实现差异。",
+    "未用真实 heap dump 示例展示 duplicate strings 与 retained size 的工具界面。",
+    "未深入展开 InternTable 在 ART GC 中的弱/强引用处理边界。"
+  ],
+  "discovered_connections": [
+    "Day 05 的 DEX/DexCache 主题与 Day 06 的 string_ids/const-string 解析直接相连。",
+    "Day 03 的分配洪峰判断可以复用到 String：String 多不一定是泄漏，可能是短命分配热点。",
+    "Day 10 的 GC Roots 可以继续补充 InternTable 与字符串可达性的边界。"
+  ],
+  "suggest_future_topics": [
+    "在 heap dump 篇补充 duplicate strings 的具体分析步骤与截图式字段解释。",
+    "在 dumpsys meminfo 篇补充 String/char[] retained size 与 Java Heap/PSS 的关系。",
+    "在对象头篇或源码篇补充不同 Android 版本下 String 对象字段布局的差异。"
+  ],
+  "knowledge_gaps": [
+    "需要按 Android 版本核对 `java.lang.String` 的 backing storage 是 char[] 还是 byte[]，以及是否存在压缩字符串策略差异。",
+    "需要阅读 ART InternTable 与 GC 交互的源码，确认不同类型 interned string 的回收边界。"
+  ],
+  "applied_reflections": [
+    "应用 Day 05 的 next_run_instructions：把 String/intern 的判断落到 heap dump、Allocation 视图和生命周期证据链，而不是只讲常量池概念。",
+    "应用 evolution-ledger 的多图少文字要求：新增 InternTable 结构图与 String 排障决策流，并用多张短表替代长段解释。"
+  ],
+  "visible_changes": [
+    "新增 Mermaid 结构图：DEX string_ids、const-string、ClassLinker/DexCache、InternTable 与 heap String 对象之间的关系。",
+    "新增 Mermaid 决策流：从 String 数量高到是否值得 intern 的判断路径。",
+    "新增多张短表：intern 适用场景、heap dump 证据链、A/B 对照实验、常见误区与判断小抄。"
+  ],
+  "next_run_instructions": [
+    "Day 07（对象头结构与 Mark Word）需要继续多图少文字，至少画出对象头/klass 指针/锁状态/GC 标记相关结构的关系图。",
+    "Day 07 必须明确 Android ART 与 HotSpot Mark Word 术语的边界，避免把 HotSpot 对象头模型硬套到 ART。",
+    "继续记录 gh 未认证导致 Issues 不可读的 blocker，除非 gh auth 已经恢复。"
+  ],
+  "issue_feedback": {
+    "read_attempted": true,
+    "read_success": false,
+    "blocker": "GitHub CLI 未认证（gh auth status 显示未登录），本次无法读取 hello-he/android-memory-expert 的 open Issues。"
+  }
+}

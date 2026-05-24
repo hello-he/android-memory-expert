@@ -1,0 +1,46 @@
+{
+  "day": 5,
+  "title": "方法区/元数据空间（ART 视角）：ClassLinker、DEX/OAT/VDEX、JIT Code Cache 的证据链拆账",
+  "key_conclusions": [
+    "ART 的“方法区”更像一组可拆账的内存构件：类/方法元数据（ClassLinker/ArtMethod/DexCache）、dex/vdex/oat/odex 映射、boot/app image、以及 JIT code cache；不要把它等同于 HotSpot 的 Metaspace。",
+    "排查 Code/常驻内存上涨时，优先用“两段式证据链”：先用 dumpsys meminfo 判断是否是 Code 占比主导；再用 /proc/<pid>/maps 把 Code 拆到具体映射（oat/vdex/jit-cache），并用时间对比（maps diff）固化结论。",
+    "仅靠单点 meminfo 截图容易误判：JIT 累积、安装/升级/后台编译导致的 oat/vdex 映射波动，都需要“前后对比”来区分正常行为与异常增长。"
+  ],
+  "shallow_points": [
+    "对不同 Android 大版本（以及 OEM/ROM）下 AOT/JIT/后台编译触发时机与路径差异，目前仍停留在“方法论 + 边界声明”，缺少按版本的可复核对照表。",
+    "类卸载（class unloading）在 App 进程中的边界与工程策略（隔离/多进程/按需加载）的案例仍不够具体，可在后续结合动态特性/插件化场景补齐。"
+  ],
+  "discovered_connections": [
+    "Day 02 提到的“Code 归因快速识别”在 Day 05 里被落地为可执行证据链：meminfo（聚合口径）→ maps（拆账）→ maps diff（时间对比）。",
+    "Day 04 的“证据链写法”可以复用到非对象内存：同样通过可观测信号把概念压缩成可复用的排障动作与结论句式。"
+  ],
+  "suggest_future_topics": [
+    "按 Android 版本补一张“Code 账单拆分对照表”：常见映射文件（oat/vdex/jit-cache/image）在不同版本/编译模式下的差异与典型路径。",
+    "在 Day 27（dumpsys meminfo）前置一段“字段到 maps 的映射方法”：教读者如何从 App Summary 的 Code/Graphics/Native 拆到 /proc/<pid>/maps 的具体段。",
+    "结合 DexClassLoader/动态特性模块，补一个“动态 dex 加载导致常驻增长”的最小复现实验与观测脚本。"
+  ],
+  "knowledge_gaps": [
+    "需要用 AOSP 源码与目标设备实测核对：JIT code cache 的增长策略、上限与回收条件，以及不同版本的文件/映射路径差异。",
+    "需要更明确地回答：哪些场景会导致类/方法元数据常驻不可回落（即使置 null 也不回落），以及工程上可控的治理点是什么。"
+  ],
+  "applied_reflections": [
+    "应用 Day 04 的 next_run_instructions：继续坚持“证据链写法”，把 dex/oat/vdex/class metadata/JIT code cache 的可观测信号落到 meminfo/maps/对比实验，而不是停留在概念解释。",
+    "应用 evolution-ledger 的“多图少文字”反馈：用结构图 + 决策流 + 对照表替代长段落，并把结论写成可复用的排障句式。"
+  ],
+  "visible_changes": [
+    "新增 Mermaid 结构图：从加载 dex 到 ClassLinker/DexCache/元数据，再到 oat/vdex/jit-cache 的内存落点（响应“多图少文字”反馈）。",
+    "新增 Mermaid 决策流：当 Code 或 PSS 异常增长时，如何用 meminfo+maps 快速缩小范围（响应“多图少文字”反馈）。",
+    "新增对照表与 checklist：现象→机制→证据→结论句式，以及 maps 两次采样 diff 的可执行命令（用表格替代长段说明）。"
+  ],
+  "next_run_instructions": [
+    "Day 06（String 常量池与 intern）：继续用“证据链”写法，至少包含 heap dump 侧证（String/char[] 占用、保留链）、以及与分配热点/生命周期的对齐。",
+    "如果 gh 仍未认证：保持 issue_feedback 的 blocker 记录格式一致，并在 automation memory 里同步写明需要的解决动作（gh auth login / 配置 GH_TOKEN）。",
+    "在尝试 git add/commit/push 前先检查是否存在残留的 .git/index.lock；若出现权限/锁问题，记录具体错误与修复建议。"
+  ],
+  "issue_feedback": {
+    "read_attempted": true,
+    "read_success": false,
+    "blocker": "gh 未认证：命令提示运行 `gh auth login` 或设置 `GH_TOKEN`，因此本次无法读取 hello-he/android-memory-expert 的 open Issues。"
+  }
+}
+
