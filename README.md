@@ -18,7 +18,7 @@
 | Day 04 | 栈内存与帧结构（ART 视角）：从局部引用到 GC Roots | ✅[2026-05-22](docs/week-01/day04-stack-memory-and-frames.md) |
 | Day 05 | 方法区与元数据空间（ART 视角）：ClassLinker、DEX/OAT/VDEX、JIT Code Cache | ✅[2026-05-24](docs/week-01/day05-metaspace-and-method-area.md) |
 | Day 06 | String 常量池与 intern() 机制（ART 视角） | ✅[2026-05-24](docs/week-01/day06-string-pool-and-intern.md) |
-| Day 07 | 对象头结构与 Mark Word | ⏳待生成 |
+| Day 07 | 对象头结构与 Mark Word | ✅[2026-05-25](docs/week-01/day07-object-header-and-mark-word.md) |
 | Day 08 | 引用类型：强引用、软引用、弱引用、虚引用 | ⏳待生成 |
 | Day 09 | ART GC 算法：CMS 与 CC（Concurrent Copying） | ⏳待生成 |
 | Day 10 | GC Roots 枚举与可达性分析 | ⏳待生成 |

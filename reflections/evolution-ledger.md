@@ -54,11 +54,18 @@
 - 可见变化：Day 06 新增两张 Mermaid（InternTable 结构图 + 是否值得 intern 的决策流），并用适用场景表、heap dump 证据表、A/B 实验表替代长段概念解释。
 - 未解决：`gh auth` 仍未完成；String backing storage、InternTable 与 GC 的交互边界仍需按 Android 版本核对。
 
+### Day 06 → Day 07
+
+- 应用的前一日反思：明确 ART 与 HotSpot Mark Word 的术语边界，把对象头问题落到 ART 的 `mirror::Object`、class 信息、LockWord/Monitor、GC 扫描和可观测证据。
+- 可见变化：Day 07 新增三张 Mermaid（ART 对象心智模型、HotSpot/ART 边界图、排障决策流），并用短表讲对象大小、锁状态、可达性和源码入口。
+- 未解决：`gh auth` 仍未完成；ART 对象头字段、lock word 编码、read barrier 与 collector 配置仍需按具体 Android 分支核对。
+
 ---
 
-## 下一次必须执行（面向 Day 07）
+## 下一次必须执行（面向 Day 08）
 
-- Day 07（对象头结构与 Mark Word）：继续多图少文字，至少画出对象头、klass 指针、锁状态、GC 标记/移动相关信息之间的关系图。
-- 必须明确 Android ART 与 HotSpot Mark Word 术语的边界，避免把 HotSpot 对象头模型硬套到 ART。
+- Day 08（引用类型：强引用、软引用、弱引用、虚引用）：继续多图少文字，至少画出引用强度/可达性层级图和 ReferenceQueue/回收决策流。
+- 必须承接 Day 07：对象是否回收由可达性、引用类型和持有链决定，不由对象头或 Mark Word 决定。
+- 必须落到 Android 场景：缓存、图片加载、Handler/生命周期、LeakCanary 可达性分析。
 - 如果 `gh` 仍未认证：在 reflection 的 `issue_feedback` 和 automation memory 里明确记录 blocker（包含建议的解决方式：`gh auth login` / `GH_TOKEN`）。
 - 生成后务必先跑一遍 JSON 校验，再尝试 `git status/add/commit/push`；若仍被 `.git/index.lock` 阻塞，记录“具体错误 + 需要的修复动作”。

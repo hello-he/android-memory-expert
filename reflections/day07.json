@@ -1,0 +1,54 @@
+{
+  "day": 7,
+  "title": "对象头结构与 Mark Word（ART 视角）",
+  "key_conclusions": [
+    "Mark Word 是 HotSpot 对象头术语，不能直接作为 Android ART 对象头模型来讲。",
+    "ART 对象头应按 mirror::Object、class 信息、lock/monitor 状态、实例字段或数组数据、GC 访问路径来理解，具体布局必须按目标 Android 分支核对。",
+    "App 内存优化中，对象头开销通常要放在大量小对象、数组浪费、持有链和缓存生命周期的证据链里判断。",
+    "锁相关问题应优先看 thread dump、Perfetto、monitor contention 和调用栈，而不是从 heap dump 或 Mark Word bit 猜测。",
+    "精确字段和 bit layout 没有在本文硬写，避免把版本相关实现误导成稳定结论。"
+  ],
+  "shallow_points": [
+    "没有按 Android 12、13、14、15 分支逐一核对 mirror::Object 与 lock_word.h 的具体差异。",
+    "没有加入真实设备上的 heap dump shallow size 截图或 Perfetto monitor contention 截图。",
+    "没有展开 ART read barrier、moving collector 与对象访问路径的版本细节。"
+  ],
+  "discovered_connections": [
+    "Day 03 的大量小对象分配路径与 Day 07 的对象头开销直接相连：先减少对象数量，再讨论单个对象布局。",
+    "Day 04 的 GC Roots 与栈/JNI 持有链解释了对象是否可达，对象头本身不决定生命周期。",
+    "Day 05 的 class metadata 是 Day 07 中 GC 扫描引用字段和理解对象类型信息的基础。",
+    "Day 06 的 String 重复对象问题可以用 Day 07 的对象数量、backing storage 和 shallow/retained size 继续拆账。"
+  ],
+  "suggest_future_topics": [
+    "在 Day 08 引用类型中补充强/软/弱/虚引用与对象可达性、ReferenceQueue、泄漏排查之间的图示关系。",
+    "在 Day 10 GC Roots 中继续解释对象头、class metadata、引用字段布局和 root tracing 的边界。",
+    "在 Day 23 heap dump 中补充 shallow size、retained size、对象头开销和数组开销的真实样例。",
+    "在源码阅读篇按 AOSP 目标分支核对 object.h、class.h、lock_word.h、monitor.h。"
+  ],
+  "knowledge_gaps": [
+    "需要按目标 Android 版本核对 ART 对象头字段、lock word 编码、压缩引用、read barrier 与 collector 配置。",
+    "需要真实设备样本验证大量小对象场景下对象头开销与业务字段、数组元素、对齐浪费之间的占比。",
+    "需要补充 monitor contention 的 Perfetto 或 thread dump 证据模板。"
+  ],
+  "applied_reflections": [
+    "应用 Day 06 的 next_run_instructions：明确区分 Android ART 与 HotSpot Mark Word 术语边界，避免误把 HotSpot 模型硬套到 Android。",
+    "应用 evolution-ledger 的多图少文字要求：新增 ART 对象心智模型图、HotSpot/ART 边界图、排障决策流三张 Mermaid。",
+    "继续保留证据链写法：把对象头问题落到 heap dump、retained size、thread dump、Perfetto、AOSP 源码路径。"
+  ],
+  "visible_changes": [
+    "正文先给三张图，再用短表拆解对象大小、锁状态、GC 扫描、引用链和源码入口。",
+    "新增 AOSP 路径表，强调具体 layout 必须按目标分支核对。",
+    "新增常见误区表，专门纠正 ART 对象头等于 Mark Word + Klass Pointer、JOL 直接套 Android 等说法。"
+  ],
+  "next_run_instructions": [
+    "Day 08（引用类型：强引用、软引用、弱引用、虚引用）继续多图少文字，至少画出引用强度/可达性层级图和 ReferenceQueue/回收决策流。",
+    "Day 08 必须承接 Day 07：说明对象是否回收由可达性和引用类型决定，不由对象头或 Mark Word 决定。",
+    "Day 08 要把每种引用类型落到 Android 场景：缓存、图片加载、Handler/生命周期、LeakCanary 可达性分析。",
+    "继续记录 gh 未认证导致 Issues 不可读的 blocker，除非 gh auth status 已经恢复。"
+  ],
+  "issue_feedback": {
+    "read_attempted": true,
+    "read_success": false,
+    "blocker": "GitHub CLI 未认证（gh auth status 显示未登录），本次无法读取 hello-he/android-memory-expert 的 open Issues；建议完成 gh auth login 或配置 GH_TOKEN 后再读取用户反馈。"
+  }
+}
