@@ -1,0 +1,48 @@
+{
+  "day": 9,
+  "title": "ART GC 算法：CMS vs CC（Concurrent Copying）",
+  "key_conclusions": [
+    "CMS 与 CC 的核心差异不在“是否并发”，而在是否 moving：CMS 以并发标记-清扫为主，CC 以并发搬迁为主。",
+    "排障时不要先争论 CMS 还是 CC；先把问题落到证据链：GC 日志、dumpsys meminfo、必要时的 heap dump 和 Perfetto。",
+    "长暂停通常需要拆成 STW 阶段变长，或并发阶段被抢占导致收尾变重；用 Perfetto 对齐 GC 线程调度与主线程卡顿更可靠。",
+    "回收少更像是强可达链留住对象，而不是 GC 算法“失效”；需要 heap dump 的 Dominator / retained 分析来闭环。"
+  ],
+  "shallow_points": [
+    "未按具体 Android 版本和设备输出给出可直接复制的精确 GC tag/property 开关清单，不同 ROM 和版本差异较大。",
+    "未补充一个真实日志片段的逐字段解读，例如 freed bytes、pause、concurrent time 的语义差异。"
+  ],
+  "discovered_connections": [
+    "承接 Day 03（分配路径）：GC 频繁很多时候是分配率和对象 churn 的问题，先定位分配热点再讨论 collector 取舍。",
+    "承接 Day 08（引用类型）：回收少或像泄漏时，优先用 heap dump 的可达性链分析，而不是尝试用 Soft/Weak 充当缓存开关。",
+    "为 Day 10（GC Roots）铺垫：Dominator 与 shortest path 的根本，是把 roots -> 引用链 -> retained 闭环成可复现证据链。"
+  ],
+  "suggest_future_topics": [
+    "Day 10：把 GC Roots 枚举写成一张“roots 分类 + 证据链（heap dump 里怎么看）”对照表，并给出最小可执行的 MAT / Profiler 操作清单。",
+    "Day 11：按 AOSP 路径把 collector 目录做成“文件入口 -> 关键阶段 -> 你能在日志里看到什么”的索引图。",
+    "补一篇“GC 日志速读”小抄：不同常见字段和短语（freed、paused、concurrent）对应的排障动作。"
+  ],
+  "knowledge_gaps": [
+    "需要按目标 Android 分支核对 CC 读屏障实现细节，以及它们在日志与 trace 上的可观测差异。",
+    "需要补齐不同 space（region、LOS 等）与 CMS / CC 的交互边界：哪些问题更像碎片与大对象分配，哪些更像读屏障和搬迁成本。"
+  ],
+  "applied_reflections": [
+    "应用 Day 08 的 next_run_instructions：保持“多图少字 + 证据链”写法，新增执行路径图（CMS vs CC）与排障决策流，并补齐可观测命令与 AOSP 路径入口。",
+    "延续 evolution-ledger 的长期约束：用表格和矩阵替代长段解释，把概念落到可执行排障动作。"
+  ],
+  "visible_changes": [
+    "因“多图少文”反馈，在 Day 09 正文新增 2 张 Mermaid：1）CMS vs CC 执行路径图；2）排障决策流图。",
+    "新增 3 张表格：CMS vs CC 对比矩阵、证据链现象-观察-问题表、复盘小抄表，用表格替代长段段落。",
+    "新增最小可执行命令块：logcat 粗筛 GC 行、dumpsys meminfo 分解、/proc/<pid>/maps 快速定位增长分区，并给出 Perfetto 采样模板。"
+  ],
+  "next_run_instructions": [
+    "更新 README：把 Day 09 标记为已生成并链接到 docs/week-02/day09-art-gc-algorithms.md，同时让 Day 10 保持待生成。",
+    "更新 progress.json：将 current_day 推进到 10，并更新 last_generated 时间戳。",
+    "如果 `gh` 仍未认证，继续在 reflection 的 `issue_feedback` 与 automation memory 记录 blocker，并提示 `gh auth login` 或设置 `GH_TOKEN`。",
+    "尝试 git add/commit/push；若仍被 `.git/index.lock`、权限或鉴权阻塞，记录具体错误和可复现修复步骤。"
+  ],
+  "issue_feedback": {
+    "read_attempted": true,
+    "read_success": false,
+    "blocker": "无法读取 hello-he/android-memory-expert open Issues：GitHub CLI 未认证，需运行 `gh auth login` 或配置 `GH_TOKEN`。"
+  }
+}

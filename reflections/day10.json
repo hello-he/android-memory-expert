@@ -1,0 +1,52 @@
+{
+  "day": 10,
+  "title": "GC Roots 枚举与可达性分析",
+  "key_conclusions": [
+    "GC Roots 只是可达性分析的起点，真正决定对象是否驻留的是从 root 出发的强引用链，而不是“GC 有没有工作”。",
+    "排查“回收少”时，先用 `dumpsys meminfo` 确认问题是否主要落在 Java Heap，再用 heap dump 的 `Dominator Tree` 与 `Path To GC Roots` 闭环。",
+    "对 Android 工程问题最有价值的不是背 root 名单，而是把 root 类型直接映射到修复动作：线程生命周期、JNI 引用释放、静态持有收敛、锁与队列清理。",
+    "同一批对象如果共享同一个 holder，通常比修目标对象本身更有效；这也是 `Merge Shortest Paths` 和 `Dominator Tree` 优先级高于单纯看对象数量的原因。"
+  ],
+  "shallow_points": [
+    "仍未按 Android 具体版本逐一核对 root visitor 与线程/JNI root 枚举实现差异，当前 AOSP 路径是工程入口而非逐版本确认结论。",
+    "缺少真实 heap dump 截图或样例日志，Day 10 仍以方法论与最小命令清单为主，尚未附带真实案例样本。",
+    "尚未展开 Kotlin 协程、Looper、Binder 回调在 root 路径中的具体表现，这部分可在后续泄漏专题或源码篇继续补。"
+  ],
+  "discovered_connections": [
+    "Day 04 讲的线程栈/JNI 边界，在 Day 10 被重新组织成 root 分类与证据入口，形成从运行时结构到工具视图的闭环。",
+    "Day 08 的“可达性 + 引用链”在 Day 10 向前补到了 root 起点，向后补到了 MAT 的 `Path To GC Roots` 视角。",
+    "Day 09 提出的“回收少更像强可达链，而非 GC 算法失效”，在 Day 10 通过排障矩阵和 MAT 视图清单被落成了可执行动作。",
+    "Day 15 的泄漏本质篇可以直接复用 Day 10 的 root 分类、holder 视角和修复动作映射。"
+  ],
+  "suggest_future_topics": [
+    "Day 11 可以把 `art/runtime/gc/*` 目录写成“文件入口 -> root/collector 阶段 -> 你能在日志里看到什么”的源码索引图。",
+    "Day 15 应继续扩展“GC Root -> holder -> retained graph -> fix”的泄漏排查模板，并补真实案例。",
+    "Day 22-25 做 Profiler/MAT 专题时，应把 Day 10 的 `Histogram`、`Dominator Tree`、`Path To GC Roots` 做成截图化或步骤化操作手册。"
+  ],
+  "knowledge_gaps": [
+    "需要按目标 Android 分支核对 `root_visitor`、线程 root、JNI root 与 class linker 相关枚举逻辑，避免把工程入口误写成统一实现细节。",
+    "需要真实案例验证不同 root 类型在 MAT/Android Studio 中的表现差异，例如 `Thread` root、`JNI Global` root、`Class` root 的可视化形态。",
+    "需要补齐协程、Binder、线程池任务在 root 路径中的常见误判方式，并给出对应证据模板。"
+  ],
+  "applied_reflections": [
+    "应用 Day 09 的 next_run_instructions：把“回收少 -> 强可达链”写成 roots 分类 + 证据链对照表，并补上最小可执行的 heap dump / MAT 操作清单。",
+    "应用 evolution-ledger 的长期约束：继续坚持“多图少文”，用 Mermaid 结构图、证据流图和决策流图替代长段概念解释。",
+    "应用 Day 07 / Day 08 的可达性反思：明确 root tracing 决定生命周期，对象头、引用类型与 root path 的边界被清楚拆开。"
+  ],
+  "visible_changes": [
+    "因“多图少文”反馈，在 Day 10 正文新增 3 张 Mermaid：1）GC Roots 分类结构图；2）heap dump/MAT 证据流图；3）Troubleshooting 决策流图。",
+    "新增 roots 分类速查表、MAT 视图清单、排障矩阵与工程话术表，用表格替代原本可能出现的长段解释。",
+    "新增最小命令块：`am dumpheap`、`dumpsys meminfo`、`/proc/<pid>/maps`，把 root 分析落到可执行工具步骤。"
+  ],
+  "next_run_instructions": [
+    "Day 11（ART GC 源码：gc/collector/ 目录关键路径）继续保留“多图少文 + 工程入口表”写法，最好画出 `heap -> collector -> root visitor -> reference processor` 的目录关系图。",
+    "如果 `gh` 仍未认证，继续在 `issue_feedback` 和 automation memory 中记录 blocker，不要假装已经读取 open Issues。",
+    "提交前继续先验证 JSON，再尝试 `git add/commit/push`；如果 `.git` 权限或远端鉴权仍阻塞，要记录具体命令和报错。",
+    "后续应尽快补一个带真实 heap dump 视角的案例型文章，把 Day 10 的方法论变成截图化操作路径。"
+  ],
+  "issue_feedback": {
+    "read_attempted": true,
+    "read_success": false,
+    "blocker": "无法读取 hello-he/android-memory-expert 的 open Issues：`gh auth status` 显示未登录，需执行 `gh auth login` 或提供 `GH_TOKEN`。"
+  }
+}

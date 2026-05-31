@@ -1,0 +1,51 @@
+{
+  "day": 8,
+  "title": "引用类型：强引用 / 软引用 / 弱引用 / 虚引用（Android/ART 视角）",
+  "key_conclusions": [
+    "对象是否回收取决于“可达性 + 引用链”，引用类型只是改变可达性层级与 GC 处理方式，不是独立的“省内存开关”。",
+    "SoftReference 在 Android 上不适合作为稳定缓存策略：回收时机受版本、厂商和内存压力影响，命中率与抖动都不可控。",
+    "WeakReference 适合避免延长生命周期，例如 listener、callback、弱键映射，但不适合作为主缓存策略。",
+    "PhantomReference 的价值在于“回收后通知”：配合 ReferenceQueue 把清理动作变成可观测事件，减少对 finalizer 的依赖。"
+  ],
+  "shallow_points": [
+    "尚未按 Android 版本核对 ART reference_processor 的细节差异，例如入队时机与 collector 的交互边界。",
+    "缺少真实设备或真实业务场景的 A/B 数据，用于量化 Soft/Weak 用作缓存时的命中率、GC pause 和 PSS 抖动成本。",
+    "未覆盖 Kotlin 协程场景下“弱引用 + 生命周期”的常见误用，例如 scope 泄漏与回调丢失之间的平衡。"
+  ],
+  "discovered_connections": [
+    "Day 07 的结论“对象是否回收不由对象头决定”在 Day 08 被落到可达性层级图：强、软、弱、虚引用影响的是引用链强度与回收时机，而不是对象布局。",
+    "Day 06 的“不要把机制当开关”的写法可复用于引用类型：Soft/Weak 需要先走 heap dump、meminfo、maps 证据链，再做选型。",
+    "后续 Day 10 可以直接复用 Day 08 的可达性分层图，补齐 root 枚举与 reachability 的完整闭环。"
+  ],
+  "suggest_future_topics": [
+    "在 Day 10（GC Roots）中补一张“Root -> 引用链 -> 可达性层级”的合并图，把引用类型与 root tracing 打通。",
+    "在 Day 22-25（Profiler/MAT）中补一个“ReferenceQueue 失效或无人消费导致资源未清理”的排障案例模板。",
+    "在 Bitmap/缓存篇（Day 36+）复用 Day 08 的决策流，对比 LruCache 与 SoftReference 的抖动和命中率差异。"
+  ],
+  "knowledge_gaps": [
+    "需要按目标 Android 分支阅读并标注 `art/runtime/gc/reference_processor.*` 的关键路径，确认 clear/enqueue 时机与并发/移动 GC 的交互。",
+    "需要收集 Android 官方或主流库对 SoftReference 的工程建议与替代方案，落到可执行的缓存策略对照表。",
+    "需要补齐“引用类型导致逻辑丢失”的工程边界，例如弱引用回调消失、软引用命中不可控，以及对应的测试策略。"
+  ],
+  "applied_reflections": [
+    "应用 Day 07 的 next_run_instructions：把“对象是否回收”明确落到可达性与引用链，并画出引用强度/可达性层级图与 ReferenceQueue 决策流。",
+    "应用 evolution-ledger 的“多图少文字”反馈：正文以 2 张 Mermaid（结构图 + 排障决策流）为骨架，并用短表格替代长段解释。",
+    "延续 Day 05-06 的“证据链写法”：加入 heap dump、meminfo、maps 的最小可执行命令模板，避免只讲概念。"
+  ],
+  "visible_changes": [
+    "新增 Mermaid 结构图（可达性层级 + ReferenceQueue），把强、软、弱、虚引用落到对象图与队列消费线程，响应“多图少文”。",
+    "新增 Mermaid 排障/决策流，用于选择引用类型与定位“像泄漏”的问题，响应“多图少文”。",
+    "新增 4 张短表：引用类型对照表、Android 场景选型表、证据链模板表、小抄选型表，用表格替代长段解释。"
+  ],
+  "next_run_instructions": [
+    "更新 README 与 progress.json：把 Day 08 标记为已生成，并把 current_day 推进到 Day 09（ART GC 算法）。",
+    "如果 `gh` 仍未认证，继续在 reflection 与 automation memory 记录 blocker，并给出 `gh auth login` 或设置 `GH_TOKEN` 的解决路径。",
+    "本次 `git add` 曾失败，错误为 `fatal: Unable to create .git/index.lock: Permission denied`；下次运行前需要优先复核 `.git` 目录权限。",
+    "Day 09（ART GC 算法）继续保持“证据链 + 多图少字”：至少画出 CC/CMS 执行路径图与排障决策流，并给出可观测信号（GC log / meminfo / trace）。"
+  ],
+  "issue_feedback": {
+    "read_attempted": true,
+    "read_success": false,
+    "blocker": "无法读取 hello-he/android-memory-expert 的 open Issues：`gh issue list` 提示未登录，需要执行 `gh auth login` 或配置 `GH_TOKEN`。"
+  }
+}
