@@ -1,0 +1,50 @@
+{
+  "day": 11,
+  "title": "ART GC source code paths",
+  "key_conclusions": [
+    "The real entry to ART GC source reading is `art/runtime/gc/heap.*`, not a single collector file.",
+    "The `collector/*` directory explains how a GC run executes, but root cause analysis still needs `root_visitor`, `reference_processor`, `space/*`, and runtime evidence.",
+    "A useful source-reading article must map source paths to logcat, meminfo, heap dump, and Perfetto signals."
+  ],
+  "shallow_points": [
+    "This article is still an index-style walkthrough and does not include a function-level call chain screenshot from a concrete Android branch.",
+    "It does not yet verify the default CC or CMS combination, phase names, and log fields across Android versions.",
+    "It does not yet split `heap.cc` trigger logic into alloc GC, background GC, and explicit GC with a direct side-by-side table."
+  ],
+  "discovered_connections": [
+    "Day 10 root and retained-path analysis now connects upstream to `root_visitor` in source.",
+    "Day 09 evidence-first reasoning now becomes a concrete source index: `heap -> collector -> reference/space -> logs/trace`.",
+    "Day 08 reference-type boundaries now connect directly to `reference_processor.*`."
+  ],
+  "suggest_future_topics": [
+    "Day 12 should turn alloc GC, background GC, and explicit GC into a state diagram tied back to `heap.cc`.",
+    "A later article should decode common GC log fields such as freed bytes, paused, concurrent, and LOS against source phases.",
+    "The Profiler and MAT articles should reuse the Day 11 source-entry table as a source-to-tool-to-fix template."
+  ],
+  "knowledge_gaps": [
+    "We still need to inspect the target Android branch and mark the exact call chain across `heap.cc`, `concurrent_copying.cc`, and `reference_processor.cc`.",
+    "We still need one real Perfetto example that aligns long pauses with collector phases and scheduler contention.",
+    "We still need to verify large-object-space and region-space interactions against concrete Android versions."
+  ],
+  "applied_reflections": [
+    "Applied Day 10 next-run guidance by drawing the `heap -> collector -> root visitor -> reference processor` path explicitly.",
+    "Applied the long-term multi-diagram rule by replacing prose-heavy source commentary with diagrams, tables, and command blocks.",
+    "Applied the evidence-chain rule by adding `rg`, logcat, meminfo, heap dump, and Perfetto entry points."
+  ],
+  "visible_changes": [
+    "Added three Mermaid diagrams because of the more-diagrams-less-prose feedback: source map, execution path, and troubleshooting flow.",
+    "Added source-entry, observation, boundary, and engineering-phrasing tables to reduce dense prose.",
+    "Added AOSP `rg` commands and a minimal observation command block to make the article more actionable."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 11 is marked complete and Day 12 remains pending.",
+    "Update `progress.json` so `current_day` becomes 12 and `last_generated` is refreshed.",
+    "Keep the Day 12 article visual-first and center it on alloc GC, background GC, and explicit GC trigger flow.",
+    "If GitHub Issues still cannot be read, keep recording the `gh auth login` or `GH_TOKEN` blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "read_attempted": true,
+    "read_success": false,
+    "blocker": "Could not read open Issues for hello-he/android-memory-expert because `gh issue list` requires `gh auth login` or `GH_TOKEN`."
+  }
+}

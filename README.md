@@ -22,7 +22,7 @@
 | Day 08 | 引用类型：强引用、软引用、弱引用、虚引用 | ✅[2026-05-26](docs/week-02/day08-reference-types.md) |
 | Day 09 | ART GC 算法：CMS 与 CC（Concurrent Copying） | ✅[2026-05-28](docs/week-02/day09-art-gc-algorithms.md) |
 | Day 10 | GC Roots 枚举与可达性分析 | ✅[2026-05-31](docs/week-02/day10-gc-roots-and-reachability.md) |
-| Day 11 | ART GC 源码：gc/collector/ 目录关键路径 | ⏳待生成 |
+| Day 11 | ART GC 源码：gc/collector/ 目录关键路径 | ✅[2026-06-28](docs/week-02/day11-art-gc-source-code.md) |
 | Day 12 | GC 触发时机：alloc gc、background gc、explicit gc | ⏳待生成 |
 | Day 13 | GC pause 的来源与优化思路 | ⏳待生成 |
 | Day 14 | Generational GC 在 ART 中的实现 | ⏳待生成 |
