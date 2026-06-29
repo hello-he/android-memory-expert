@@ -1,0 +1,51 @@
+{
+  "day": 12,
+  "title": "GC trigger timing",
+  "key_conclusions": [
+    "Alloc GC should be read as pressure from the allocation path, not as a collector-quality verdict.",
+    "Background GC is usually a maintenance signal and must be checked against foreground interaction before being treated as a user-visible problem.",
+    "Explicit GC is only a request; it is not a reliable memory-release API and should be justified with before/after evidence.",
+    "GC trigger analysis should start with cause/reason, then freed result, then pause/trace alignment, then retained-path evidence."
+  ],
+  "shallow_points": [
+    "The article still does not validate exact `GcCause` enum names and log wording against a specific Android branch.",
+    "It does not include a real device log snippet with concrete freed, pause, and total-time fields decoded line by line.",
+    "It does not yet connect trigger timing to Day 13 pause optimization with a real Perfetto capture."
+  ],
+  "discovered_connections": [
+    "Day 11 source-path indexing now becomes a trigger-state article centered on `heap.cc` rather than `collector/*` alone.",
+    "Day 09 GC algorithm reasoning is extended with trigger causes: frequent GC is often allocation churn, while low reclaim still points to reachability.",
+    "Day 10 retained-path analysis remains the next step whenever GC runs but freed bytes are low."
+  ],
+  "suggest_future_topics": [
+    "Day 13 should decode where pause time comes from and use Perfetto to separate GC phase cost from scheduler contention.",
+    "A later GC log quick-reference article should decode real fields such as freed bytes, paused, total time, LOS, and cause/reason.",
+    "When reaching bitmap and large-object topics, reuse the alloc-GC plus LOS pressure table from this article."
+  ],
+  "knowledge_gaps": [
+    "Need target-branch validation for exact `heap.cc` call chains around alloc, background, and explicit GC.",
+    "Need a real Perfetto trace that aligns GC trigger reason with UI jank or confirms no foreground impact.",
+    "Need ROM/version comparison for GC log fields and whether explicit GC requests are honored, delayed, or suppressed."
+  ],
+  "applied_reflections": [
+    "Applied Day 11 shallow point by splitting `heap.cc` trigger logic into alloc GC, background GC, and explicit GC with a side-by-side trigger matrix.",
+    "Applied Day 11 next-run instruction by centering the article on trigger flow and tying each branch back to `heap.cc`, logcat, meminfo, Perfetto, and heap dump evidence.",
+    "Applied the standing visual-first feedback by using three Mermaid diagrams, multiple decision tables, and short command blocks instead of long prose."
+  ],
+  "visible_changes": [
+    "Added three Mermaid diagrams because of the more-diagrams-less-prose feedback: allocation-to-trigger runtime path, troubleshooting decision flow, and log-field-to-action map.",
+    "Added trigger boundary, source-entry, evidence-chain, scenario, boundary, and engineering-phrase tables to replace dense paragraphs.",
+    "Added AOSP `rg` commands plus logcat, meminfo, Perfetto, and dumpheap command templates so the article visibly strengthens source paths and tooling evidence."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 12 is marked complete and Day 13 remains pending.",
+    "Update `progress.json` so `current_day` becomes 13 and `last_generated` is refreshed.",
+    "Day 13 should visibly apply this run's gap by adding a pause-source diagram and a Perfetto-oriented decision table.",
+    "If GitHub Issues still cannot be read, keep recording the `gh auth login` or `GH_TOKEN` blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "read_attempted": true,
+    "read_success": false,
+    "blocker": "Could not read open Issues for hello-he/android-memory-expert because `gh issue list` reported that GitHub CLI is not authenticated and requires `gh auth login` or `GH_TOKEN`."
+  }
+}

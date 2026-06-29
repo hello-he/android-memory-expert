@@ -1,8 +1,8 @@
 {
-  "current_day": 12,
+  "current_day": 13,
   "total_days": 60,
   "started_at": "2026-05-15",
-  "last_generated": "2026-06-28T21:56:09.6883368+08:00",
+  "last_generated": "2026-06-29T22:46:20.8562569+08:00",
   "curriculum": [
     { "day": 1, "week": 1, "slug": "art-heap-structure", "title": "ART heap structure" },
     { "day": 2, "week": 1, "slug": "art-vs-dalvik-memory", "title": "ART vs Dalvik memory model" },
