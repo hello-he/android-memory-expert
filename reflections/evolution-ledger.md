@@ -77,11 +77,16 @@ This file records how each run should improve on the previous one. It is not par
 - Visible change: added three Mermaid diagrams, trigger/source/evidence/scenario tables, AOSP `rg` commands, and logcat/meminfo/Perfetto/dumpheap command templates because of the more-diagrams-less-prose feedback.
 - Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; exact `GcCause` names, log fields, and trigger call chains still need target-branch validation.
 
+### Day 12 -> Day 13
+- Applied reflection: carried forward Day 12's Perfetto gap by separating `paused`, `total time`, GC slice timing, Main Thread overlap, and scheduler contention.
+- Visible change: added four Mermaid diagrams, pause/source/optimization matrices, AOSP `rg` commands, and logcat/Perfetto/meminfo/dumpheap command templates because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; exact pause phase names, collector defaults, and log fields still need target-branch and real-trace validation.
+
 ---
 
-## Next Run: Day 13
+## Next Run: Day 14
 - Keep the visual-first format.
-- Focus on GC pause sources and optimization, carrying forward Day 12's need for Perfetto-oriented phase and scheduler evidence.
+- Focus on generational GC in ART, carrying forward Day 13's need for branch/version-specific boundaries and real trace evidence.
 - Keep the engineering entry table pattern: source path, log signal, trace signal, and tool command.
 - If GitHub Issues still cannot be read, record the auth blocker again in reflection and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.

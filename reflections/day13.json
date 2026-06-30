@@ -1,0 +1,51 @@
+{
+  "day": 13,
+  "title": "GC pause and optimization",
+  "key_conclusions": [
+    "GC pause must be separated from total GC time and from user-visible jank; Perfetto is needed to align GC slices with Main Thread and RenderThread.",
+    "A long paused field points toward STW, suspension, root scan, or remark work, while long total time with short paused time points toward concurrent phase cost or scheduler contention.",
+    "Low freed bytes is not primarily a pause-optimization problem; it should move the investigation to retained paths, large objects, or non-Java memory pressure.",
+    "The trigger reason from Day 12 remains part of the diagnosis because For Alloc, Background, and Explicit GC require different engineering actions."
+  ],
+  "shallow_points": [
+    "The article still uses command templates rather than a real Perfetto trace with concrete slices and timestamps.",
+    "Exact pause phase names, default collector combinations, and log fields were not validated against a specific Android branch.",
+    "The article does not include a real device GC log decoded field by field."
+  ],
+  "discovered_connections": [
+    "Day 12 trigger timing now feeds directly into Day 13 pause triage: reason determines whether to inspect allocation churn, background overlap, or explicit callers.",
+    "Day 11 source-path indexing is reused as a source path plus trace signal table for heap.cc, collector, root visitor, reference processor, and space code.",
+    "Day 10 retained-path guidance remains the correct branch when GC runs but freed bytes stay low."
+  ],
+  "suggest_future_topics": [
+    "A later article should decode a real GC log line and align it with Perfetto timestamps.",
+    "Profiler and MAT topics should reuse the pause-to-evidence matrix and add screenshots or sample trace tables.",
+    "Bitmap and large-object articles should reuse the For Alloc plus LOS pressure path from this article."
+  ],
+  "knowledge_gaps": [
+    "Need target-branch validation for exact STW phases and collector behavior in ART.",
+    "Need a real Perfetto capture that separates GC phase cost from scheduler contention.",
+    "Need ROM/version comparison for GC log fields and whether explicit GC is delayed, suppressed, or run immediately."
+  ],
+  "applied_reflections": [
+    "Applied Day 12's knowledge gap by adding a Perfetto-oriented sequence diagram and a decision table that separates GC phase cost from scheduler contention.",
+    "Applied Day 12's next-run instruction by keeping the engineering entry table pattern: source path, search term, runtime signal, and tool command.",
+    "Applied the standing visual-first feedback by using four Mermaid diagrams, compact matrices, and short command blocks instead of long prose."
+  ],
+  "visible_changes": [
+    "Added four Mermaid diagrams because of the more-diagrams-less-prose feedback: pause source path, Perfetto alignment sequence, troubleshooting decision flow, and log-field-to-action flow.",
+    "Added pause decomposition, source-path-to-trace-signal, optimization, boundary, and engineering-expression tables to replace dense prose.",
+    "Added logcat, Perfetto, meminfo, dumpheap, and AOSP rg command blocks so the article visibly strengthens tooling commands and source paths."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 13 is marked complete and Day 14 remains pending.",
+    "Update progress.json so current_day becomes 14 and last_generated is refreshed.",
+    "Day 14 should visibly apply this run's unresolved version boundary by treating generational GC as branch/version-specific rather than universal.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}
