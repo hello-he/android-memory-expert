@@ -1,0 +1,52 @@
+{
+  "day": 14,
+  "title": "Generational GC in ART",
+  "key_conclusions": [
+    "Generational GC should be explained through ART space, collector, barrier, and runtime evidence rather than by directly importing HotSpot Eden/Survivor/Old terminology.",
+    "The main benefit depends on the young-object mortality hypothesis; when young collections free many short-lived objects, the engineering fix is usually allocation-rate reduction rather than collector tuning.",
+    "A low-freed young or partial GC should move the investigation to retained paths, Large Object Space pressure, or Native/Graphics memory instead of blaming generational GC.",
+    "Target Android branch validation is mandatory because collector names, log fields, and default generational behavior differ across ART versions and ROMs."
+  ],
+  "shallow_points": [
+    "The article still uses command templates and does not decode a real device GC log line with concrete young/full fields.",
+    "It does not validate exact generational collector defaults against a specific Android branch checkout.",
+    "It does not include a real Perfetto trace proving young collection pause and total-time behavior on a target device."
+  ],
+  "discovered_connections": [
+    "Day 13 pause analysis feeds directly into generational GC because young collection benefits must be verified with paused, total time, Perfetto scheduling, and frame overlap.",
+    "Day 12 trigger timing remains necessary because frequent young GC is often a For Alloc and allocation-churn signal.",
+    "Day 10 retained-path analysis remains the fallback when young or partial GC frees little memory.",
+    "Day 3 allocation-path and LOS concepts explain why large objects may bypass the expected young-object fast-reclaim story."
+  ],
+  "suggest_future_topics": [
+    "A later article should decode a real Android GC log line field by field and distinguish young, partial, full, For Alloc, Background, and Explicit signals.",
+    "Profiler and MAT articles should reuse the young-GC decision flow and add concrete allocation-rate and retained-path screenshots or sample tables.",
+    "Bitmap and large-object articles should reuse the LOS boundary from this article to avoid over-attributing memory pressure to Java generational GC."
+  ],
+  "knowledge_gaps": [
+    "Need target-branch validation for exact ART generational collector names, defaults, and source call paths.",
+    "Need a real Perfetto capture that shows young collection, full collection fallback, GC thread scheduling, and frame overlap.",
+    "Need ROM/version comparison for GC log fields that expose or hide young-generation behavior."
+  ],
+  "applied_reflections": [
+    "Applied Day 13's unresolved version-boundary gap by making branch validation a first-class section and avoiding universal claims about ART generational GC.",
+    "Applied Day 13's source/log/trace/tool table pattern by adding a version-and-source table with AOSP search terms, runtime signals, and commands.",
+    "Applied the standing more-diagrams-less-prose feedback by using three Mermaid diagrams, evidence matrices, optimization tables, and short checklists instead of long paragraphs."
+  ],
+  "visible_changes": [
+    "Added three Mermaid diagrams because of the more-diagrams-less-prose feedback: ART generational structure, young/full execution sequence, and troubleshooting decision flow.",
+    "Added boundary, source-entry, observation, evidence-chain, optimization, and cross-topic tables to replace dense prose.",
+    "Added AOSP rg commands plus logcat, dumpsys meminfo, Perfetto, and dumpheap command templates so the article visibly strengthens source paths and tooling evidence."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 14 is marked complete and Day 15 remains pending.",
+    "Update progress.json so current_day becomes 15 and last_generated is refreshed.",
+    "Day 15 should visibly apply this run's retained-path fallback by framing memory leak essence as a GC Roots and ownership-chain problem rather than a GC failure.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}

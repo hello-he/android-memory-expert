@@ -82,11 +82,16 @@ This file records how each run should improve on the previous one. It is not par
 - Visible change: added four Mermaid diagrams, pause/source/optimization matrices, AOSP `rg` commands, and logcat/Perfetto/meminfo/dumpheap command templates because of the more-diagrams-less-prose feedback.
 - Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; exact pause phase names, collector defaults, and log fields still need target-branch and real-trace validation.
 
+### Day 13 -> Day 14
+- Applied reflection: carried forward Day 13's branch/version boundary gap by treating ART generational GC as target-branch-specific instead of universal HotSpot-style Young/Old terminology.
+- Visible change: added three Mermaid diagrams, a version/source validation table, young/full execution sequence, troubleshooting decision flow, and logcat/Perfetto/meminfo/dumpheap command templates because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; exact generational collector defaults, log fields, and pause behavior still need target-branch validation and a real Perfetto trace.
+
 ---
 
-## Next Run: Day 14
+## Next Run: Day 15
 - Keep the visual-first format.
-- Focus on generational GC in ART, carrying forward Day 13's need for branch/version-specific boundaries and real trace evidence.
+- Focus on memory leak essence, carrying forward Day 14's retained-path fallback: leaks are ownership/reachability problems, not GC failure.
 - Keep the engineering entry table pattern: source path, log signal, trace signal, and tool command.
 - If GitHub Issues still cannot be read, record the auth blocker again in reflection and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.

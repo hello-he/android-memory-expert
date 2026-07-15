@@ -25,7 +25,7 @@
 | Day 11 | ART GC 源码：gc/collector/ 目录关键路径 | ✅[2026-06-28](docs/week-02/day11-art-gc-source-code.md) |
 | Day 12 | GC 触发时机：alloc gc、background gc、explicit gc | ✅[2026-06-29](docs/week-02/day12-gc-trigger-timing.md) |
 | Day 13 | GC pause 的来源与优化思路 | ✅[2026-06-30](docs/week-02/day13-gc-pause-and-optimization.md) |
-| Day 14 | Generational GC 在 ART 中的实现 | ⏳待生成 |
+| Day 14 | Generational GC 在 ART 中的实现 | ✅[2026-07-15](docs/week-02/day14-generational-gc-in-art.md) |
 | Day 15 | 内存泄漏的本质：GC Roots 持有链分析 | ⏳待生成 |
 | Day 16 | Activity/Fragment 泄漏的常见模式 | ⏳待生成 |
 | Day 17 | Handler 泄漏：消息队列与生命周期的冲突 | ⏳待生成 |
