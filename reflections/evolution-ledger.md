@@ -87,11 +87,16 @@ This file records how each run should improve on the previous one. It is not par
 - Visible change: added three Mermaid diagrams, a version/source validation table, young/full execution sequence, troubleshooting decision flow, and logcat/Perfetto/meminfo/dumpheap command templates because of the more-diagrams-less-prose feedback.
 - Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; exact generational collector defaults, log fields, and pause behavior still need target-branch validation and a real Perfetto trace.
 
+### Day 14 -> Day 15
+- Applied reflection: carried forward Day 14's retained-path fallback by framing memory leaks as GC Root ownership-chain problems rather than collector or generational GC failures.
+- Visible change: added three Mermaid diagrams, Root-owner-bridge-victim modeling, retained-path troubleshooting flow, leak-type/source/evidence matrices, and adb/logcat/dumpheap/maps/AOSP command blocks because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs a real HPROF and real LeakCanary trace decoded line by line.
+
 ---
 
-## Next Run: Day 15
+## Next Run: Day 16
 - Keep the visual-first format.
-- Focus on memory leak essence, carrying forward Day 14's retained-path fallback: leaks are ownership/reachability problems, not GC failure.
+- Focus on Activity and Fragment leaks, carrying forward Day 15's Root-owner-bridge-victim model.
 - Keep the engineering entry table pattern: source path, log signal, trace signal, and tool command.
 - If GitHub Issues still cannot be read, record the auth blocker again in reflection and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.

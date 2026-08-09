@@ -1,0 +1,53 @@
+{
+  "day": 15,
+  "title": "Memory leak essence",
+  "key_conclusions": [
+    "Android memory leaks are lifecycle mismatch plus strong reachability from a GC Root, not a collector failure.",
+    "GC can only reclaim unreachable objects; if a retained path still exists, manual GC or collector tuning cannot fix the root cause.",
+    "A leak investigation should identify the Root, owner, bridge, victim, and first incorrect ownership edge with heap dump evidence.",
+    "When GC freed bytes stay low, the next engineering step is retained-path analysis plus memory-category attribution, not more GC speculation."
+  ],
+  "shallow_points": [
+    "The article still uses representative retained-path examples instead of a real HPROF from a target application.",
+    "It does not decode an actual LeakCanary trace line by line.",
+    "It does not validate MAT, Android Studio Profiler, and LeakCanary output differences on the same heap dump."
+  ],
+  "discovered_connections": [
+    "Day 14's low-freed generational GC fallback becomes the core Day 15 leak model: retained path explains why GC cannot reclaim objects.",
+    "Day 10 GC Roots and reachability directly supply the Root-to-victim graph used for leak diagnosis.",
+    "Day 12 trigger timing and Day 13 pause analysis remain useful only after Java Heap growth is separated from Native, Graphics, and mmap pressure.",
+    "Upcoming Activity, Handler, singleton, listener, resource, and LeakCanary articles can reuse the Root-owner-bridge-victim model."
+  ],
+  "suggest_future_topics": [
+    "Day 16 should apply the Root-owner-bridge-victim model to Activity and Fragment lifecycle boundaries.",
+    "Day 17 should map Handler MessageQueue retained paths and show removeCallbacksAndMessages evidence.",
+    "Day 21 should decode a real or sample LeakCanary trace and compare shortest path, retained size, and suspected leaking object markers.",
+    "A later tools article should analyze one HPROF with MAT, Android Studio Profiler, and LeakCanary side by side."
+  ],
+  "knowledge_gaps": [
+    "Need a real app HPROF to demonstrate retained size and Path To GC Roots with concrete class names.",
+    "Need a real LeakCanary trace to decode suspected leaking markers and reference names line by line.",
+    "Need tool-version comparison for MAT, Android Studio Profiler, and LeakCanary retained-size calculations."
+  ],
+  "applied_reflections": [
+    "Applied Day 14's retained-path fallback by making the article's central claim that leaks are strong GC Root ownership chains rather than generational GC or collector failures.",
+    "Applied the standing source/log/trace/tool table pattern by adding meminfo, logcat, dumpheap, maps, MAT, Profiler, AOSP, and LeakCanary evidence entries.",
+    "Applied the more-diagrams-less-prose feedback by using three Mermaid diagrams, multiple matrices, command blocks, and short checklists instead of long explanatory paragraphs."
+  ],
+  "visible_changes": [
+    "Added three Mermaid diagrams because of the more-diagrams-less-prose feedback: GC Root retained-path structure, symptom-to-retained-path troubleshooting flow, and reference-chain type map.",
+    "Added role, evidence-chain, leak-type, AOSP/tool-source, Day 14 fallback, boundary, and engineering-phrase tables to replace dense prose.",
+    "Added concrete adb, logcat, dumpheap, maps, and AOSP rg commands so the article visibly strengthens source paths and tooling evidence."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 15 is marked complete and Day 16 remains pending.",
+    "Update progress.json so current_day becomes 16 and last_generated is refreshed.",
+    "Day 16 should visibly apply the Root-owner-bridge-victim model to Activity and Fragment leaks, especially destroyed Activity, Fragment view binding, adapter, and lifecycle observer paths.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}
