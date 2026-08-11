@@ -94,9 +94,17 @@ This file records how each run should improve on the previous one. It is not par
 
 ---
 
-## Next Run: Day 16
+### Day 15 -> Day 16
+- Applied reflection: carried forward Day 15's Root-owner-bridge-victim model into concrete Activity and Fragment leak patterns, especially destroyed Activity, Fragment view binding, adapter callback, observer, and lifecycle-bound task paths.
+- Visible change: added three Mermaid diagrams, Root-owner-bridge-victim mapping, lifecycle-boundary tables, high-frequency-pattern matrices, LeakCanary trace reading notes, and adb/logcat/dumpheap/dumpsys/AOSP/AndroidX command blocks because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs a real HPROF and real LeakCanary trace decoded line by line, plus AndroidX Fragment version validation.
+
+---
+
+## Next Run: Day 17
 - Keep the visual-first format.
-- Focus on Activity and Fragment leaks, carrying forward Day 15's Root-owner-bridge-victim model.
+- Focus on Handler leaks, carrying forward Day 16's Thread / MessageQueue / Message / Runnable branch.
 - Keep the engineering entry table pattern: source path, log signal, trace signal, and tool command.
+- Expand source paths and verification around delayed messages, lifecycle cancellation, and `removeCallbacksAndMessages`.
 - If GitHub Issues still cannot be read, record the auth blocker again in reflection and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.

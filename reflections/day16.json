@@ -1,0 +1,56 @@
+{
+  "day": 16,
+  "title": "Activity and Fragment leaks",
+  "key_conclusions": [
+    "Activity leaks should be diagnosed as destroyed Activity objects that remain strongly reachable from a GC Root after onDestroy.",
+    "Fragment View leaks are usually view-lifecycle boundary failures: the Fragment may still be valid while the old View tree should have been released at onDestroyView.",
+    "The practical fix point is the owner or bridge edge, such as a singleton field, delayed message, observer, adapter callback, binding field, or animation listener.",
+    "A fix should be accepted only with before/after evidence from retained paths, LeakCanary traces, heap dump instance counts, or dumpsys meminfo trends."
+  ],
+  "shallow_points": [
+    "The article still uses representative retained-path examples rather than a real target-app HPROF.",
+    "It does not decode a real LeakCanary Activity or Fragment trace line by line.",
+    "It does not validate AndroidX Fragment internal field names against a specific dependency version.",
+    "Compose-specific lifecycle and remember/effect leak patterns are only named as a boundary, not analyzed."
+  ],
+  "discovered_connections": [
+    "Day 15's Root-owner-bridge-victim model maps directly to Activity and Fragment leak diagnosis.",
+    "Day 10 GC Roots remain the starting point for proving why destroyed pages are still reachable.",
+    "Day 13 and Day 14 low-freed-GC guidance applies here: low reclaimed bytes should push the investigation to retained paths rather than collector tuning.",
+    "Upcoming Handler, singleton, listener, and resource-leak articles can each reuse one branch of the Day 16 Activity/Fragment decision flow."
+  ],
+  "suggest_future_topics": [
+    "Day 17 should expand the Thread / MessageQueue / Message / Runnable branch with concrete Handler source paths and removeCallbacksAndMessages verification.",
+    "Day 18 should expand the static and singleton branch with applicationContext boundaries and cache ownership rules.",
+    "Day 19 should expand listener, observer, adapter callback, and anonymous inner-class retained paths.",
+    "A later tools article should decode one real LeakCanary trace and compare it with MAT Path To GC Roots on the same HPROF.",
+    "A later UI article should cover Compose remember, LaunchedEffect, DisposableEffect, and scope leaks separately."
+  ],
+  "knowledge_gaps": [
+    "Need a real HPROF from a sample Activity/Fragment leak to show exact retained size, shortest path, and instance counts.",
+    "Need target AndroidX Fragment version validation for performDestroyView, mView, binding, and lifecycle-owner internals.",
+    "Need a real LeakCanary trace that distinguishes destroyed Activity, retained Fragment, and old Fragment View tree.",
+    "Need a Compose-specific leak path article because View lifecycle advice does not fully cover Compose state/effect ownership."
+  ],
+  "applied_reflections": [
+    "Applied Day 15's instruction to carry forward the Root-owner-bridge-victim model by mapping each Activity/Fragment leak pattern to Root, owner, bridge, and victim columns.",
+    "Applied Day 15's tool-evidence gap by adding dumpsys meminfo, logcat, dumpheap, activity dumpsys, LeakCanary, heap dump, AOSP, and AndroidX source-path commands.",
+    "Applied the standing more-diagrams-less-prose feedback by structuring the article around three Mermaid diagrams, multiple matrices, compact tables, and short checklists."
+  ],
+  "visible_changes": [
+    "Added three Mermaid diagrams because of the more-diagrams-less-prose feedback: Activity/Fragment retained-path structure, troubleshooting decision flow, and Fragment View binding lifecycle sequence.",
+    "Added Root-owner-bridge-victim, lifecycle-boundary, high-frequency-pattern, evidence-entry, LeakCanary-trace, repair-checklist, and boundary tables to replace dense prose.",
+    "Added concrete adb, logcat, dumpheap, dumpsys activity, AOSP Activity, and AndroidX Fragment source search commands so prior requests for stronger tooling evidence are visibly applied."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 16 is marked complete and Day 17 remains pending.",
+    "Update progress.json so current_day becomes 17 and last_generated is refreshed.",
+    "Day 17 should visibly expand the Handler branch from Day 16 with MessageQueue retained paths, source paths, delayed messages, lifecycle cancellation, and before/after verification.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}
