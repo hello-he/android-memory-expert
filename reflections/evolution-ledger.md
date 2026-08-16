@@ -108,3 +108,20 @@ This file records how each run should improve on the previous one. It is not par
 - Expand source paths and verification around delayed messages, lifecycle cancellation, and `removeCallbacksAndMessages`.
 - If GitHub Issues still cannot be read, record the auth blocker again in reflection and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+---
+
+### Day 16 -> Day 17
+- Applied reflection: carried forward Day 16's Thread / MessageQueue / Message / Runnable branch and made Handler leaks a concrete retained-path problem through `Message.callback`, `Message.target`, `Message.obj`, and HandlerThread ownership.
+- Visible change: added three Mermaid diagrams, Root-owner-bridge-victim mapping, AOSP Handler/Looper/MessageQueue/Message/HandlerThread source paths, lifecycle cancellation tables, token-based cleanup guidance, and adb/logcat/dumpheap/thread commands because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs a real HPROF, real LeakCanary Handler trace, target AOSP branch validation, and live pending-message instrumentation.
+
+---
+
+## Next Run: Day 18
+- Keep the visual-first format.
+- Focus on static and singleton leaks by contrasting global owner fields with Day 17's queued Message owner model.
+- Reuse Root-owner-bridge-victim tables, source paths, troubleshooting flow, and before/after evidence commands.
+- Expand boundaries around `applicationContext`, process-lifetime caches, singleton registries, and static listener lists.
+- If GitHub Issues still cannot be read, record the auth blocker again in reflection and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.

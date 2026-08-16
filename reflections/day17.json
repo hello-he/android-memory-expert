@@ -1,0 +1,59 @@
+{
+  "day": 17,
+  "title": "Handler leaks",
+  "key_conclusions": [
+    "Handler leaks are retained-path problems through Thread, Looper, MessageQueue, Message, callback, target, or obj rather than a generic Handler-class problem.",
+    "Delayed messages extend the lifetime of captured Activity, Fragment, binding, or View objects until execution or explicit removal.",
+    "The correct cancellation boundary must match the victim lifecycle: Activity onDestroy, Fragment View onDestroyView, or HandlerThread owner disposal.",
+    "A Handler leak fix should be accepted only with before/after evidence from LeakCanary, HPROF Path To GC Roots, dumpsys meminfo, thread state, or source-path verification."
+  ],
+  "shallow_points": [
+    "The article still uses representative retained paths rather than a real target-app HPROF.",
+    "It does not decode a real LeakCanary Handler trace line by line with concrete class names.",
+    "It does not validate Handler, MessageQueue, Looper, and Message method names against a specific Android branch checkout.",
+    "It does not include a live MessageQueue dump or custom instrumentation proving which delayed Message remained queued."
+  ],
+  "discovered_connections": [
+    "Day 16's Thread / MessageQueue / Message / Runnable branch becomes the central Handler leak model.",
+    "Day 15's Root-owner-bridge-victim retained-path model maps directly to Message.callback, Message.target, Message.obj, and HandlerThread leak edges.",
+    "Day 10 GC Roots still explain why the main thread and worker threads keep queued messages alive.",
+    "Day 13 and Day 14 low-freed-GC guidance remains useful: low reclaimed bytes after page exit should move the investigation to retained paths, not collector tuning.",
+    "Future singleton and listener leak articles can reuse the same owner-bridge-victim table structure."
+  ],
+  "suggest_future_topics": [
+    "Day 18 should compare static singleton leaks with Handler leaks by separating global owner fields from queued Message owners.",
+    "Day 19 should expand listener and anonymous inner-class captures, including this$0 patterns already introduced in Handler traces.",
+    "Day 21 should decode a real LeakCanary trace that includes Thread, Looper, MessageQueue, Message.callback, and destroyed Activity markers.",
+    "A later tools article should show a real HPROF Path To GC Roots before and after removeCallbacksAndMessages(token).",
+    "A later Compose article should distinguish Handler queued work from LaunchedEffect, DisposableEffect, rememberCoroutineScope, and lifecycle scope ownership."
+  ],
+  "knowledge_gaps": [
+    "Need a real HPROF from a Handler delayed-message leak to prove retained size, shortest path, and exact Message field ownership.",
+    "Need target Android branch validation for Handler.java, MessageQueue.java, Looper.java, Message.java, and HandlerThread.java method names.",
+    "Need a concrete LeakCanary trace showing Message.callback versus Message.target versus Message.obj retained paths.",
+    "Need a small sample app or instrumentation hook that lists pending Handler tasks safely for demonstration."
+  ],
+  "applied_reflections": [
+    "Applied Day 16's next-run instruction by expanding the Thread / MessageQueue / Message / Runnable branch into the article's central structure diagram, decision flow, source table, and cancellation-boundary checklist.",
+    "Applied Day 16's tool-evidence request by adding AOSP source paths for Handler, MessageQueue, Looper, Message, and HandlerThread plus adb dumpheap, dumpsys meminfo, logcat, Perfetto, and thread inspection commands.",
+    "Applied Day 16's lifecycle-boundary reflection by separating Activity onDestroy, Fragment onDestroyView, RecyclerView item recycling, and HandlerThread owner disposal.",
+    "Applied the standing more-diagrams-less-prose feedback by using three Mermaid diagrams, comparison matrices, and compact evidence tables instead of long prose."
+  ],
+  "visible_changes": [
+    "Added three Mermaid diagrams because of the more-diagrams-less-prose feedback: Handler runtime retained-path structure, Handler leak troubleshooting decision flow, and delayed-message lifecycle sequence.",
+    "Added Root-owner-bridge-victim, source-entry, API-field, lifecycle-boundary, engineering-evidence, LeakCanary-trace, repair-strategy, and acceptance-checklist tables to replace dense prose.",
+    "Added concrete AOSP rg commands and adb/logcat/dumpheap/thread commands so the prior requests for deeper evidence, clearer boundaries, source paths, and tooling commands are visibly applied."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 17 is marked complete and Day 18 remains pending.",
+    "Update progress.json so current_day becomes 18 and last_generated is refreshed.",
+    "Day 18 should visibly contrast static/singleton owner leaks with Handler queued-message owner leaks, using Root-owner-bridge-victim tables and source/tool evidence.",
+    "Day 18 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}

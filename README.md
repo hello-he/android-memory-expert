@@ -28,7 +28,7 @@
 | Day 14 | Generational GC 在 ART 中的实现 | ✅[2026-07-15](docs/week-02/day14-generational-gc-in-art.md) |
 | Day 15 | 内存泄漏的本质：GC Roots 持有链分析 | ✅[2026-08-09](docs/week-03/day15-memory-leak-essence.md) |
 | Day 16 | Activity/Fragment 泄漏的常见模式 | ✅[2026-08-12](docs/week-03/day16-activity-fragment-leak.md) |
-| Day 17 | Handler 泄漏：消息队列与生命周期的冲突 | ⏳待生成 |
+| Day 17 | Handler 泄漏：消息队列与生命周期的冲突 | ✅[2026-08-16](docs/week-03/day17-handler-leak.md) |
 | Day 18 | 静态持有、单例泄漏的排查路径 | ⏳待生成 |
 | Day 19 | Listener 未注销与匿名内部类泄漏 | ⏳待生成 |
 | Day 20 | Cursor、Stream 等资源未关闭的泄漏场景 | ⏳待生成 |
