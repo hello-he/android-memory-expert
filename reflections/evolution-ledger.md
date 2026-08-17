@@ -125,3 +125,20 @@ This file records how each run should improve on the previous one. It is not par
 - Expand boundaries around `applicationContext`, process-lifetime caches, singleton registries, and static listener lists.
 - If GitHub Issues still cannot be read, record the auth blocker again in reflection and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+---
+
+### Day 17 -> Day 18
+- Applied reflection: carried forward Day 17's request to contrast queued Message owners with global owner fields, then made static/singleton leaks a concrete retained-path problem through `ClassLoader`, `Class`, `static field`, singleton/cache/listener fields, and destroyed page victims.
+- Visible change: added four Mermaid diagrams, Handler-owner versus global-owner comparison, Root-owner-bridge-victim mapping, AOSP Context/View/Activity/LruCache source paths, applicationContext boundaries, cache policy checks, and adb/logcat/dumpheap/MAT/source-search command blocks because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs a real HPROF, real LeakCanary static-field trace, target AOSP branch validation, and a concrete third-party SDK singleton example.
+
+---
+
+## Next Run: Day 19
+- Keep the visual-first format.
+- Focus on listener and inner-class leaks by expanding Day 18's static listener-list branch.
+- Include anonymous inner classes, lambda captures, `this$0`, observer APIs, adapter callbacks, lifecycle unregister boundaries, and before/after verification.
+- Reuse Root-owner-bridge-victim tables, source paths, troubleshooting flow, and evidence command blocks.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.

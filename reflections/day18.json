@@ -1,0 +1,59 @@
+{
+  "day": 18,
+  "title": "Static and singleton leaks",
+  "key_conclusions": [
+    "Static and singleton leaks are retained-path problems through ClassLoader, Class, static fields, singleton instances, caches, listener lists, or global manager callbacks.",
+    "The main lifecycle mismatch is process-lifetime ownership retaining page-lifetime Activity, Fragment, View, binding, listener, or callback objects.",
+    "applicationContext is only a valid fix for app-level dependencies that do not need page theme, window, or View-tree behavior.",
+    "A singleton leak fix should be accepted only with before/after evidence from LeakCanary, HPROF Path To GC Roots, dumpsys meminfo, Activity/View counts, or source-path verification."
+  ],
+  "shallow_points": [
+    "The article still uses representative retained paths rather than a real target-app HPROF.",
+    "It does not decode a real LeakCanary static-field or singleton trace line by line with concrete app class names.",
+    "It does not validate Context, View, Activity, and LruCache method names against a specific Android branch checkout.",
+    "It does not inspect a real third-party SDK singleton retaining an Activity context."
+  ],
+  "discovered_connections": [
+    "Day 17's queued Message owner model contrasts cleanly with Day 18's global static-field owner model.",
+    "Day 15's Root-owner-bridge-victim model maps directly to ClassLoader, Class, static field, singleton/cache/listener, and destroyed page objects.",
+    "Day 16's Activity and Fragment lifecycle boundaries remain the victim-side acceptance criteria for static and singleton leaks.",
+    "Day 13 and Day 14 low-freed-GC guidance still applies: low reclaimed bytes after page exit should move the investigation to retained paths rather than collector tuning.",
+    "Day 19 can reuse the listener-list branch and expand anonymous inner-class and callback captures."
+  ],
+  "suggest_future_topics": [
+    "Day 19 should expand listener registries, observer callbacks, anonymous inner classes, lambda captures, and this$0 retained paths.",
+    "Day 21 should decode a real LeakCanary trace that includes System class, static INSTANCE, ArrayList.elementData, View.mContext, and destroyed Activity markers.",
+    "A later tools article should compare MAT OQL, Android Studio Profiler, and LeakCanary on the same HPROF for singleton leaks.",
+    "A later SDK article should analyze third-party SDK initialization patterns that retain Activity context.",
+    "A later DI article should explain singleton scope versus Activity, Fragment, ViewModel, and View scopes."
+  ],
+  "knowledge_gaps": [
+    "Need a real HPROF from a static singleton Activity leak to prove retained size, shortest path, and exact static field ownership.",
+    "Need target Android branch validation for Context.java, Activity.java, View.java, and LruCache.java source paths and method names.",
+    "Need a concrete LeakCanary trace showing System class or ClassLoader roots through static INSTANCE and listener/cache fields.",
+    "Need examples from common SDKs or DI containers where Activity context is accidentally stored in a singleton."
+  ],
+  "applied_reflections": [
+    "Applied Day 17's next-run instruction by explicitly contrasting queued Message owners with global static-field owners in the central comparison table.",
+    "Applied Day 17's Root-owner-bridge-victim carry-forward by mapping singleton, cache, listener, SDK, and DI leak patterns to Root, owner, bridge, and victim columns.",
+    "Applied Day 17's request for source paths and verification by adding app rg searches, AOSP Context/View/Activity/LruCache source paths, adb dumpheap, dumpsys meminfo, logcat, and MAT OQL evidence entries.",
+    "Applied the standing more-diagrams-less-prose feedback by using four Mermaid diagrams, compact comparison matrices, source/evidence tables, and short checklists instead of long prose."
+  ],
+  "visible_changes": [
+    "Added four Mermaid diagrams because of the more-diagrams-less-prose feedback: static/singleton runtime retained-path structure, troubleshooting decision flow, singleton lifecycle sequence, and cache admission decision flow.",
+    "Added Day 17 Handler-owner versus Day 18 global-owner comparison, Root-owner-bridge-victim, source-entry, applicationContext-boundary, high-risk-code, cache-policy, evidence, LeakCanary-trace, repair-strategy, and acceptance-checklist tables.",
+    "Added concrete rg, adb, logcat, dumpheap, dumpsys activity, MAT OQL, and AOSP source-search commands so prior requests for deeper evidence, clearer boundaries, source paths, and tooling commands are visibly applied."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 18 is marked complete and Day 19 remains pending.",
+    "Update progress.json so current_day becomes 19 and last_generated is refreshed.",
+    "Day 19 should visibly expand the listener registry branch from Day 18, including anonymous inner classes, lambda captures, this$0, observer APIs, adapter callbacks, and unregister verification.",
+    "Day 19 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}
