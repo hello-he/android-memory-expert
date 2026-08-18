@@ -1,0 +1,60 @@
+{
+  "day": 19,
+  "title": "Listener and inner-class leaks",
+  "key_conclusions": [
+    "Listener leaks are retained-path problems through registry, manager, adapter, observable, listener, callback, lambda, this$0, or captured fields rather than a generic inner-class problem.",
+    "Anonymous inner classes and Kotlin lambdas become dangerous when a longer-lived owner stores them after they have captured Activity, Fragment, View, binding, or Context objects.",
+    "The unregister boundary must match the owner and victim lifecycle: Activity onDestroy/onStop, Fragment onDestroyView, ViewHolder recycling, removeObserver, dispose, or Job cancellation.",
+    "A listener leak fix should be accepted only with before/after evidence from LeakCanary, HPROF Path To GC Roots, listener list counts, dumpsys meminfo trends, or source-path verification."
+  ],
+  "shallow_points": [
+    "The article still uses representative retained paths rather than a real target-app HPROF.",
+    "It does not decode a real LeakCanary listener, observeForever, or adapter callback trace line by line with concrete app class names.",
+    "It does not validate AndroidX LiveData, Fragment, RecyclerView, RxJava, or coroutine method names against specific dependency versions.",
+    "It does not include live instrumentation that prints registry/listener counts before and after lifecycle callbacks."
+  ],
+  "discovered_connections": [
+    "Day 18's static listener-list branch becomes the central Day 19 model: a long-lived owner list retaining a page-capturing callback.",
+    "Day 17's delayed callback model overlaps with listener leaks because Message.callback and registry listeners both retain captured page objects.",
+    "Day 16's Fragment View lifecycle boundary is the key acceptance rule when listener callbacks capture binding or old View trees.",
+    "Day 15's Root-owner-bridge-victim model maps directly to registry, listener/callback, captured field, and destroyed page objects.",
+    "Day 21 can reuse this listener/callback retained-path model when decoding real LeakCanary traces."
+  ],
+  "suggest_future_topics": [
+    "Day 20 should contrast listener leaks with resource leaks by separating Java retained references from OS/native handles that remain open.",
+    "Day 21 should decode a real LeakCanary trace that includes ArrayList.elementData, listener objects, this$0, LiveData AlwaysActiveObserver, and destroyed Activity markers.",
+    "A later tools article should compare MAT Path To GC Roots and Android Studio Profiler on the same listener leak HPROF.",
+    "A later Compose article should distinguish listener unregister from DisposableEffect, rememberUpdatedState, LaunchedEffect, and lifecycle-aware collection.",
+    "A later instrumentation article should show a debug-only registry counter for add/remove listener symmetry."
+  ],
+  "knowledge_gaps": [
+    "Need a real HPROF from a listener or observeForever leak to prove retained size, shortest path, and exact callback ownership.",
+    "Need target dependency validation for AndroidX LiveData observeForever/removeObserver, Fragment performDestroyView, RecyclerView observer/callback internals, RxJava Disposable, and coroutine Job cancellation APIs.",
+    "Need a concrete LeakCanary trace showing this$0 or Kotlin lambda captured receiver through a listener list.",
+    "Need a small sample app or instrumentation hook that exposes listener registry counts safely for before/after verification."
+  ],
+  "applied_reflections": [
+    "Applied Day 18's next-run instruction by expanding the static listener-list branch into listener registries, observer callbacks, anonymous inner classes, lambda captures, this$0, adapter callbacks, lifecycle unregister boundaries, and before/after verification.",
+    "Applied Day 18's Root-owner-bridge-victim carry-forward by mapping singleton registry, system callback, adapter callback, View listener, observeForever, Rx, and coroutine stream patterns to Root, owner, bridge, and victim columns.",
+    "Applied Day 18's request for deeper evidence and source paths by adding app rg searches, AOSP View and Activity source paths, AndroidX LiveData/Fragment/RecyclerView source entries, LeakCanary trace-reading cues, adb dumpheap, dumpsys meminfo, and logcat command blocks.",
+    "Applied the standing more-diagrams-less-prose feedback by using four Mermaid diagrams, compact comparison matrices, source/evidence tables, and short checklists instead of long prose."
+  ],
+  "visible_changes": [
+    "Added four Mermaid diagrams because of the more-diagrams-less-prose feedback: listener runtime retained-path structure, troubleshooting decision flow, registration/unregistration lifecycle sequence, and WeakReference decision flow.",
+    "Added Day 18 carry-forward table, Root-owner-bridge-victim mapping, capture-shape matrix, lifecycle-boundary table, source-entry table, high-risk API matrix, LeakCanary trace table, three-line verification table, repair-strategy matrix, WeakReference boundary table, and acceptance checklist.",
+    "Added concrete rg, adb, logcat, dumpheap, dumpsys activity, AOSP, and AndroidX source-search commands so prior requests for deeper evidence, clearer boundaries, source paths, and tooling commands are visibly applied."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 19 is marked complete and Day 20 remains pending.",
+    "Update progress.json so current_day becomes 20 and last_generated is refreshed.",
+    "Day 20 should visibly contrast listener/reference leaks with resource-not-closed leaks by separating Java object reachability from native/file/socket/cursor handle lifetime.",
+    "Day 20 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 20 should carry forward before/after verification but add close/finally/use/try-with-resources, StrictMode, CloseGuard, lsof/proc fd, and dumpsys evidence.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}

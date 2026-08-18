@@ -142,3 +142,20 @@ This file records how each run should improve on the previous one. It is not par
 - Reuse Root-owner-bridge-victim tables, source paths, troubleshooting flow, and evidence command blocks.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+---
+
+### Day 18 -> Day 19
+- Applied reflection: carried forward Day 18's static listener-list branch and expanded it into listener registries, observer callbacks, anonymous inner classes, Kotlin lambda captures, `this$0`, adapter callbacks, and lifecycle unregister boundaries.
+- Visible change: added four Mermaid diagrams, Day 18 carry-forward table, Root-owner-bridge-victim mapping, capture-shape matrix, lifecycle-boundary table, source/evidence command blocks, LeakCanary trace cues, and before/after verification tables because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs a real HPROF, real LeakCanary listener trace, target AndroidX dependency validation, and live listener-count instrumentation.
+
+---
+
+## Next Run: Day 20
+- Keep the visual-first format.
+- Focus on resource-not-closed leaks by contrasting Java retained listener/reference leaks with native/file/socket/cursor handle lifetime.
+- Carry forward Day 19's before/after verification, but add `close`, `finally`, Kotlin `use`, Java try-with-resources, StrictMode, CloseGuard, `/proc/<pid>/fd`, lsof-style evidence, CursorWindow, Stream, Socket, and file descriptor checks.
+- Reuse Root-owner-bridge-victim only where Java references are involved; explicitly separate reachability leaks from resource lifetime leaks.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.

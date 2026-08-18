@@ -30,7 +30,7 @@
 | Day 16 | Activity/Fragment 泄漏的常见模式 | ✅[2026-08-12](docs/week-03/day16-activity-fragment-leak.md) |
 | Day 17 | Handler 泄漏：消息队列与生命周期的冲突 | ✅[2026-08-16](docs/week-03/day17-handler-leak.md) |
 | Day 18 | 静态持有、单例泄漏的排查路径 | ✅[2026-08-17](docs/week-03/day18-static-singleton-leak.md) |
-| Day 19 | Listener 未注销与匿名内部类泄漏 | ⏳待生成 |
+| Day 19 | Listener 未注销与匿名内部类泄漏 | ✅[2026-08-19](docs/week-03/day19-listener-and-inner-class-leak.md) |
 | Day 20 | Cursor、Stream 等资源未关闭的泄漏场景 | ⏳待生成 |
 | Day 21 | LeakCanary 源码：如何检测泄漏引用链 | ⏳待生成 |
 | Day 22 | Android Studio Memory Profiler 核心操作 | ⏳待生成 |
