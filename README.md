@@ -1,10 +1,18 @@
 # Android 内存专家养成计划
 
-每天自动生成一篇深度技术文章，60 天系统覆盖 Android 内存核心知识体系。
+每天自动生成一篇深度技术文章，80 天系统覆盖 Android 内存核心知识体系。
 
 由 Codex 自动化任务驱动：无需手动操作（默认北京时间 08:00 自动更新）。
 
 有想法/反馈：欢迎在这里开一个 [Issue](../../issues/new)，后续文章会自然融入你的问题与场景。
+
+---
+
+## 专项目标
+
+这套计划新增一个低端机系统内存专项：围绕 **内存水位增长来源追查**、**内存水位过低导致卡顿** 与 **lmkd 查杀看似优先级更高的进程** 三类真实问题，建立从 `meminfo / vmstat / slab / dma-buf / memcg / watermark / kswapd / direct reclaim / PSI / lmkd / oom_score_adj / ZRAM / mmd` 到 Perfetto、logcat、`/proc`、statsd 的完整证据链。
+
+详细路线见：[低端机系统内存学习规划](docs/learning-plan-low-end-memory.md)。
 
 ---
 
@@ -32,46 +40,66 @@
 | Day 18 | 静态持有、单例泄漏的排查路径 | ✅[2026-08-17](docs/week-03/day18-static-singleton-leak.md) |
 | Day 19 | Listener 未注销与匿名内部类泄漏 | ✅[2026-08-19](docs/week-03/day19-listener-and-inner-class-leak.md) |
 | Day 20 | Cursor、Stream 等资源未关闭的泄漏场景 | ✅[2026-08-20](docs/week-03/day20-resource-not-closed-leak.md) |
-| Day 21 | LeakCanary 源码：如何检测泄漏引用链 | ⏳待生成 |
-| Day 22 | Android Studio Memory Profiler 核心操作 | ⏳待生成 |
-| Day 23 | Heap Dump 分析：hprof 文件结构 | ⏳待生成 |
-| Day 24 | MAT（Memory Analyzer Tool）入门与实战 | ⏳待生成 |
+| Day 21 | LeakCanary 源码与泄漏引用链检测 | ⏳待生成 |
+| Day 22 | Android Studio Memory Profiler 核心工作流 | ⏳待生成 |
+| Day 23 | Heap Dump 与 HPROF 文件结构 | ⏳待生成 |
+| Day 24 | MAT 入门与泄漏分析实战 | ⏳待生成 |
 | Day 25 | MAT Dominator Tree 与 Retained Heap 解读 | ⏳待生成 |
 | Day 26 | Allocation Tracker 与对象分配热点定位 | ⏳待生成 |
-| Day 27 | dumpsys meminfo 输出字段解读：PSS/RSS/VSS | ⏳待生成 |
-| Day 28 | adb shell procrank 与系统内存全局视图 | ⏳待生成 |
-| Day 29 | JNI 内存管理：Local Reference 与 Global Reference | ⏳待生成 |
-| Day 30 | NewByteArray / NewDirectByteBuffer 的内存归属 | ⏳待生成 |
-| Day 31 | Native Heap：malloc/free 与 jemalloc | ⏳待生成 |
-| Day 32 | AddressSanitizer（ASan）检测 Native 内存错误 | ⏳待生成 |
-| Day 33 | /proc/<pid>/maps 解读：内存映射全貌 | ⏳待生成 |
-| Day 34 | mmap 与匿名映射：ByteBuffer.allocateDirect() 的底层 | ⏳待生成 |
-| Day 35 | Native 内存泄漏的排查工具链 | ⏳待生成 |
-| Day 36 | Bitmap 内存模型：Android 8.0 前后的变化 | ⏳待生成 |
-| Day 37 | Bitmap 像素数据在 Native 堆的存储机制 | ⏳待生成 |
-| Day 38 | BitmapFactory.Options：inSampleSize、inBitmap 的内存影响 | ⏳待生成 |
-| Day 39 | Glide 内存缓存架构：LruCache + BitmapPool | ⏳待生成 |
-| Day 40 | 大图加载策略：BitmapRegionDecoder 分块解码 | ⏳待生成 |
-| Day 41 | 硬件加速与 Bitmap 的 GPU 内存占用 | ⏳待生成 |
-| Day 42 | 图片内存泄漏场景与 Weak Reference 的正确使用 | ⏳待生成 |
-| Day 43 | Android 进程内存限制：ActivityManager.getMemoryClass() | ⏳待生成 |
-| Day 44 | LMK（Low Memory Killer）机制与 adj 值 | ⏳待生成 |
-| Day 45 | onTrimMemory() 回调等级与响应策略 | ⏳待生成 |
-| Day 46 | onLowMemory() 与系统内存压力信号 | ⏳待生成 |
-| Day 47 | Zram 与内存压缩在 Android 上的应用 | ⏳待生成 |
-| Day 48 | 共享内存：Ashmem 与 MemoryFile | ⏳待生成 |
-| Day 49 | 进程间内存隔离：每个 App 的内存视图 | ⏳待生成 |
-| Day 50 | 内存优化全局方法论：观测 → 定位 → 验证 | ⏳待生成 |
-| Day 51 | 启动阶段内存控制：冷启动内存峰值分析 | ⏳待生成 |
-| Day 52 | RecyclerView 内存优化：ViewHolder 复用机制 | ⏳待生成 |
-| Day 53 | 多进程架构的内存收益与代价 | ⏳待生成 |
-| Day 54 | ProGuard/R8 对内存的影响 | ⏳待生成 |
-| Day 55 | 面试高频：GC 机制、内存泄漏、OOM 排查 | ⏳待生成 |
-| Day 56 | 面试高频：Bitmap 内存、LMK、Native 内存 | ⏳待生成 |
-| Day 57 | AOSP 源码阅读路径：内存相关核心模块索引 | ⏳待生成 |
-| Day 58 | 综合实战：一次完整的内存问题排查复盘 | ⏳待生成 |
-| Day 59 | Android 版本演进中的内存变化（5.0→15） | ⏳待生成 |
-| Day 60 | 总结：Android 内存专家的知识图谱 | ⏳待生成 |
+| Day 27 | dumpsys meminfo 输出字段解读：PSS/RSS/USS | ⏳待生成 |
+| Day 28 | procrank、showmap 与系统内存全局视图 | ⏳待生成 |
+| Day 29 | JNI Local/Global Reference 与跨边界泄漏 | ⏳待生成 |
+| Day 30 | NewByteArray、GetPrimitiveArrayCritical 与 DirectByteBuffer 内存归属 | ⏳待生成 |
+| Day 31 | Native Heap 分配器：jemalloc、Scudo 与 malloc 调试 | ⏳待生成 |
+| Day 32 | /proc/&lt;pid&gt;/maps、smaps 与 native 内存映射全貌 | ⏳待生成 |
+| Day 33 | mmap、ashmem、memfd 与 dma-buf 的内存账单 | ⏳待生成 |
+| Day 34 | Native 内存泄漏工具链：heapprofd、malloc_debug、Perfetto | ⏳待生成 |
+| Day 35 | Native Crash 与 tombstone：从 signal 到 backtrace | ⏳待生成 |
+| Day 36 | 内存越界、内存踩踏、UAF 与 double free 问题模型 | ⏳待生成 |
+| Day 37 | ASan 检测 Native 内存错误：构建、运行与报告解读 | ⏳待生成 |
+| Day 38 | HWASan 与 Android 整机内存错误定位 | ⏳待生成 |
+| Day 39 | GWP-ASan、Scudo 与 MTE：低开销检测和运行时防护 | ⏳待生成 |
+| Day 40 | KASAN 与 KFENCE：Kernel 内存越界和 UAF 定位 | ⏳待生成 |
+| Day 41 | Bitmap 内存模型：Android 8.0 前后的变化 | ⏳待生成 |
+| Day 42 | Bitmap 像素数据、Native Heap 与 Graphics 归因 | ⏳待生成 |
+| Day 43 | BitmapFactory.Options：inSampleSize、inBitmap 与解码峰值 | ⏳待生成 |
+| Day 44 | Glide 内存缓存架构：LruCache、BitmapPool 与生命周期 | ⏳待生成 |
+| Day 45 | 大图加载策略：Region Decode、Tile 与峰值控制 | ⏳待生成 |
+| Day 46 | 硬件加速、RenderThread、GPU 内存与 dma-buf | ⏳待生成 |
+| Day 47 | Android 进程内存限制：memoryClass、largeHeap 与进程上限 | ⏳待生成 |
+| Day 48 | Android 低内存全景：RAM、ZRAM、kswapd、PSI 与 LMKD | ⏳待生成 |
+| Day 49 | Linux Page Reclaim：file/anon 页、LRU 与 MGLRU | ⏳待生成 |
+| Day 50 | 内存水位机制：zone、min/low/high watermark 与保留页 | ⏳待生成 |
+| Day 51 | 低端机卡顿根因：kswapd、direct reclaim、compaction 与 UI 抖动 | ⏳待生成 |
+| Day 52 | PSI 内存压力：some/full、avg10/60/300 与 thrashing 判断 | ⏳待生成 |
+| Day 53 | 内存水位增长来源追查：meminfo、vmstat、slab、dma-buf、memcg | ⏳待生成 |
+| Day 54 | lmkd 架构：PSI/vmpressure、kill strategy 与关键属性 | ⏳待生成 |
+| Day 55 | ActivityManager OomAdjuster：进程状态到 oom_score_adj | ⏳待生成 |
+| Day 56 | 为什么 lmkd 会杀看似优先级更高的进程：证据链与误判拆解 | ⏳待生成 |
+| Day 57 | lmkd 日志、statsd 与 victim 分析：从 kill reason 到 adj/RSS | ⏳待生成 |
+| Day 58 | ZRAM 与 swap 路径：压缩、换入换出、mm_stat 与延迟代价 | ⏳待生成 |
+| Day 59 | mmd、ZRAM writeback/recompression 与厂商内存拓展 | ⏳待生成 |
+| Day 60 | App Compaction、CachedAppOptimizer、onTrimMemory 与缓存释放 | ⏳待生成 |
+| Day 61 | 低内存复现实验室：stress、trace、logcat 与可重复场景 | ⏳待生成 |
+| Day 62 | 水位与 lmkd 调参：min_free_kbytes、watermark_scale_factor、lmkd 属性与风险 | ⏳待生成 |
+| Day 63 | 关键进程保护：adj 设计、绑定关系、前台服务与滥用边界 | ⏳待生成 |
+| Day 64 | 案例复盘：低端机内存水位过低导致卡顿 | ⏳待生成 |
+| Day 65 | 案例复盘：lmkd 查杀高优先级进程的根因定位 | ⏳待生成 |
+| Day 66 | 共享内存与 IPC 内存账单：ashmem、memfd、Binder、dma-buf | ⏳待生成 |
+| Day 67 | memcg 与 cgroup：每个 App 的内存隔离和系统视图 | ⏳待生成 |
+| Day 68 | Native/System 内存归因：smaps、showmap、heapprofd、memcg 交叉验证 | ⏳待生成 |
+| Day 69 | 启动阶段内存控制：冷启动峰值、预加载与缓存时机 | ⏳待生成 |
+| Day 70 | RecyclerView 内存优化：ViewHolder、Prefetch、Pool 与图片峰值 | ⏳待生成 |
+| Day 71 | 多进程架构的内存收益、账单代价与 lmkd 风险 | ⏳待生成 |
+| Day 72 | ProGuard/R8 对 dex、类加载、JIT 与运行时内存的影响 | ⏳待生成 |
+| Day 73 | 内存优化全局方法论：观测、归因、干预、验证 | ⏳待生成 |
+| Day 74 | AOSP 内存源码阅读路径：ART、AMS、lmkd、kernel、mmd | ⏳待生成 |
+| Day 75 | Android 版本演进中的内存变化：5.0 到 17 | ⏳待生成 |
+| Day 76 | 面试高频：GC、泄漏、OOM 与 Native 内存 | ⏳待生成 |
+| Day 77 | 面试高频：Bitmap、LMKD、PSI、水位与 ZRAM | ⏳待生成 |
+| Day 78 | 综合实战：一次低端机卡顿和误杀进程的完整排查 | ⏳待生成 |
+| Day 79 | Android 内存评审清单：上线前、灰度中、事故后 | ⏳待生成 |
+| Day 80 | 总结：Android 内存专家知识图谱 | ⏳待生成 |
 
 ---
 

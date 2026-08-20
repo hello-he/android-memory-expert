@@ -126,6 +126,7 @@ def generate_document_and_reflection(
     day_info: dict,
     knowledge_context: str,
     feedback: list[dict],
+    total_days: int,
 ) -> tuple[str, dict]:
     """Generate document + structured reflection in a single API call."""
     client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
@@ -140,7 +141,7 @@ def generate_document_and_reflection(
     prompt = f"""为《Android 内存专家养成计划》系列写第 {day_info['day']} 篇文章。
 
 主题：{day_info['title']}
-这是第 {day_info['week']} 周内容，系列第 {day_info['day']}/60 篇。
+这是第 {day_info['week']} 周内容，系列第 {day_info['day']}/{total_days} 篇。
 
 {knowledge_context}
 
@@ -270,7 +271,7 @@ def main():
     current_day = progress["current_day"]
 
     if current_day > progress["total_days"]:
-        print("60 天课程已全部完成！")
+        print(f"{progress['total_days']} 天课程已全部完成！")
         sys.exit(0)
 
     curriculum = progress["curriculum"]
@@ -299,7 +300,7 @@ def main():
 
     # Generate document + reflection
     content, reflection_data = generate_document_and_reflection(
-        day_info, knowledge_context, feedback
+        day_info, knowledge_context, feedback, progress["total_days"]
     )
 
     # Save outputs
@@ -330,7 +331,7 @@ def main():
         next_topic = next((d["title"] for d in curriculum if d["day"] == next_day), "")
         print(f"完成。明天将生成：Day {next_day}《{next_topic}》")
     else:
-        print("60 天全部完成！")
+        print(f"{progress['total_days']} 天全部完成！")
 
 
 if __name__ == "__main__":
