@@ -1,0 +1,60 @@
+{
+  "day": 20,
+  "title": "Resource not closed leaks",
+  "key_conclusions": [
+    "Resource-not-closed leaks must separate Java reachability from OS and native handle lifetime; a small Java wrapper can still own a file descriptor, CursorWindow, socket, mmap, or native buffer.",
+    "The primary engineering boundary is explicit close or release ownership, not waiting for GC, finalizers, or CloseGuard.",
+    "Cursor, Stream, ParcelFileDescriptor, Socket, OkHttp Response, ZipFile, AssetFileDescriptor, MediaCodec, and decoder resources should be verified with fd, meminfo, logcat, and source-path evidence.",
+    "A fix should be accepted only after before/after evidence shows fd counts, fd types, CursorWindow/native memory, StrictMode warnings, or retained wrappers are stable or gone."
+  ],
+  "shallow_points": [
+    "The article still uses representative fd and CursorWindow workflows rather than a real target-device trace.",
+    "It does not decode a real StrictMode or CloseGuard stack trace line by line with concrete app classes.",
+    "It does not validate exact CursorWindow, SQLiteClosable, StrictMode, CloseGuard, FileInputStream, and Socket source paths against a specific Android branch checkout.",
+    "It does not include a runnable sample app that intentionally leaks Cursor, Stream, Socket, and OkHttp Response resources for before/after measurement."
+  ],
+  "discovered_connections": [
+    "Day 19's before/after verification model applies directly, but the measured object changes from listener list size to fd count, fd target, CursorWindow, and native/rss metrics.",
+    "Day 15's Root-owner-bridge-victim model still matters only when the Java resource wrapper is retained; otherwise the central problem is missing close/release ownership.",
+    "Day 27 dumpsys meminfo can deepen the SQL, native heap, object count, and fd evidence introduced here.",
+    "Day 29 and Day 35 can reuse the explicit resource ownership model for JNI local/global references and native memory leak tools.",
+    "Bitmap and mmap topics later in the plan should reuse the distinction between Java wrapper lifetime and native allocation lifetime."
+  ],
+  "suggest_future_topics": [
+    "Day 21 should decode real LeakCanary traces and explicitly call out when LeakCanary can and cannot prove resource lifetime leaks.",
+    "Day 22 should connect Android Studio Memory Profiler with fd and meminfo evidence so users do not rely only on Java heap charts.",
+    "Day 27 should expand dumpsys meminfo SQL, Objects, Native Heap, and fd-related interpretation with sample outputs.",
+    "A later native-tools article should show lsof/proc fd snapshots, heapprofd, malloc debug, and Perfetto on the same resource leak.",
+    "A later sample-app article should create reproducible Cursor, Stream, Socket, and ResponseBody leaks with automated before/after checks."
+  ],
+  "knowledge_gaps": [
+    "Need real device output for /proc/<pid>/fd before and after Cursor, file, socket, and OkHttp Response leaks.",
+    "Need concrete StrictMode and CloseGuard stack traces from a debug build to show exact warning shape.",
+    "Need target Android branch validation for CursorWindow, SQLiteClosable, StrictMode, CloseGuard, libcore IO, and socket close paths.",
+    "Need a comparison of Android version and OEM ROM differences in fd naming, CursorWindow accounting, and dumpsys meminfo fields."
+  ],
+  "applied_reflections": [
+    "Applied Day 19's next-run instruction by contrasting listener/reference leaks with resource-not-closed leaks and explicitly separating Java retained references from OS/native handle lifetime.",
+    "Applied Day 19's before/after verification request by adding fd count, readlink fd classification, dumpsys meminfo, StrictMode, CloseGuard, CursorWindow, logcat, and heap wrapper verification tables and command blocks.",
+    "Applied Day 19's source/tooling request by adding AOSP and libcore source paths for CursorWindow, SQLiteClosable, StrictMode, CloseGuard, FileInputStream, Socket, plus app rg commands for open and close symmetry.",
+    "Applied the standing more-diagrams-less-prose feedback by using four Mermaid diagrams, compact matrices, command blocks, and short checklists instead of long prose."
+  ],
+  "visible_changes": [
+    "Added four Mermaid diagrams because of the more-diagrams-less-prose feedback: Java reachability versus resource lifetime structure, resource leak troubleshooting decision flow, close-dominates-all-paths sequence, and heap-versus-fd triage flow.",
+    "Added Day 19 carry-forward table, must-close resource matrix, CursorWindow layer table, four-line evidence table, StrictMode/CloseGuard boundary tables, source-entry table, repair-strategy matrix, tool-selection table, and acceptance checklist.",
+    "Added concrete adb /proc fd, readlink, dumpsys meminfo, logcat, StrictMode, AOSP rg, libcore rg, and app source-search commands so prior requests for deeper evidence, clearer boundaries, source paths, and tooling commands are visibly applied."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 20 is marked complete and Day 21 remains pending.",
+    "Update progress.json so current_day becomes 21 and last_generated is refreshed.",
+    "Day 21 should focus on LeakCanary source code and carry forward Day 20's boundary: LeakCanary proves Java retained paths, while fd/native resource lifetime still needs fd, meminfo, StrictMode, or native evidence.",
+    "Day 21 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 21 should decode LeakCanary retained paths for Activity/Fragment/listener/resource-wrapper cases, with source paths for ObjectWatcher, KeyedWeakReference, HeapAnalyzer, Shark, retained object reporting, and Android lifecycle watchers.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}

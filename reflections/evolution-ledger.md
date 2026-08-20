@@ -159,3 +159,20 @@ This file records how each run should improve on the previous one. It is not par
 - Reuse Root-owner-bridge-victim only where Java references are involved; explicitly separate reachability leaks from resource lifetime leaks.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+---
+
+### Day 19 -> Day 20
+- Applied reflection: carried forward Day 19's before/after verification model while explicitly separating Java retained references from OS/native handle lifetime for Cursor, Stream, Socket, file descriptor, CursorWindow, and native resource leaks.
+- Visible change: added four Mermaid diagrams, Day 19 carry-forward table, fd/CursorWindow/StrictMode/CloseGuard evidence tables, must-close resource matrix, source path table, adb `/proc/<pid>/fd` and `dumpsys meminfo` command blocks, and repair/acceptance matrices because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real device fd snapshots, real StrictMode/CloseGuard traces, target AOSP branch validation, and a runnable sample app with reproducible resource leaks.
+
+---
+
+## Next Run: Day 21
+- Keep the visual-first format.
+- Focus on LeakCanary source code and carry forward Day 20's boundary: LeakCanary proves Java retained paths, while fd/native resource lifetime still needs fd, meminfo, StrictMode, or native evidence.
+- Decode retained paths for Activity/Fragment/listener/resource-wrapper cases, and show what LeakCanary can and cannot prove.
+- Include source paths for ObjectWatcher, KeyedWeakReference, HeapAnalyzer, Shark, retained object reporting, and Android lifecycle watchers.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
