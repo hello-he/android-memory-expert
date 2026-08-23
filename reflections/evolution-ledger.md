@@ -176,3 +176,21 @@ This file records how each run should improve on the previous one. It is not par
 - Include source paths for ObjectWatcher, KeyedWeakReference, HeapAnalyzer, Shark, retained object reporting, and Android lifecycle watchers.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+---
+
+### Day 20 -> Day 21
+- Applied reflection: carried forward Day 20's Java reachability versus fd/native resource-lifetime boundary and made it the central LeakCanary limitation: LeakCanary proves retained Java paths, while resource lifetime still needs fd, meminfo, StrictMode, CloseGuard, or native evidence.
+- Visible change: added four Mermaid diagrams, LeakCanary/Shark/source-entry tables, Root-Owner-Bridge-Victim trace decoding, Activity/Fragment trace matrices, and combined LeakCanary-plus-resource acceptance flow because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs a real HPROF, real LeakCanary reports with concrete app classes, dependency-version validation, and same-HPROF comparison with MAT and Android Studio Profiler.
+
+---
+
+## Next Run: Day 22
+- Keep the visual-first format.
+- Focus on Android Studio Memory Profiler core workflow.
+- Compare profiler heap/allocation/class-instance views with Day 21 LeakCanary retained-path reports.
+- Carry forward Day 21's boundary: Java heap charts do not prove fd/native resource release without fd, meminfo, StrictMode, or native evidence.
+- Include source/tooling commands and at least two Mermaid diagrams: one profiler evidence workflow and one troubleshooting decision flow.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.

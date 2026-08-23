@@ -1,0 +1,60 @@
+{
+  "day": 21,
+  "title": "LeakCanary 源码与泄漏引用链检测",
+  "key_conclusions": [
+    "LeakCanary's core path is watch weak reference, wait for GC, dump HPROF, then let Shark compute the shortest strong path from GC Roots to the retained object.",
+    "LeakCanary proves Java reachability and ownership paths; it does not by itself prove file descriptor, CursorWindow, socket, or native buffer release.",
+    "Leak traces should be decoded as Root, Owner, Bridge, and Victim before choosing a fix.",
+    "Resource-wrapper fixes require combined acceptance evidence: LeakCanary retained object gone plus fd, meminfo, StrictMode, or CloseGuard stability."
+  ],
+  "shallow_points": [
+    "The article still uses representative LeakCanary traces rather than a real project HPROF decoded line by line.",
+    "It does not validate exact LeakCanary, Shark, and AndroidX watcher class names against a specific dependency version in a checked-out source tree.",
+    "It does not include a runnable sample that leaks Activity, Fragment view, listener, Handler, and resource-wrapper paths for before/after LeakCanary reports.",
+    "It does not compare LeakCanary's shortest path with MAT Path To GC Roots on the same HPROF."
+  ],
+  "discovered_connections": [
+    "Day 20's Java reachability versus fd/native resource-lifetime boundary is the central limit of LeakCanary evidence.",
+    "Day 15's Root-owner-bridge-victim model is the most compact way to read LeakCanary leak traces.",
+    "Day 16, Day 17, Day 18, and Day 19 leak patterns map naturally to LeakCanary report segments: Activity/Fragment victims, MessageQueue owners, singleton owners, and listener/callback bridges.",
+    "Day 22 should connect Android Studio Memory Profiler with LeakCanary and fd/meminfo evidence so users do not over-trust one Java heap tool.",
+    "Day 23 and Day 24 can deepen this article by opening the same HPROF in raw HPROF, Android Studio, MAT, and Shark."
+  ],
+  "suggest_future_topics": [
+    "Day 22 should compare LeakCanary reports with Android Studio Memory Profiler heap, allocation, and class-instance views.",
+    "Day 23 should use a real or sample HPROF to explain records, class instances, references, GC roots, and retained objects.",
+    "Day 24 should compare MAT Path To GC Roots and dominator concepts against LeakCanary's shortest strong path.",
+    "A later sample-app article should generate reproducible Activity, Fragment view, listener, Handler, Cursor, and Stream leak traces.",
+    "A later tooling article should show how to validate LeakCanary and Shark source behavior against the project's exact dependency version."
+  ],
+  "knowledge_gaps": [
+    "Need a real LeakCanary report with concrete app classes and retained sizes for Activity, Fragment view, listener, and resource-wrapper cases.",
+    "Need dependency-version validation for ObjectWatcher, KeyedWeakReference, HeapDumpTrigger, HeapAnalyzer, ShortestPathFinder, ActivityWatcher, and FragmentAndViewModelWatcher.",
+    "Need a same-HPROF comparison between Shark, MAT Path To GC Roots, Android Studio Profiler, and raw HPROF inspection.",
+    "Need device output combining LeakCanary retained-object disappearance with /proc/<pid>/fd and dumpsys meminfo stabilization for resource-wrapper fixes."
+  ],
+  "applied_reflections": [
+    "Applied Day 20's next-run instruction by making LeakCanary's boundary explicit: it proves Java retained paths, while fd/native resource lifetime still needs fd, meminfo, StrictMode, CloseGuard, or native evidence.",
+    "Applied Day 20's request for source paths by adding LeakCanary, Shark, Android lifecycle watcher, and app-side source-search tables and rg command blocks.",
+    "Applied Day 20's before/after verification model by adding combined acceptance flow for LeakCanary retained-object checks plus fd count, meminfo, StrictMode, and CloseGuard evidence.",
+    "Applied the standing more-diagrams-less-prose feedback by using four Mermaid diagrams, compact trace-decoding tables, source/evidence matrices, and short checklists instead of long prose."
+  ],
+  "visible_changes": [
+    "Added four Mermaid diagrams because of the more-diagrams-less-prose feedback: LeakCanary runtime structure, troubleshooting decision flow, destroyed Activity report sequence, and Java-path/resource-path acceptance flow.",
+    "Added Day 20 carry-forward table, source-entry table, trace segment table, Activity trace decoding table, Fragment view trace decoding table, LeakCanary evidence-boundary matrix, report-reading checklist, and common-misread matrix.",
+    "Added concrete rg, adb, logcat, dumpsys meminfo, /proc fd, LeakCanary, Shark, and app-source command blocks so prior requests for deeper evidence, clearer boundaries, source paths, tooling commands, and stronger engineering case were visibly applied."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 21 is marked complete and Day 22 remains pending.",
+    "Update progress.json so current_day becomes 22 and last_generated is refreshed.",
+    "Day 22 should focus on Android Studio Memory Profiler core workflow and compare profiler heap/allocation/class-instance views with Day 21 LeakCanary retained-path reports.",
+    "Day 22 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 22 should carry forward Day 21's boundary by combining profiler evidence with fd, meminfo, StrictMode, and LeakCanary rather than relying only on Java heap charts.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}
