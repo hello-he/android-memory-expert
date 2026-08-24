@@ -194,3 +194,16 @@ This file records how each run should improve on the previous one. It is not par
 - Include source/tooling commands and at least two Mermaid diagrams: one profiler evidence workflow and one troubleshooting decision flow.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 21 -> Day 22
+- Applied reflection: carried forward Day 21's comparison gap and boundary by placing Android Studio Memory Profiler beside LeakCanary/MAT/fd/meminfo evidence instead of treating heap charts as complete proof.
+- Visible change: added four Mermaid diagrams, a Profiler/LeakCanary/MAT division-of-labor matrix, timeline-shape interpretation table, source/tooling commands, and resource-lifetime acceptance gates because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real Android Studio profiler captures, a same-HPROF comparison across Android Studio/Shark/MAT, and Android Studio version-specific UI validation.
+
+## Next Run: Day 23
+- Keep the visual-first format.
+- Focus on Heap Dump and HPROF file structure.
+- Carry forward Day 22's same-HPROF comparison gap by explaining records, classes, instances, references, GC roots, retained objects, and what Android Studio/LeakCanary/MAT each extract from the file.
+- Include source/tooling commands and at least two Mermaid diagrams: one HPROF structure/parse path and one troubleshooting decision flow.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.

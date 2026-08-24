@@ -1,0 +1,60 @@
+{
+  "day": 22,
+  "title": "Android Studio Memory Profiler 核心工作流",
+  "key_conclusions": [
+    "Android Studio Memory Profiler should be used as an evidence entry point: timeline first, then heap dump, allocation recording, class-instance inspection, and before/after replay.",
+    "Profiler heap and allocation views complement LeakCanary; Profiler finds when and what grows, while LeakCanary or MAT is needed to prove retained ownership paths.",
+    "Java heap charts do not prove fd, CursorWindow, socket, graphics, or native resource release, so resource cases still require /proc/<pid>/fd, dumpsys meminfo, StrictMode, CloseGuard, heapprofd, or similar external evidence.",
+    "A fix is acceptable only when the same scenario shows stable post-GC baseline, suspect instance counts, allocation hotspots, and all relevant resource metrics."
+  ],
+  "shallow_points": [
+    "The article still uses representative profiler workflows rather than screenshots or exports from a real Android Studio profiling session.",
+    "It does not open the same HPROF in Android Studio, LeakCanary/Shark, and MAT for side-by-side retained-path comparison.",
+    "It does not validate exact Android Studio UI labels against one pinned Android Studio version.",
+    "It does not include a runnable sample app with repeatable Activity, Fragment view, allocation churn, fd, and native leak scenarios."
+  ],
+  "discovered_connections": [
+    "Day 21's LeakCanary boundary becomes the central Profiler boundary: Profiler can reveal Java object and allocation symptoms, but retained ownership and resource lifetime need separate evidence.",
+    "Day 20's resource-not-closed evidence chain remains necessary when Profiler shows only a small Java wrapper while fd or native memory keeps growing.",
+    "Day 23 should deepen this by walking through HPROF records, classes, instances, references, roots, and retained objects from the same heap dump.",
+    "Day 24 should compare Android Studio heap views with MAT dominator tree and Path To GC Roots on the same dump.",
+    "Day 26 should reuse the allocation-recording workflow and expand it into object churn and call-site hotspot analysis."
+  ],
+  "suggest_future_topics": [
+    "Day 23 should use a concrete HPROF-style walkthrough to explain file structure, records, class instances, references, GC roots, and retained objects.",
+    "Day 24 should compare MAT Path To GC Roots and dominator tree with Android Studio Profiler and LeakCanary on the same HPROF.",
+    "Day 26 should expand allocation recording with call stack interpretation, object churn, cold-start spikes, scrolling spikes, and before/after allocation budgets.",
+    "Day 27 should connect Profiler's high-level categories with dumpsys meminfo PSS/RSS/USS and Java/Native/Graphics accounting.",
+    "A later sample-app article should generate reproducible profiler sessions and store before/after artifacts."
+  ],
+  "knowledge_gaps": [
+    "Need real profiler capture artifacts from a target app for timeline, heap dump, allocation recording, and class-instance deltas.",
+    "Need a same-HPROF comparison among Android Studio Profiler, Shark, MAT Path To GC Roots, and raw HPROF inspection.",
+    "Need Android Studio version-specific validation for Memory Profiler UI field names, heap dump columns, and allocation recording behavior.",
+    "Need real device resource evidence combining Profiler, /proc/<pid>/fd, dumpsys meminfo, StrictMode, CloseGuard, and heapprofd for resource-wrapper cases."
+  ],
+  "applied_reflections": [
+    "Applied Day 21's next-run instruction by directly comparing Android Studio Profiler heap, allocation, and class-instance views with LeakCanary retained-path reports.",
+    "Applied Day 21's boundary by repeatedly separating Java heap and allocation evidence from fd/native resource lifetime, with explicit fd, meminfo, StrictMode, CloseGuard, and heapprofd follow-up checks.",
+    "Applied Day 21's same-HPROF comparison gap by adding a Profiler/LeakCanary/MAT/external-tool division-of-labor matrix and assigning Day 23/24 to deepen the same-dump workflow.",
+    "Applied the standing more-diagrams-less-prose feedback by using four Mermaid diagrams, compact matrices, command blocks, and short checklists instead of long prose."
+  ],
+  "visible_changes": [
+    "Added four Mermaid diagrams because of the more-diagrams-less-prose feedback: Memory Profiler evidence chain, troubleshooting decision flow, page-enter/exit profiling sequence, and before/after acceptance matrix.",
+    "Added Profiler-view responsibility table, Day 21 carry-forward table, four-step workflow table, timeline-shape interpretation table, Profiler/LeakCanary/MAT division-of-labor matrix, source/tooling entry table, repair acceptance matrix, and common-misread matrix.",
+    "Added concrete adb dumpheap, dumpsys meminfo, /proc fd, logcat, app rg, AOSP rg, and native/resource attribution commands so prior requests for deeper evidence, clearer boundaries, source paths, tooling commands, and stronger engineering case were visibly applied."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 22 is marked complete and Day 23 remains pending.",
+    "Update progress.json so current_day becomes 23 and last_generated is refreshed.",
+    "Day 23 should focus on Heap Dump and HPROF file structure using the Day 22 workflow as the entry point.",
+    "Day 23 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 23 should carry forward the same-HPROF comparison gap by explaining records, classes, instances, references, GC roots, retained objects, and what Android Studio/LeakCanary/MAT each extract from the file.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}
