@@ -1,0 +1,60 @@
+{
+  "day": 25,
+  "title": "MAT Dominator Tree 与 Retained Heap 解读",
+  "key_conclusions": [
+    "A dominator is an object that every path from GC roots to another object must pass through; the immediate dominator is the closest mandatory owner.",
+    "Retained heap is the theoretical reclaimable impact if an object becomes unreachable, while shallow heap is only the object's own size.",
+    "Dominator Tree ranks impact, and Path To GC Roots proves ownership; reliable leak decisions require both views plus lifecycle semantics.",
+    "Large retained heap can be a real leak, a bounded cache, a bitmap pool, a session owner, a thread queue, or a classloader boundary, so cache policy and external metrics must be checked."
+  ],
+  "shallow_points": [
+    "The article still explains retained heap with representative object graphs rather than exporting a real MAT dominator tree.",
+    "It does not validate MAT retained-size calculations or weak-reference handling against a specific MAT version.",
+    "It does not include real before/suspect/after HPROF retained tree screenshots or CSV exports.",
+    "It does not quantify a concrete cache hit-rate, trim-memory response, or bitmap/native graphics correlation from a device."
+  ],
+  "discovered_connections": [
+    "Day 24's distinction between ownership path and retained impact is the central decision boundary for Dominator Tree use.",
+    "Day 23's HPROF object graph explains why a dominator tree is not the same as the original Java field tree.",
+    "Day 22's Profiler timeline still supplies the scenario and post-GC baseline before a retained-impact analysis starts.",
+    "Day 26 should contrast allocation churn with retained heap so frequent allocation is not confused with dominated retained memory.",
+    "Day 27 should connect retained Java object evidence with dumpsys meminfo categories and PSS/RSS/USS accounting."
+  ],
+  "suggest_future_topics": [
+    "Day 26 should focus on Allocation Tracker and object allocation hotspots, explicitly separating allocation churn from retained heap.",
+    "Day 27 should connect Java Heap, Native Heap, Graphics, SQL, Objects, and PSS/RSS/USS fields with heap dump findings.",
+    "A later bitmap article should connect retained Bitmap wrappers with Graphics/native/dma-buf metrics.",
+    "A later sample-app article should provide before/suspect/after HPROF files and exported MAT dominator reports.",
+    "A later methodology article should define review thresholds for retained heap, cache size, and trim-memory response."
+  ],
+  "knowledge_gaps": [
+    "Need a real MAT retained tree export and Path To GC Roots comparison on the same object ids.",
+    "Need MAT version-specific validation for retained heap, immediate dominator, weak-reference exclusions, and report/export behavior.",
+    "Need concrete cache policy examples with memoryClass, onTrimMemory, hit-rate, retained heap, and after-trim evidence.",
+    "Need Java retained wrapper versus native/Graphics memory correlation for bitmap and resource-heavy objects."
+  ],
+  "applied_reflections": [
+    "Applied Day 24's next-run instruction by focusing on MAT Dominator Tree and Retained Heap while carrying forward the distinction between ownership paths and retained impact.",
+    "Applied Day 24's request to explain shallow heap, retained heap, immediate dominator, dominance frontier, cache-versus-leak boundaries, and before/after retained-impact validation.",
+    "Applied Day 24's boundary around MAT and resource evidence by explicitly pairing retained heap with meminfo, fd, trim-memory, Graphics/native, and scenario replay checks.",
+    "Applied the standing more-diagrams-less-prose feedback by using four Mermaid diagrams, compact definition/cache/OQL/acceptance matrices, command blocks, and short checklists instead of long prose."
+  ],
+  "visible_changes": [
+    "Added four Mermaid diagrams because of the more-diagrams-less-prose feedback: object graph to Dominator interpretation, troubleshooting decision flow, Dominator-plus-Path sequence, and retained-impact acceptance matrix.",
+    "Added Day 24 carry-forward table, dominator concept table, shallow-versus-retained matrix, root/path versus retained-impact combination table, cache boundary matrix, OQL helper table, and common-misread matrix.",
+    "Added concrete app rg, trim-memory, dumpheap, dumpsys meminfo, and retained-impact verification commands so prior requests for deeper evidence, clearer boundaries, source paths, tooling commands, and stronger engineering case were visibly applied."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 25 is marked complete and Day 26 remains pending.",
+    "Update progress.json so current_day becomes 26 and last_generated is refreshed.",
+    "Day 26 should focus on Allocation Tracker and object allocation hotspots, carrying forward Day 25's boundary between allocation churn, retained heap, and leak ownership.",
+    "Day 26 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 26 should explain allocation recording, call stacks, object churn, cold-start/page-scroll spikes, before/after allocation budgets, and how to pair Allocation Tracker with HPROF/MAT/Profiler evidence.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}

@@ -233,3 +233,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain shallow heap, retained heap, immediate dominator, large owner/caches, Path To GC Roots cross-checking, and before/after retained-impact validation.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 24 -> Day 25
+- Applied reflection: carried forward Day 24's distinction between ownership path and retained impact, making Dominator Tree a prioritization tool rather than a standalone leak verdict.
+- Visible change: added four Mermaid diagrams, shallow/retained heap tables, immediate-dominator and dominance-frontier explanations, cache-versus-leak matrices, OQL helper checks, and retained-impact acceptance gates because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs a real MAT retained tree export, same-object Path To GC Roots comparison, and concrete cache trim-memory evidence.
+
+## Next Run: Day 26
+- Keep the visual-first format.
+- Focus on Allocation Tracker and object allocation hotspots.
+- Carry forward Day 25's boundary: allocation churn, retained heap, and leak ownership are different questions and need different evidence.
+- Explain allocation recording, call stacks, object churn, cold-start/page-scroll spikes, before/after allocation budgets, and pairing Allocation Tracker with HPROF/MAT/Profiler evidence.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
