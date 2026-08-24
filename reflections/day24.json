@@ -1,0 +1,60 @@
+{
+  "day": 24,
+  "title": "MAT 入门与泄漏分析实战",
+  "key_conclusions": [
+    "MAT should be used as a repeatable workflow: Histogram, suspect class, Path To GC Roots, retained impact, OQL or report evidence, and before/after validation.",
+    "Path To GC Roots proves ownership paths, while Dominator Tree and retained heap describe impact; neither replaces the other.",
+    "Leak Suspects Report is a triage entry point, not a final judgment, and every candidate must be checked against lifecycle semantics.",
+    "MAT reads Java heap evidence only, so fd, native heap, Graphics, CursorWindow, and dma-buf cases still require external metrics."
+  ],
+  "shallow_points": [
+    "The article still uses representative MAT workflow rather than screenshots, exported reports, and index files from a real HPROF.",
+    "It does not compare actual Android Studio, Shark, and MAT outputs on the same dump.",
+    "It introduces Dominator Tree but leaves immediate dominator, retained heap calculation, and cache-versus-leak interpretation for Day 25.",
+    "It does not include an automated MAT/OQL script or CI pipeline for before/after heap comparisons."
+  ],
+  "discovered_connections": [
+    "Day 23's HPROF object graph maps directly to MAT Histogram, Path To GC Roots, Dominator Tree, and OQL.",
+    "Day 21's Root-Owner-Bridge-Victim model is the safest way to read MAT paths without blaming the victim object.",
+    "Day 22's Profiler workflow remains the scenario entry point before MAT deep analysis.",
+    "Day 25 should deepen retained heap and dominator interpretation so large caches are separated from lifecycle leaks.",
+    "Day 26 should contrast allocation hotspots and churn against MAT's retained-object evidence."
+  ],
+  "suggest_future_topics": [
+    "Day 25 should explain MAT Dominator Tree, immediate dominator, retained heap, shallow heap, cache policy, and large-owner prioritization.",
+    "Day 26 should show when allocation tracking is the right tool because MAT proves only retained objects after a dump.",
+    "Day 27 should connect MAT Java heap findings with dumpsys meminfo Java Heap, Native Heap, Graphics, SQL, and PSS/RSS/USS fields.",
+    "A later sample-app article should create before/suspect/after HPROF artifacts and export MAT reports for common leak types.",
+    "A later automation article should evaluate OQL or scripted heap diff options for regression checks."
+  ],
+  "knowledge_gaps": [
+    "Need a real MAT report package from a target-app HPROF with Histogram, Path To GC Roots, OQL results, and Leak Suspects export.",
+    "Need same-dump comparison among Android Studio, LeakCanary/Shark, and MAT on concrete object ids and paths.",
+    "Need MAT version-specific validation for report names, OQL behavior, and weak-reference exclusion options.",
+    "Need a reproducible before/after workflow that stores dump metadata, scenario steps, and expected class-count deltas."
+  ],
+  "applied_reflections": [
+    "Applied Day 23's next-run instruction by focusing on MAT intro and practical leak analysis using HPROF object graph, root path, and same-dump comparison foundations.",
+    "Applied Day 23's request for histogram, Path To GC Roots, leak suspects, OQL, and report export by turning them into a seven-step MAT workflow and evidence checklist.",
+    "Applied Day 23's boundary around Java heap versus resource/native evidence by explicitly pairing MAT with Android Studio, LeakCanary/Shark, fd, meminfo, StrictMode, CloseGuard, and native tooling where needed.",
+    "Applied the standing more-diagrams-less-prose feedback by using four Mermaid diagrams, compact workflow/tooling/OQL matrices, command blocks, and short checklists instead of long prose."
+  ],
+  "visible_changes": [
+    "Added four Mermaid diagrams because of the more-diagrams-less-prose feedback: MAT workbench structure, troubleshooting decision flow, Histogram-to-fix sequence, and report/acceptance flow.",
+    "Added Day 23 carry-forward table, MAT view responsibility matrix, seven-step practical workflow, Path To GC Roots option table, OQL starter table, same-HPROF tool division matrix, acceptance checklist, and common-misread matrix.",
+    "Added concrete adb dumpheap, hprof-conv, dumpsys meminfo, /proc fd, logcat, MAT OQL, and evidence export guidance so prior requests for deeper evidence, clearer boundaries, source paths, tooling commands, and stronger engineering case were visibly applied."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 24 is marked complete and Day 25 remains pending.",
+    "Update progress.json so current_day becomes 25 and last_generated is refreshed.",
+    "Day 25 should focus on MAT Dominator Tree and Retained Heap, carrying forward Day 24's distinction between root path ownership and retained impact.",
+    "Day 25 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 25 should explain shallow heap, retained heap, immediate dominator, dominance frontier, cache-versus-leak boundaries, and before/after retained-impact validation.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}

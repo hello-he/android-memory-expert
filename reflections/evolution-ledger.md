@@ -220,3 +220,16 @@ This file records how each run should improve on the previous one. It is not par
 - Include histogram, Path To GC Roots, leak suspects, OQL, report export, and clear boundaries against Android Studio, LeakCanary/Shark, fd/native evidence.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 23 -> Day 24
+- Applied reflection: carried forward Day 23's HPROF object graph foundation into a MAT workflow using Histogram, Path To GC Roots, Leak Suspects, Dominator Tree, OQL, and report export.
+- Visible change: added four Mermaid diagrams, MAT view responsibility tables, Path To GC Roots option matrix, OQL starter queries, same-HPROF tool division, and before/after report gates because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs a real MAT report package and same-dump comparison across Android Studio, Shark, and MAT.
+
+## Next Run: Day 25
+- Keep the visual-first format.
+- Focus on MAT Dominator Tree and Retained Heap.
+- Carry forward Day 24's distinction between Root/Owner/Bridge/Victim ownership paths and retained-impact prioritization.
+- Explain shallow heap, retained heap, immediate dominator, large owner/caches, Path To GC Roots cross-checking, and before/after retained-impact validation.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
