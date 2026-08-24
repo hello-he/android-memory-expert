@@ -1,0 +1,60 @@
+{
+  "day": 26,
+  "title": "Allocation Tracker 与对象分配热点定位",
+  "key_conclusions": [
+    "Allocation Tracker or allocation recording answers who allocates, how much is allocated, which call stack is responsible, and whether churn or peaks create GC pressure.",
+    "Allocation hotspots are not leak proof; leak proof requires post-GC retained evidence from HPROF, MAT, LeakCanary, or Shark.",
+    "Cold start, page entry, list scrolling, search input, image decoding, JSON parsing, and string formatting are high-value allocation windows.",
+    "A fix should be accepted only when before/after allocation count and size, GC pressure, post-GC baseline, retained paths, and relevant resource metrics improve together."
+  ],
+  "shallow_points": [
+    "The article still describes allocation recording workflows without a real Android Studio allocation export.",
+    "It does not validate Android Studio version-specific allocation recording fields, export behavior, or API-level differences.",
+    "It does not include a concrete Perfetto trace tying allocation churn to frame jank and GC slices.",
+    "It does not provide runnable benchmark scripts or allocation budgets for a sample app."
+  ],
+  "discovered_connections": [
+    "Day 25's retained heap boundary is essential: allocation churn, peak allocation, and retained memory are separate diagnoses.",
+    "Day 22's Memory Profiler timeline is the entry point for choosing allocation windows.",
+    "Day 23 and Day 24 provide the HPROF/MAT proof path when allocated objects survive GC.",
+    "Day 27 should connect allocation findings with dumpsys meminfo Java Heap, Native Heap, Graphics, Objects, and PSS/RSS/USS categories.",
+    "Bitmap, RecyclerView, cold-start, and low-memory topics later in the plan should reuse allocation budgets and before/after replay gates."
+  ],
+  "suggest_future_topics": [
+    "Day 27 should map allocation and retained Java heap findings to dumpsys meminfo PSS/RSS/USS, Java Heap, Native Heap, Graphics, SQL, and Objects fields.",
+    "Day 43 and Day 45 should reuse allocation peak analysis for BitmapFactory and large image loading.",
+    "Day 70 should apply allocation recording to RecyclerView binding, prefetch, pools, image churn, and scroll jank.",
+    "A later sample-app article should store allocation recordings, HPROF dumps, Perfetto traces, and before/after budgets.",
+    "A later methodology article should define allocation budgets per workflow and regression gates."
+  ],
+  "knowledge_gaps": [
+    "Need real Android Studio allocation recordings for cold start, scrolling, search input, and image decode scenarios.",
+    "Need Android Studio/API-level validation for allocation recording fields, live object behavior, and call stack fidelity.",
+    "Need Perfetto traces that align allocation windows, GC slices, and frame misses.",
+    "Need sample app benchmarks that quantify allocation reductions and prove no retained-object regression."
+  ],
+  "applied_reflections": [
+    "Applied Day 25's next-run instruction by focusing on Allocation Tracker and object allocation hotspots while carrying forward the boundary between allocation churn, retained heap, and leak ownership.",
+    "Applied Day 25's request to explain allocation recording, call stacks, object churn, cold-start/page-scroll spikes, before/after budgets, and pairing Allocation Tracker with HPROF/MAT/Profiler evidence.",
+    "Applied Day 25's resource/native boundary by pairing allocation recording with dumpsys meminfo, /proc fd, HPROF/MAT, GC logs, and external native/graphics metrics.",
+    "Applied the standing more-diagrams-less-prose feedback by using four Mermaid diagrams, compact call-stack/hotspot/budget/acceptance matrices, command blocks, and short checklists instead of long prose."
+  ],
+  "visible_changes": [
+    "Added four Mermaid diagrams because of the more-diagrams-less-prose feedback: Allocation evidence chain, troubleshooting decision flow, scrolling hotspot sequence, and final acceptance matrix.",
+    "Added Day 25 carry-forward table, allocation evidence table, minimal recording workflow, call stack interpretation matrix, sorting-risk matrix, scrolling evidence table, hotspot repair matrix, allocation budget table, and common-misread matrix.",
+    "Added concrete adb logcat, dumpheap, dumpsys meminfo, /proc status/fd, app rg, and AOSP ART allocation/GC source-search commands so prior requests for deeper evidence, clearer boundaries, source paths, tooling commands, and stronger engineering case were visibly applied."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 26 is marked complete and Day 27 remains pending.",
+    "Update progress.json so current_day becomes 27 and last_generated is refreshed.",
+    "Day 27 should focus on dumpsys meminfo output fields PSS/RSS/USS and connect profiler, HPROF, MAT, allocation, native, graphics, SQL, Objects, and fd evidence to process memory accounting.",
+    "Day 27 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 27 should explain Java Heap, Native Heap, Graphics, Stack, Code, Others, SQL/CursorWindow, Objects, PSS/RSS/USS boundaries, and how to use meminfo before/after for leak and peak validation.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}

@@ -246,3 +246,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain allocation recording, call stacks, object churn, cold-start/page-scroll spikes, before/after allocation budgets, and pairing Allocation Tracker with HPROF/MAT/Profiler evidence.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 25 -> Day 26
+- Applied reflection: carried forward Day 25's boundary by separating allocation churn, allocation peaks, retained heap, and leak ownership into different evidence paths.
+- Visible change: added four Mermaid diagrams, allocation evidence tables, call-stack interpretation, hotspot repair strategies, before/after allocation budgets, and HPROF/MAT/Profiler acceptance gates because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real Android Studio allocation recordings, Perfetto GC/frame correlation, and runnable sample-app allocation budgets.
+
+## Next Run: Day 27
+- Keep the visual-first format.
+- Focus on `dumpsys meminfo` output fields: PSS/RSS/USS and process memory categories.
+- Carry forward Day 26's allocation evidence by connecting Java Heap, Native Heap, Graphics, Stack, Code, Others, SQL/CursorWindow, Objects, fd, profiler, HPROF, MAT, and allocation recordings to process memory accounting.
+- Include before/after meminfo validation for leak, peak, cache, resource, and native/graphics cases.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.

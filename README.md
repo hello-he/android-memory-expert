@@ -45,7 +45,7 @@
 | Day 23 | Heap Dump 与 HPROF 文件结构 | ✅[2026-08-25](docs/week-04/day23-heap-dump-hprof.md) |
 | Day 24 | MAT 入门与泄漏分析实战 | ✅[2026-08-25](docs/week-04/day24-mat-intro.md) |
 | Day 25 | MAT Dominator Tree 与 Retained Heap 解读 | ✅[2026-08-25](docs/week-04/day25-mat-dominator-tree.md) |
-| Day 26 | Allocation Tracker 与对象分配热点定位 | ⏳待生成 |
+| Day 26 | Allocation Tracker 与对象分配热点定位 | ✅[2026-08-25](docs/week-04/day26-allocation-tracker.md) |
 | Day 27 | dumpsys meminfo 输出字段解读：PSS/RSS/USS | ⏳待生成 |
 | Day 28 | procrank、showmap 与系统内存全局视图 | ⏳待生成 |
 | Day 29 | JNI Local/Global Reference 与跨边界泄漏 | ⏳待生成 |
