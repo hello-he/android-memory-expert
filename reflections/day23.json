@@ -1,0 +1,60 @@
+{
+  "day": 23,
+  "title": "Heap Dump 与 HPROF 文件结构",
+  "key_conclusions": [
+    "HPROF is a Java heap object-graph snapshot, not a profiler screenshot; its core evidence is records, heap sub-records, object ids, field references, arrays, classes, and GC roots.",
+    "A useful HPROF reading workflow starts from file structure, then reconstructs class schemas, object nodes, reference edges, roots, and finally Root-Owner-Bridge-Victim paths.",
+    "Android Studio, LeakCanary/Shark, and MAT can read the same dump but answer different questions: quick browsing, shortest retained path, and dominator/retained heap analysis.",
+    "HPROF does not prove fd, native heap, Graphics, or dma-buf lifetime, so resource and native cases still require meminfo, /proc fd, Perfetto, heapprofd, StrictMode, or CloseGuard evidence."
+  ],
+  "shallow_points": [
+    "The article still explains representative HPROF structure rather than decoding a real target-app dump object by object.",
+    "It does not validate exact ART HPROF tags and dumpheap implementation against a checked-out Android branch.",
+    "It does not include exported Android Studio, Shark, and MAT screenshots or reports for the same HPROF.",
+    "It does not provide an automated script that diffs before/after class histograms or retained paths in CI."
+  ],
+  "discovered_connections": [
+    "Day 22's same-HPROF comparison gap becomes the central workflow: one dump can feed Android Studio, Shark, MAT, and raw/scripted checks.",
+    "Day 21's Root-Owner-Bridge-Victim model maps directly onto HPROF roots, class/static fields, object fields, array elements, and destroyed-object victims.",
+    "Day 24 should deepen MAT Path To GC Roots, dominator tree, retained heap, and OQL using this HPROF object-graph foundation.",
+    "Day 25 should separate dominator impact from shortest-path ownership so large caches are not confused with lifecycle leaks.",
+    "Day 26 allocation tracking should explicitly contrast allocation churn with HPROF retained-object evidence."
+  ],
+  "suggest_future_topics": [
+    "Day 24 should walk through MAT import, histogram, Path To GC Roots, OQL, leak suspects, and report export on a concrete HPROF workflow.",
+    "Day 25 should explain dominator tree, immediate dominator, retained heap, shallow heap, and cache-versus-leak interpretation with diagrams.",
+    "Day 26 should connect allocation recording and object churn with heap dump evidence so allocation hotspots are not misreported as leaks.",
+    "A later sample-app article should produce before/after HPROF files for Activity, Fragment view, listener, Handler, Cursor, Stream, and bitmap scenarios.",
+    "A later native-tools article should pair HPROF Java wrappers with heapprofd/native heap and /proc fd evidence on the same scenario."
+  ],
+  "knowledge_gaps": [
+    "Need a real target-app HPROF decoded across Android Studio, Shark, MAT, and a raw parser.",
+    "Need target Android branch validation for dumpheap, ART HPROF writer paths, root tag names, and conversion compatibility.",
+    "Need a reproducible before/after class histogram and retained-path diff pipeline.",
+    "Need examples where MAT and Shark disagree because of weak references, excluded refs, or retained-size calculation strategy."
+  ],
+  "applied_reflections": [
+    "Applied Day 22's next-run instruction by focusing on Heap Dump and HPROF file structure from the Memory Profiler workflow entry point.",
+    "Applied Day 22's same-HPROF comparison gap by showing how Android Studio, LeakCanary/Shark, MAT, and raw/scripted checks extract different evidence from one HPROF.",
+    "Applied Day 22's boundary around Java heap versus resource/native evidence by repeatedly separating HPROF object-graph proof from fd, meminfo, heapprofd, Perfetto, StrictMode, and CloseGuard checks.",
+    "Applied the standing more-diagrams-less-prose feedback by using four Mermaid diagrams, compact record/reference/tooling matrices, command blocks, and short checklists instead of long prose."
+  ],
+  "visible_changes": [
+    "Added four Mermaid diagrams because of the more-diagrams-less-prose feedback: HPROF structure and parse path, troubleshooting decision flow, same-HPROF multi-tool sequence, and before/after HPROF acceptance matrix.",
+    "Added Day 22 carry-forward table, HPROF record evidence table, reference-edge matrix, same-dump tool comparison table, root-type table, MAT OQL starter table, repair acceptance matrix, and common-misread matrix.",
+    "Added concrete adb dumpheap, hprof-conv, dumpsys meminfo, /proc fd, MAT OQL, app rg, and AOSP rg command blocks so prior requests for deeper evidence, clearer boundaries, source paths, tooling commands, and stronger engineering case were visibly applied."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 23 is marked complete and Day 24 remains pending.",
+    "Update progress.json so current_day becomes 24 and last_generated is refreshed.",
+    "Day 24 should focus on MAT intro and practical leak analysis, carrying forward Day 23's HPROF object graph, root path, and same-dump comparison foundation.",
+    "Day 24 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 24 should show histogram, Path To GC Roots, leak suspects, OQL, report export, and where MAT must be paired with Android Studio/LeakCanary/fd/native evidence.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}

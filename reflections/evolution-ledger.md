@@ -207,3 +207,16 @@ This file records how each run should improve on the previous one. It is not par
 - Include source/tooling commands and at least two Mermaid diagrams: one HPROF structure/parse path and one troubleshooting decision flow.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 22 -> Day 23
+- Applied reflection: carried forward Day 22's same-HPROF comparison gap by treating HPROF as the shared object-graph source for Android Studio, LeakCanary/Shark, MAT, and raw/scripted checks.
+- Visible change: added four Mermaid diagrams, HPROF record/sub-record/reference/root tables, same-dump tool comparison, MAT OQL starter commands, and before/after acceptance gates because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs a real target-app HPROF decoded across Android Studio, Shark, MAT, and a raw parser with target Android branch validation.
+
+## Next Run: Day 24
+- Keep the visual-first format.
+- Focus on MAT intro and practical leak analysis.
+- Carry forward Day 23's HPROF object graph foundation: records become classes, instances, references, GC roots, root paths, histograms, and retained-size evidence.
+- Include histogram, Path To GC Roots, leak suspects, OQL, report export, and clear boundaries against Android Studio, LeakCanary/Shark, fd/native evidence.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.

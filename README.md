@@ -42,7 +42,7 @@
 | Day 20 | Cursor、Stream 等资源未关闭的泄漏场景 | ✅[2026-08-20](docs/week-03/day20-resource-not-closed-leak.md) |
 | Day 21 | LeakCanary 源码与泄漏引用链检测 | ✅[2026-08-23](docs/week-03/day21-leakcanary-source-code.md) |
 | Day 22 | Android Studio Memory Profiler 核心工作流 | ✅[2026-08-25](docs/week-04/day22-memory-profiler-core.md) |
-| Day 23 | Heap Dump 与 HPROF 文件结构 | ⏳待生成 |
+| Day 23 | Heap Dump 与 HPROF 文件结构 | ✅[2026-08-25](docs/week-04/day23-heap-dump-hprof.md) |
 | Day 24 | MAT 入门与泄漏分析实战 | ⏳待生成 |
 | Day 25 | MAT Dominator Tree 与 Retained Heap 解读 | ⏳待生成 |
 | Day 26 | Allocation Tracker 与对象分配热点定位 | ⏳待生成 |
