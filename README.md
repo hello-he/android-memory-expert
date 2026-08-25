@@ -47,7 +47,7 @@
 | Day 25 | MAT Dominator Tree 与 Retained Heap 解读 | ✅[2026-08-25](docs/week-04/day25-mat-dominator-tree.md) |
 | Day 26 | Allocation Tracker 与对象分配热点定位 | ✅[2026-08-25](docs/week-04/day26-allocation-tracker.md) |
 | Day 27 | dumpsys meminfo 输出字段解读：PSS/RSS/USS | ✅[2026-08-25](docs/week-04/day27-dumpsys-meminfo.md) |
-| Day 28 | procrank、showmap 与系统内存全局视图 | ⏳待生成 |
+| Day 28 | procrank、showmap 与系统内存全局视图 | ✅[2026-08-25](docs/week-04/day28-procrank-showmap-system-memory.md) |
 | Day 29 | JNI Local/Global Reference 与跨边界泄漏 | ⏳待生成 |
 | Day 30 | NewByteArray、GetPrimitiveArrayCritical 与 DirectByteBuffer 内存归属 | ⏳待生成 |
 | Day 31 | Native Heap 分配器：jemalloc、Scudo 与 malloc 调试 | ⏳待生成 |

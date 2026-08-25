@@ -272,3 +272,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain how to move from one-process meminfo to system pressure: top PSS processes, shared libraries, ZRAM/swap hints, native mappings, ashmem/memfd/dma-buf candidates, and low-memory triage.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 27 -> Day 28
+- Applied reflection: carried forward Day 27's PSS/RSS/USS boundary from single-process `dumpsys meminfo` into `procrank` process ranking and `showmap`/`smaps` per-mapping attribution.
+- Visible change: added three Mermaid diagrams, procrank field table, showmap mapping matrix, low-memory triage flow, capture template, combined diagnosis matrix, and AOSP source-search commands because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real low-memory snapshots, vendor/version field validation, a parser joining procrank/showmap/meminfo, and deeper dma-buf ownership examples.
+
+## Next Run: Day 29
+- Keep the visual-first format.
+- Focus on JNI Local/Global Reference and cross-boundary leaks.
+- Carry forward Day 28's system/mapping view by correlating Java retained paths, JNI reference tables, native owner lifetime, `meminfo`, `showmap`, and HPROF evidence.
+- Explain local references, global references, weak global references, reference table overflow, `DeleteLocalRef`, `DeleteGlobalRef`, thread attach/detach, native owner cleanup, and before/after validation.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.

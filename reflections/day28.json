@@ -1,0 +1,60 @@
+{
+  "day": 28,
+  "title": "procrank、showmap 与系统内存全局视图",
+  "key_conclusions": [
+    "procrank should be used before single-process deep dives because it ranks system memory contributors by PSS/RSS/USS/SwapPss.",
+    "showmap and smaps explain where a selected process spends memory at the mapping level, including heap, anon, dalvik spaces, code, stack, ashmem, memfd, and shared libraries.",
+    "dumpsys meminfo is an Android bucket view, while showmap/smaps are Linux mapping views; reliable diagnosis combines both before choosing HPROF, heapprofd, fd, or graphics evidence.",
+    "Low-memory triage should move from system snapshot to process ranking, mapping attribution, owner evidence, and then same-scenario before/after validation."
+  ],
+  "shallow_points": [
+    "The article does not include real procrank/showmap output from a device under pressure.",
+    "It does not validate procrank/showmap output differences across Android versions, userdebug versus user builds, or vendor ROMs.",
+    "It does not include a parser that joins procrank rows with showmap mapping deltas and dumpsys meminfo buckets.",
+    "It introduces dma-buf, ashmem, and memfd as mapping candidates but leaves ownership accounting for later topics."
+  ],
+  "discovered_connections": [
+    "Day 27's PSS/RSS/USS boundary becomes more practical when procrank ranks every process and showmap explains one selected PID.",
+    "Day 20 resource evidence maps into fd and CursorWindow growth visible through showmap, maps, and /proc/<pid>/fd.",
+    "Day 24 and Day 25 Java retained analysis should start only after procrank/showmap indicate dalvik or Java Heap growth is relevant.",
+    "Day 32 should deepen maps and smaps into a native memory mapping atlas.",
+    "Day 33 should make ashmem, memfd, and dma-buf ownership explicit because showmap names alone are not enough."
+  ],
+  "suggest_future_topics": [
+    "Day 29 should connect JNI reference leaks to meminfo, showmap, fd, and HPROF evidence when Java and native ownership cross boundaries.",
+    "Day 32 should provide a detailed /proc/<pid>/maps and smaps reading guide with mapping-name patterns.",
+    "Day 33 should explain mmap, ashmem, memfd, and dma-buf accounting and why process-local tools can miss shared buffer owners.",
+    "Day 48 and Day 53 should reuse procrank ranking for low-memory global triage and waterline growth attribution.",
+    "A later automation article should build a script that captures procrank, meminfo, showmap, smaps_rollup, fd, PSI, and vmstat together."
+  ],
+  "knowledge_gaps": [
+    "Need real low-memory snapshots containing procrank, dumpsys meminfo, showmap, maps, smaps_rollup, fd, vmstat, PSI, and LMKD logs.",
+    "Need target-branch validation for procrank/showmap/libmeminfo implementation and output field names.",
+    "Need a robust parser that can handle vendor output differences and generate process-rank plus mapping-delta reports.",
+    "Need dma-buf and shared-memory owner examples where PSS attribution differs from intuitive process ownership."
+  ],
+  "applied_reflections": [
+    "Applied Day 27's next-run instruction by comparing dumpsys meminfo, procrank, showmap, smaps, smaps_rollup, and system-wide process ranking.",
+    "Applied Day 27's PSS/RSS/USS boundary by making PSS the ranking metric, RSS the mapping/驻留 clue, and USS/private dirty the private-reclaim estimate.",
+    "Applied the standing more-diagrams-less-prose feedback by using three Mermaid diagrams, compact tool/mapping/triage matrices, command templates, and short checklists.",
+    "Applied the prior source-path and tooling-command requirement by adding procrank, showmap, /proc/meminfo, vmstat, PSI, smaps_rollup, maps, fd, and AOSP source-search commands."
+  ],
+  "visible_changes": [
+    "Added three Mermaid diagrams because of the more-diagrams-less-prose feedback: system-to-mapping evidence path, showmap mapping split, and low-memory troubleshooting decision flow.",
+    "Added procrank field table, showmap mapping table, capture artifact table, combined diagnosis matrix, Day 27 boundary comparison, AOSP source-entry commands, and a short operational checklist.",
+    "Added explicit system-wide ranking and per-mapping attribution boundaries so the article visibly strengthens evidence, tooling commands, and engineering decision flow from prior reflections."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 28 is marked complete and Day 29 remains pending.",
+    "Update progress.json so current_day becomes 29 and last_generated is refreshed.",
+    "Day 29 should focus on JNI Local/Global Reference and cross-boundary leaks, carrying forward Day 28's need to correlate Java retained paths, native mappings, and process memory accounting.",
+    "Day 29 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 29 should explain local references, global references, weak global references, reference table overflow, DeleteLocalRef/DeleteGlobalRef, thread attach/detach, and how leaks appear in HPROF, meminfo, and native/system views.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}
