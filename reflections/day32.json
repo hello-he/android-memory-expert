@@ -1,0 +1,60 @@
+{
+  "day": 32,
+  "title": "/proc/<pid>/maps、smaps 与 native 内存映射全貌",
+  "key_conclusions": [
+    "maps is the process mapping catalog, while smaps is the per-mapping memory bill and smaps_rollup is the fast process summary.",
+    "Native memory attribution should first land on mapping classes such as heap, anon mmap, ashmem, memfd, stack, code, file-backed mappings, and dalvik spaces.",
+    "PSS, Private_Dirty, RSS, Shared_Clean, Swap, and SwapPss deltas are more useful than virtual Size when diagnosing real memory pressure.",
+    "Mapping names narrow the investigation but do not prove ownership; HPROF, heapprofd, malloc_debug, fd, dmabuf, thread dump, or source paths are still required."
+  ],
+  "shallow_points": [
+    "The article does not include real before/after maps and smaps snapshots from a device.",
+    "It does not validate smaps field availability, naming, and permissions across Android versions, SELinux policies, user/userdebug builds, or vendor ROMs.",
+    "It does not provide a parser that computes per-mapping deltas between before and after snapshots.",
+    "It introduces ashmem, memfd, and dma-buf owner boundaries but leaves detailed shared-buffer accounting to later topics."
+  ],
+  "discovered_connections": [
+    "Day 31's allocator model needs maps and smaps to distinguish heap, anon, mmap, cache, fragmentation, and allocator-retained mappings.",
+    "Day 30's DirectByteBuffer split appears as a Java wrapper in HPROF and native bytes in heap, anon, or mmap mappings.",
+    "Day 28's procrank/showmap ranking becomes actionable only after mapping deltas identify which owner tool to use.",
+    "Day 33 should deepen mmap, ashmem, memfd, and dma-buf accounting because mapping names alone are not sufficient owner proof.",
+    "Day 34 should reuse the mapping-class decision flow when choosing heapprofd or malloc_debug native leak workflows."
+  ],
+  "suggest_future_topics": [
+    "Day 33 should focus on mmap, ashmem, memfd, and dma-buf accounting, including producer-consumer ownership and shared buffer attribution.",
+    "Day 34 should join heapprofd, malloc_debug, Perfetto, meminfo, showmap, maps, and smaps into a native leak workflow.",
+    "Day 42 should reuse mapping attribution for Bitmap pixel data, Native Heap, Graphics, and dma-buf evidence.",
+    "Day 53 should reuse smaps and mapping deltas for system waterline growth attribution.",
+    "A later automation article should implement a before/after maps/smaps parser with top delta grouping."
+  ],
+  "knowledge_gaps": [
+    "Need real maps, smaps, smaps_rollup, showmap, and meminfo artifacts from native heap, DirectByteBuffer, CursorWindow, ashmem, memfd, and thread-stack scenarios.",
+    "Need target-branch validation for libmeminfo, showmap, smaps parsing, and framework meminfo bucket mapping.",
+    "Need a robust parser that groups mappings by name/type and computes PSS, RSS, Private_Dirty, and SwapPss deltas.",
+    "Need shared-buffer examples where mapping ownership and PSS attribution differ from intuitive producer ownership."
+  ],
+  "applied_reflections": [
+    "Applied Day 31's next-run instruction by focusing on /proc/<pid>/maps, smaps, smaps_rollup, and native memory mapping layout attribution.",
+    "Applied Day 31's allocator evidence boundary by mapping Native Heap, anon mmap, ashmem, memfd, stack, code, file mappings, and dalvik spaces to meminfo/showmap/smaps evidence.",
+    "Applied Day 31's leak-versus-fragmentation-versus-cache caution by emphasizing mapping deltas, PSS/private dirty/swap fields, and owner-tool selection instead of blaming Size or mapping names alone.",
+    "Applied the standing more-diagrams-less-prose feedback by using three Mermaid diagrams, compact field/mapping/tool matrices, command blocks, and a short checklist."
+  ],
+  "visible_changes": [
+    "Added three Mermaid diagrams because of the more-diagrams-less-prose feedback: maps/smaps evidence hierarchy, mapping troubleshooting decision flow, and before/after mapping delta loop.",
+    "Added maps-line field table, permission table, smaps field table, mapping type table, delta interpretation matrix, tool-combination matrix, command templates, AOSP/source searches, and today's checklist.",
+    "Added explicit boundaries between mapping names, memory pressure fields, owner proof, and tool selection so prior requests for deeper evidence, clearer boundaries, source paths, tooling commands, and stronger engineering case were visibly applied."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 32 is marked complete and Day 33 remains pending.",
+    "Update progress.json so current_day becomes 33 and last_generated is refreshed.",
+    "Day 33 should focus on mmap, ashmem, memfd, and dma-buf accounting, carrying forward Day 32's mapping-name and owner-proof boundaries.",
+    "Day 33 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 33 should explain file-backed versus anonymous mmap, ashmem versus memfd, dma-buf producer-consumer ownership, fd paths, shared/private/PSS accounting, and why process-local mapping views can miss real buffer owners.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}

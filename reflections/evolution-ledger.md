@@ -324,3 +324,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain mapping names, permissions, PSS/private dirty/swap fields, before/after mapping deltas, and owner evidence boundaries.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 31 -> Day 32
+- Applied reflection: carried forward Day 31's allocator evidence into `/proc/<pid>/maps`, `smaps`, and `smaps_rollup` by mapping Native Heap, anon mmap, ashmem, memfd, stack, code, file-backed mappings, and dalvik spaces to `meminfo`/`showmap`/`smaps` evidence.
+- Visible change: added three Mermaid diagrams, maps-line field table, permission table, smaps field table, mapping type table, mapping delta flow, tool-combination matrix, command templates, and AOSP/source searches because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real before/after maps/smaps artifacts, Android/version permission validation, a per-mapping delta parser, and detailed shared-buffer owner examples.
+
+## Next Run: Day 33
+- Keep the visual-first format.
+- Focus on `mmap`, ashmem, memfd, and dma-buf accounting.
+- Carry forward Day 32's mapping-name and owner-proof boundaries: mapping names narrow the search, but fd owner, producer-consumer ownership, dmabuf tools, and shared/private/PSS accounting decide the case.
+- Explain file-backed versus anonymous mmap, ashmem versus memfd, dma-buf producer-consumer ownership, fd paths, shared/private/PSS accounting, and why process-local mapping views can miss real buffer owners.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
