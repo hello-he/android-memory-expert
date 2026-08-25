@@ -493,3 +493,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain tile lifecycle, visible-window decode, cache eviction, gestures/zoom, and before/after memory evidence.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 44 -> Day 45
+- Applied reflection: carried forward Day 44's cache/pool/lifecycle boundaries into large image viewers by focusing on Region Decode, tiles, viewport/zoom budgets, cache eviction, decode cancellation, and native/graphics memory.
+- Visible change: added four Mermaid diagrams, large-image memory structure, region-decode decision flow, tile lifecycle sequence, troubleshooting flow, budget table, command templates, and today's checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real pan/zoom traces, region decode compatibility validation, GPU/dma-buf evidence, and tile-size tradeoff data.
+
+## Next Run: Day 46
+- Keep the visual-first format.
+- Focus on hardware acceleration, RenderThread, GPU memory, and dma-buf.
+- Carry forward Day 45's CPU/GPU tile boundary by explaining texture upload, RenderThread ownership, SurfaceFlinger visibility, dma-buf producer-consumer ownership, and Graphics meminfo validation.
+- Explain app process, RenderThread, GPU driver, SurfaceFlinger, HardwareBuffer, texture cache, and before/after evidence.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.

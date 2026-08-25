@@ -64,7 +64,7 @@
 | Day 42 | Bitmap 像素数据、Native Heap 与 Graphics 归因 | ✅[2026-08-25](docs/week-06/day42-bitmap-pixel-native-heap.md) |
 | Day 43 | BitmapFactory.Options：inSampleSize、inBitmap 与解码峰值 | ✅[2026-08-25](docs/week-07/day43-bitmapfactory-options.md) |
 | Day 44 | Glide 内存缓存架构：LruCache、BitmapPool 与生命周期 | ✅[2026-08-25](docs/week-07/day44-glide-memory-cache.md) |
-| Day 45 | 大图加载策略：Region Decode、Tile 与峰值控制 | ⏳待生成 |
+| Day 45 | 大图加载策略：Region Decode、Tile 与峰值控制 | ✅[2026-08-25](docs/week-07/day45-large-image-region-decoder.md) |
 | Day 46 | 硬件加速、RenderThread、GPU 内存与 dma-buf | ⏳待生成 |
 | Day 47 | Android 进程内存限制：memoryClass、largeHeap 与进程上限 | ⏳待生成 |
 | Day 48 | Android 低内存全景：RAM、ZRAM、kswapd、PSI 与 LMKD | ⏳待生成 |

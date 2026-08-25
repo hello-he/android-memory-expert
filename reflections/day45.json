@@ -1,0 +1,58 @@
+{
+  "day": 45,
+  "title": "大图加载策略：Region Decode、Tile 与峰值控制",
+  "key_conclusions": [
+    "Large image viewers should decode by viewport and zoom level instead of decoding the full source image.",
+    "Tile size, visible tile count, prefetch radius, active zoom levels, and eviction policy define the memory budget.",
+    "CPU pixel cache and GPU/Graphics upload must be measured separately because a tile can cost memory in both places.",
+    "Peak validation requires pan/zoom workloads, before/after meminfo, showmap/smaps, Graphics evidence, and cache plateau checks."
+  ],
+  "shallow_points": [
+    "The article does not include a real large-image viewer sample or meminfo timeline.",
+    "It does not validate BitmapRegionDecoder behavior across formats, Android versions, and hardware bitmap paths.",
+    "It does not include measured tile size, prefetch, and zoom-level tradeoff data.",
+    "It does not compare third-party subsampling image viewers."
+  ],
+  "discovered_connections": [
+    "Day 44's Glide cache, pool, and lifecycle boundaries become tile cache and decode task boundaries for large images.",
+    "Day 43's sampling and transform peak controls apply to each tile and zoom level.",
+    "Day 42's Native Heap versus Graphics attribution is needed because tiles can exist in CPU pixels and GPU resources.",
+    "Day 46 should deepen the Graphics, RenderThread, GPU upload, and dma-buf parts of this path."
+  ],
+  "suggest_future_topics": [
+    "Day 46 should focus on hardware acceleration, RenderThread, GPU memory, and dma-buf.",
+    "A future lab should build a large-image pan/zoom workload with tile budget telemetry.",
+    "A later article should compare popular subsampling image viewers and image library integration.",
+    "Day 70 should revisit tile and image request lifecycle in RecyclerView or paged viewers."
+  ],
+  "knowledge_gaps": [
+    "Need real pan/zoom traces with meminfo, Graphics, and tile-cache telemetry.",
+    "Need compatibility validation for region decode formats and Android versions.",
+    "Need GPU upload and dma-buf evidence for visible tiles.",
+    "Need measured UX tradeoffs for tile size, prefetch radius, and zoom-level retention."
+  ],
+  "applied_reflections": [
+    "Applied Day 44's next-run instruction by focusing on Region Decode, Tile loading, subsampling, viewport-driven memory, and peak control.",
+    "Applied Day 44's cache/pool/lifecycle boundaries by explaining tile cache eviction, decode cancellation, prefetch, and native/graphics memory separation.",
+    "Applied Day 42's attribution workflow by requiring meminfo, showmap/smaps, and Graphics evidence for CPU and GPU tile memory.",
+    "Applied the standing more-diagrams-less-prose feedback by using four Mermaid diagrams, compact budget/evidence matrices, command blocks, and today's checklist."
+  ],
+  "visible_changes": [
+    "Added four Mermaid diagrams because of the more-diagrams-less-prose feedback: large-image memory structure, region-decode decision flow, tile lifecycle sequence, and troubleshooting flow.",
+    "Added layer table, strategy table, lifecycle risk table, budget table, command templates, source-search commands, and today's checklist.",
+    "Added explicit boundaries between full decode, region decode, tile cache, prefetch, pan/zoom task cancellation, CPU pixel memory, and GPU/Graphics memory."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 45 is marked complete and Day 46 remains pending.",
+    "Update progress.json so current_day becomes 46 and last_generated is refreshed.",
+    "Day 46 should focus on hardware acceleration, RenderThread, GPU memory, and dma-buf.",
+    "Day 46 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 46 should carry forward Day 45's CPU/GPU tile boundary by explaining texture upload, RenderThread ownership, SurfaceFlinger visibility, dma-buf producer-consumer ownership, and Graphics meminfo validation.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}
