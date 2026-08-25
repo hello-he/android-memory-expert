@@ -1,0 +1,60 @@
+{
+  "day": 30,
+  "title": "NewByteArray、GetPrimitiveArrayCritical 与 DirectByteBuffer 内存归属",
+  "key_conclusions": [
+    "NewByteArray creates Java heap byte arrays whose long-term ownership must be verified with HPROF and JNI/Java retained paths.",
+    "GetByteArrayElements can expose either a copy or pinned array data, so every path must call ReleaseByteArrayElements with the correct mode.",
+    "GetPrimitiveArrayCritical should be held only for very short non-blocking memory access windows because prolonged critical sections can interfere with GC behavior.",
+    "DirectByteBuffer separates a Java wrapper from native memory ownership, requiring both HPROF wrapper checks and native heap/showmap/heapprofd release evidence."
+  ],
+  "shallow_points": [
+    "The article does not include a real Perfetto trace showing GC or pause impact from a long GetPrimitiveArrayCritical section.",
+    "It does not validate copy-versus-pin behavior against a target ART branch or device runtime state.",
+    "It does not include a runnable NDK sample for NewByteArray retention, GetByteArrayElements release modes, critical arrays, and DirectByteBuffer ownership.",
+    "It does not include real heapprofd/showmap/HPROF artifacts proving DirectByteBuffer wrapper and native memory lifetimes diverge."
+  ],
+  "discovered_connections": [
+    "Day 29's JNI reference-table model explains object retention, but byte-transfer APIs require a separate bytes-location and release-mode model.",
+    "Day 28's showmap mapping view is essential for DirectByteBuffer and native byte storage because Java Heap may look healthy while Native Heap grows.",
+    "Day 27's meminfo bucket model provides the acceptance gate for Java Heap versus Native Heap divergence.",
+    "Day 31 should connect these JNI byte allocations to allocator behavior in jemalloc, Scudo, and malloc_debug.",
+    "Day 36+ memory-corruption topics should reuse DirectByteBuffer lifetime mismatch as a UAF/bounds-risk example."
+  ],
+  "suggest_future_topics": [
+    "Day 31 should focus on Native Heap allocators, jemalloc, Scudo, malloc_debug, allocator arenas, and how JNI/native buffers appear in allocator evidence.",
+    "Day 32 should map direct buffers, native arrays, mmap, and anonymous mappings into /proc/<pid>/maps and smaps rows.",
+    "Day 34 should show heapprofd and malloc_debug workflows for native byte-buffer leaks.",
+    "Day 36 should connect premature native free behind DirectByteBuffer to UAF, double free, and memory corruption models.",
+    "A later sample-app article should provide reproducible JNI byte transfer benchmarks and before/after memory artifacts."
+  ],
+  "knowledge_gaps": [
+    "Need target-branch ART source validation for NewByteArray, GetByteArrayElements, GetPrimitiveArrayCritical, NewDirectByteBuffer, and CheckJNI behavior.",
+    "Need real traces showing how long critical sections affect GC, scheduling, and frame timing.",
+    "Need heapprofd plus HPROF examples where Java DirectByteBuffer wrappers and native allocations are fixed independently.",
+    "Need release-mode tests that prove JNI_ABORT versus copy-back behavior and prevent correctness regressions."
+  ],
+  "applied_reflections": [
+    "Applied Day 29's next-run instruction by focusing on NewByteArray, GetPrimitiveArrayCritical, GetByteArrayElements, Release modes, and DirectByteBuffer ownership.",
+    "Applied Day 29's JNI boundary by distinguishing Java array retention, copied native buffers, critical/pinned access, direct buffer native memory, release timing, and meminfo/showmap/HPROF evidence.",
+    "Applied the standing more-diagrams-less-prose feedback by using three Mermaid diagrams, compact API/release/DirectBuffer/acceptance matrices, command blocks, and short checklists.",
+    "Applied the source-path and tooling-command requirement by adding adb meminfo/showmap/dumpheap/logcat commands and app/AOSP searches for JNI byte-transfer APIs."
+  ],
+  "visible_changes": [
+    "Added three Mermaid diagrams because of the more-diagrams-less-prose feedback: JNI byte path and ownership structure, troubleshooting decision flow, and DirectByteBuffer wrapper/native ownership split.",
+    "Added API ownership table, Day 29 carry-forward table, release mode matrix, DirectByteBuffer failure table, collection commands, source searches, acceptance matrix, and compact checklist.",
+    "Added explicit copy-versus-pin, critical-section, release-mode, Java wrapper, and native owner boundaries so prior requests for deeper evidence, clearer boundaries, source paths, tooling commands, and stronger engineering case were visibly applied."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 30 is marked complete and Day 31 remains pending.",
+    "Update progress.json so current_day becomes 31 and last_generated is refreshed.",
+    "Day 31 should focus on Native Heap allocators: jemalloc, Scudo, malloc_debug, allocator arenas, fragmentation, and native allocation evidence.",
+    "Day 31 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 31 should carry forward Day 30's native byte ownership by showing how native buffers appear in malloc_debug, heapprofd, showmap, smaps, Native Heap, and allocator metadata.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}

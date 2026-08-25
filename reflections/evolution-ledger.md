@@ -298,3 +298,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain where bytes live, who owns release, how stalls or GC blocking can happen, and how to validate before/after.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 29 -> Day 30
+- Applied reflection: carried forward Day 29's JNI boundary into byte-transfer APIs by distinguishing Java arrays, copied buffers, critical/pinned access, DirectByteBuffer wrappers, native memory ownership, release timing, and `meminfo`/`showmap`/HPROF evidence.
+- Visible change: added three Mermaid diagrams, JNI byte API ownership table, release mode matrix, DirectByteBuffer split, troubleshooting flow, command templates, acceptance matrix, and AOSP/app source-search paths because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real Perfetto critical-section traces, ART branch validation, runnable NDK samples, and heapprofd/showmap/HPROF DirectByteBuffer artifacts.
+
+## Next Run: Day 31
+- Keep the visual-first format.
+- Focus on Native Heap allocators: jemalloc, Scudo, malloc debugging, arenas, fragmentation, and native allocation evidence.
+- Carry forward Day 30's native byte ownership by showing how native buffers appear in malloc_debug, heapprofd, showmap, smaps, Native Heap, and allocator metadata.
+- Explain allocator-level symptoms, leak versus fragmentation versus cache, and before/after validation.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
