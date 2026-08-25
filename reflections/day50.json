@@ -1,0 +1,58 @@
+{
+  "day": 50,
+  "title": "内存水位机制：zone、min/low/high watermark 与保留页",
+  "key_conclusions": [
+    "Zone watermarks explain when reclaim starts, while LRU and MGLRU explain which pages reclaim selects.",
+    "The healthy path is kswapd waking below low and reclaiming back toward high before app allocations enter direct reclaim.",
+    "Free memory must be interpreted per zone with reserves; global MemFree alone can hide low-zone pressure.",
+    "Watermark tuning requires before/after validation with zoneinfo, vmstat, PSI, lmkd logs, and user-visible jank evidence."
+  ],
+  "shallow_points": [
+    "The article does not include real zoneinfo snapshots from specific Android devices.",
+    "It does not validate watermark_scale_factor and watermark_boost_factor availability across Android kernel versions.",
+    "It does not include a controlled experiment showing min_free_kbytes changes and direct reclaim deltas.",
+    "It does not quantify safe tuning ranges for different RAM classes."
+  ],
+  "discovered_connections": [
+    "Day 49's reclaim path is governed by Day 50's watermarks: watermarks trigger reclaim, LRU/MGLRU select reclaim victims.",
+    "A low global MemFree signal is weaker than a zone-specific free/min/low/high comparison.",
+    "Direct reclaim, PSI, and LMKD pressure can begin after repeated watermark failures even before a Java heap looks large.",
+    "Watermark reserve policy connects kernel VM behavior to user-visible app jank and kill risk."
+  ],
+  "suggest_future_topics": [
+    "Day 51 should connect kswapd, direct reclaim, compaction, allocation stalls, and UI frame drops.",
+    "Day 52 should turn PSI some/full avg windows into a practical thrashing decision model.",
+    "Day 62 should revisit min_free_kbytes and lmkd tuning with measured before/after risks.",
+    "A future lab should collect synchronized zoneinfo, vmstat, PSI, Perfetto, and lmkd evidence around a low-memory workload."
+  ],
+  "knowledge_gaps": [
+    "Need real zoneinfo and vmstat samples from low, mid, and high RAM Android devices.",
+    "Need Android version and vendor validation for watermark sysctls and zone layouts.",
+    "Need measured data on how watermark changes affect cache refaults, direct reclaim, compaction, and LMKD kills.",
+    "Need Perfetto traces that align allocation stalls with zone watermark breaches."
+  ],
+  "applied_reflections": [
+    "Applied Day 49's next-run instruction by focusing on zone watermarks, min/low/high thresholds, lowmem reserves, and allocation/reclaim triggers.",
+    "Applied Day 49's reclaim model by showing how watermarks decide kswapd wakeup, direct reclaim, allocation failure, and LMKD pressure.",
+    "Applied Day 48's system pressure chain by keeping PSI, lmkd, vmstat, and meminfo as validation evidence instead of only describing kernel concepts.",
+    "Applied the standing more-diagrams-less-prose feedback by using four Mermaid diagrams, compact matrices, command templates, and today's checklist."
+  ],
+  "visible_changes": [
+    "Added four Mermaid diagrams because of the more-diagrams-less-prose feedback: zone watermark structure, allocation decision flow, kswapd target sequence, and tuning risk flow.",
+    "Added evidence tables for watermarks, allocation states, Day 49-to-Day 50 connections, tuning risks, and troubleshooting signals.",
+    "Added a concrete today's checklist that requires zoneinfo, lowmem_reserve, vmstat, PSI, lmkd, and before/after tuning evidence."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 50 is marked complete and Day 51 remains pending.",
+    "Update progress.json so current_day becomes 51 and last_generated is refreshed.",
+    "Day 51 should focus on kswapd, direct reclaim, compaction, and UI jank on low-end devices.",
+    "Day 51 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 51 should carry forward Day 50's watermark boundaries by showing how low/min breaches become background reclaim, direct reclaim, compaction, PSI, and frame drops.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "source": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url",
+    "details": "GitHub CLI is not authenticated. gh reported: To get started with GitHub CLI, please run gh auth login. Alternatively, populate the GH_TOKEN environment variable with a GitHub API authentication token."
+  }
+}

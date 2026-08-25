@@ -69,7 +69,7 @@
 | Day 47 | Android 进程内存限制：memoryClass、largeHeap 与进程上限 | ✅[2026-08-25](docs/week-07/day47-process-memory-limit.md) |
 | Day 48 | Android 低内存全景：RAM、ZRAM、kswapd、PSI 与 LMKD | ✅[2026-08-25](docs/week-07/day48-android-low-memory-overview.md) |
 | Day 49 | Linux Page Reclaim：file/anon 页、LRU 与 MGLRU | ✅[2026-08-25](docs/week-07/day49-linux-page-reclaim-lru-mglru.md) |
-| Day 50 | 内存水位机制：zone、min/low/high watermark 与保留页 | ⏳待生成 |
+| Day 50 | 内存水位机制：zone、min/low/high watermark 与保留页 | ✅[2026-08-25](docs/week-08/day50-memory-watermark-zone.md) |
 | Day 51 | 低端机卡顿根因：kswapd、direct reclaim、compaction 与 UI 抖动 | ⏳待生成 |
 | Day 52 | PSI 内存压力：some/full、avg10/60/300 与 thrashing 判断 | ⏳待生成 |
 | Day 53 | 内存水位增长来源追查：meminfo、vmstat、slab、dma-buf、memcg | ⏳待生成 |

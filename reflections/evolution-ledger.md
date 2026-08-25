@@ -558,3 +558,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain zone watermarks, watermark boost/scale, min_free_kbytes, reserves, vmstat evidence, and before/after tuning risks.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 49 -> Day 50
+- Applied reflection: carried forward Day 49's reclaim model by showing how zone watermarks decide kswapd wakeup, direct reclaim, allocation failure, and LMKD pressure.
+- Visible change: added four Mermaid diagrams, zone watermark structure, allocation decision flow, kswapd target sequence, tuning risk flow, evidence matrices, command templates, and today's checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real zoneinfo/vmstat/PSI samples, version-specific watermark sysctl validation, and measured tuning data.
+
+## Next Run: Day 51
+- Keep the visual-first format.
+- Focus on low-end device jank caused by kswapd, direct reclaim, compaction, and allocation stalls.
+- Carry forward Day 50's watermark boundaries by showing how low/min breaches become background reclaim, direct reclaim, compaction, PSI, and frame drops.
+- Explain UI thread allocation, RenderThread stalls, order allocation, compaction cost, vmstat evidence, Perfetto alignment, and before/after validation.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
