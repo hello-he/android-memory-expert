@@ -1,0 +1,59 @@
+{
+  "day": 42,
+  "title": "Bitmap 像素数据、Native Heap 与 Graphics 归因",
+  "key_conclusions": [
+    "Bitmap attribution requires separating wrapper retained paths from pixel memory buckets.",
+    "Software Bitmaps usually require Native Heap, heapprofd, showmap, and smaps evidence, while hardware Bitmaps require Graphics, dma-buf, and platform buffer evidence.",
+    "HPROF proves Java ownership but not pixel storage location.",
+    "Acceptance requires wrapper retained paths, Native Heap, Graphics/dma-buf, and decode peak evidence to move consistently."
+  ],
+  "shallow_points": [
+    "The article does not include real meminfo, showmap, smaps, HPROF, heapprofd, or dmabuf outputs.",
+    "It does not validate hardware Bitmap accounting across devices, Android versions, GPU drivers, and image libraries.",
+    "It does not provide a runnable sample generating software, hardware, transformed, and cached Bitmap cases.",
+    "It does not include automated delta calculations joining theoretical pixel size with observed memory buckets."
+  ],
+  "discovered_connections": [
+    "Day 41's wrapper-versus-pixel split becomes the core attribution workflow.",
+    "Day 33's dma-buf producer-consumer model is necessary for hardware Bitmap and Graphics cases.",
+    "Day 34's heapprofd workflow can identify software pixel allocations when stack capture is available.",
+    "Day 43 should use these attribution rules when explaining inSampleSize and inBitmap decode peak control.",
+    "Day 44 should map Glide MemoryCache and BitmapPool to wrapper, Native Heap, and Graphics buckets."
+  ],
+  "suggest_future_topics": [
+    "Day 43 should focus on BitmapFactory.Options, inSampleSize, inBitmap, decode temporary memory, and peak reduction.",
+    "Day 44 should explain Glide memory cache, BitmapPool, lifecycle, and trimming using these bucket boundaries.",
+    "A future lab should collect paired software/hardware Bitmap artifacts from real devices.",
+    "A later parser should compute expected pixel size and compare it with meminfo/showmap deltas."
+  ],
+  "knowledge_gaps": [
+    "Need real cross-version and cross-device Bitmap accounting artifacts.",
+    "Need Graphics and dma-buf attribution examples with hardware Bitmaps.",
+    "Need image-library cache metrics and pool stats.",
+    "Need automated before/after reports for Bitmap scenarios."
+  ],
+  "applied_reflections": [
+    "Applied Day 41's next-run instruction by focusing on Bitmap pixel data, Native Heap, Graphics, and dma-buf attribution.",
+    "Applied Day 41's split between wrapper ownership and pixel accounting by requiring HPROF plus meminfo/showmap/smaps/heapprofd/dma-buf evidence.",
+    "Applied Day 33's shared-buffer boundary by separating hardware Bitmap Graphics/dma-buf cost from process-local Native Heap.",
+    "Applied the standing more-diagrams-less-prose feedback by using four Mermaid diagrams, compact evidence matrices, command blocks, and today's checklist."
+  ],
+  "visible_changes": [
+    "Added four Mermaid diagrams because of the more-diagrams-less-prose feedback: pixel attribution path, evidence stitching flow, troubleshooting decision flow, and fix validation flow.",
+    "Added Bitmap shape table, tool proof table, pixel-size calculation table, scenario delta table, validation matrix, command templates, and today's checklist.",
+    "Added explicit boundaries between HPROF wrapper ownership, software pixel Native Heap, hardware Graphics/dma-buf, transform peaks, cache plateau, and BitmapPool reuse."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 42 is marked complete and Day 43 remains pending.",
+    "Update progress.json so current_day becomes 43 and last_generated is refreshed.",
+    "Day 43 should focus on BitmapFactory.Options, inSampleSize, inBitmap, and decode peak control.",
+    "Day 43 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 43 should carry forward Day 42's attribution workflow by showing how sampling, reuse, temporary buffers, transforms, and cache insertion change Native Heap and Graphics peaks.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}

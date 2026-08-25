@@ -454,3 +454,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain software versus hardware Bitmap bills, shared buffers, texture upload, decode temporary memory, and before/after attribution.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 41 -> Day 42
+- Applied reflection: carried forward Day 41's split between Bitmap wrapper ownership and pixel accounting by joining HPROF, meminfo, showmap/smaps, heapprofd, Graphics, HardwareBuffer, and dma-buf evidence.
+- Visible change: added four Mermaid diagrams, pixel attribution path, evidence stitching flow, troubleshooting flow, fix validation flow, pixel-size tables, tool-proof matrix, command templates, and today's checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real Bitmap artifacts, device/version validation, hardware Bitmap dmabuf examples, and automated delta calculations.
+
+## Next Run: Day 43
+- Keep the visual-first format.
+- Focus on BitmapFactory.Options, inSampleSize, inBitmap, and decode peak control.
+- Carry forward Day 42's attribution workflow by showing how sampling, reuse, temporary buffers, transforms, and cache insertion change Native Heap and Graphics peaks.
+- Explain decode bounds pass, sample-size math, reuse constraints, hardware Bitmap limits, before/after meminfo, and HPROF validation.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
