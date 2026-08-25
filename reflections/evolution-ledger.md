@@ -259,3 +259,16 @@ This file records how each run should improve on the previous one. It is not par
 - Include before/after meminfo validation for leak, peak, cache, resource, and native/graphics cases.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 26 -> Day 27
+- Applied reflection: carried forward Day 26's request to connect allocation evidence with `dumpsys meminfo` Java Heap, Native Heap, Graphics, SQL, Objects, fd, and PSS/RSS/USS process accounting.
+- Visible change: added three Mermaid diagrams, PSS/RSS/USS comparison, meminfo bucket attribution table, same-scenario before/after sequence, acceptance matrix, command templates, and AOSP source-search paths because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real device meminfo samples, vendor/version comparison, source-level libmeminfo validation, and an automated before/after parser.
+
+## Next Run: Day 28
+- Keep the visual-first format.
+- Focus on `procrank`, `showmap`, and the system-wide memory view.
+- Carry forward Day 27's PSS/RSS/USS boundary and compare process ranking, per-mapping attribution, shared/private accounting, `smaps`, `smaps_rollup`, and `dumpsys meminfo`.
+- Explain how to move from one-process meminfo to system pressure: top PSS processes, shared libraries, ZRAM/swap hints, native mappings, ashmem/memfd/dma-buf candidates, and low-memory triage.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.

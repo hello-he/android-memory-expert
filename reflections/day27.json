@@ -1,0 +1,60 @@
+{
+  "day": 27,
+  "title": "dumpsys meminfo 输出字段解读：PSS/RSS/USS",
+  "key_conclusions": [
+    "PSS is the best first-line process cost metric because shared pages are proportionally charged, while RSS can double-count shared pages and USS/private dirty better estimates process-private reclaim.",
+    "dumpsys meminfo buckets are attribution entry points, not final proof; Java Heap needs HPROF/MAT/LeakCanary, Native Heap needs heapprofd or malloc evidence, and Graphics needs buffer or SurfaceFlinger evidence.",
+    "Allocation recording from Day 26 must be reconciled with meminfo before/after totals so churn, peak, retained Java objects, native memory, graphics buffers, SQL, and fd growth are not mixed together.",
+    "A fix should be accepted only when the relevant meminfo bucket and the external owner evidence both improve under the same replay scenario."
+  ],
+  "shallow_points": [
+    "The article does not include a real dumpsys meminfo capture from a device or compare Android version/vendor ROM formatting differences.",
+    "It explains PSS/RSS/USS conceptually but does not validate exact calculations against libmeminfo source for a target Android branch.",
+    "It does not include an automated parser that extracts before/after bucket deltas into a report.",
+    "It does not correlate a real meminfo sample with a same-run HPROF, heapprofd trace, dmabuf dump, and fd snapshot."
+  ],
+  "discovered_connections": [
+    "Day 26 allocation evidence becomes more useful when mapped to Java Heap, Native Heap, Graphics, SQL, Objects, and Total PSS deltas.",
+    "Day 24 and Day 25 MAT retained-path work explains only Java Heap retained ownership, so native, graphics, SQL, and fd buckets require separate tools.",
+    "Day 20 resource-lifetime evidence maps naturally to SQL, Objects, and fd changes in meminfo.",
+    "Day 28 should expand from per-process meminfo to system-wide procrank/showmap comparisons and shared-page accounting.",
+    "Later dma-buf, bitmap, and low-memory articles should reuse PSS/RSS/USS boundaries instead of treating one process bucket as the whole system pressure story."
+  ],
+  "suggest_future_topics": [
+    "Day 28 should compare dumpsys meminfo with procrank and showmap for system-wide PSS/RSS/shared/private accounting.",
+    "Day 32 should deepen /proc/<pid>/maps and smaps attribution for native mappings, ashmem, memfd, file mappings, and anonymous memory.",
+    "Day 33 should connect Graphics and shared memory buckets to ashmem, memfd, and dma-buf ownership.",
+    "Day 53 should reuse the before/after bucket-delta workflow when tracing system memory waterline growth.",
+    "A later methodology article should add scripts that parse meminfo, smaps_rollup, fd count, and HPROF metadata into regression gates."
+  ],
+  "knowledge_gaps": [
+    "Need real meminfo samples across Android versions and vendor ROMs to document field-name and bucket differences.",
+    "Need target-branch validation for Debug.MemoryInfo, MemInfoReader, and libmeminfo PSS/RSS/private dirty calculation paths.",
+    "Need same-scenario artifacts that pair meminfo deltas with allocation recordings, HPROF, heapprofd, dmabuf, and fd snapshots.",
+    "Need a small parser and budget report for before/after meminfo validation."
+  ],
+  "applied_reflections": [
+    "Applied Day 26's next-run instruction by connecting allocation, retained Java objects, native memory, Graphics, SQL, Objects, fd, Profiler, HPROF, and MAT evidence to dumpsys meminfo process accounting.",
+    "Applied Day 26's boundary between churn, peak, retained memory, and leak ownership by making bucket-specific external evidence mandatory before accepting a diagnosis.",
+    "Applied the standing more-diagrams-less-prose feedback by using three Mermaid diagrams, compact metric/bucket/acceptance matrices, command blocks, and short checklists instead of long prose.",
+    "Applied the ledger's tooling-command requirement by adding adb meminfo, smaps_rollup, fd, dumpheap, and AOSP source-search commands."
+  ],
+  "visible_changes": [
+    "Added three Mermaid diagrams because of the more-diagrams-less-prose feedback: process memory bill structure, troubleshooting decision flow, and same-scenario before/after validation sequence.",
+    "Added PSS/RSS/USS comparison, meminfo bucket attribution table, before/after acceptance matrix, diagnosis priority table, command templates, and a compact checklist.",
+    "Added explicit boundaries for Java Heap versus Native Heap versus Graphics versus SQL/fd so prior requests for clearer boundaries, source paths, tooling commands, and stronger engineering case were visibly applied."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 27 is marked complete and Day 28 remains pending.",
+    "Update progress.json so current_day becomes 28 and last_generated is refreshed.",
+    "Day 28 should focus on procrank, showmap, and system memory global views, carrying forward Day 27's PSS/RSS/USS and shared/private accounting boundaries.",
+    "Day 28 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 28 should compare dumpsys meminfo, procrank, showmap, smaps, smaps_rollup, and system-wide process ranking for low-memory investigations.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}
