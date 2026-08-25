@@ -1,0 +1,59 @@
+{
+  "day": 38,
+  "title": "HWASan 与 Android 整机内存错误定位",
+  "key_conclusions": [
+    "HWASan detects memory errors by comparing pointer tags with memory tags, making tag mismatch the central report concept.",
+    "Compared with ASan redzones, HWASan is especially useful for Android 64-bit UAF and stale pointer scenarios where memory may be reused quickly.",
+    "HWASan diagnosis still needs the same engineering discipline as ASan: preserve symbols, ABI, build variant, raw logs, and reproducible steps.",
+    "When HWASan cannot be enabled, the blocker must be recorded and the workflow should fall back to ASan, GWP-ASan, Scudo, or malloc_debug depending on scope."
+  ],
+  "shallow_points": [
+    "The article does not include a real HWASan tag mismatch report from an Android device or system image.",
+    "It does not validate concrete HWASan build flags or system image setup across Android versions, NDK releases, and ROMs.",
+    "It does not include runnable samples comparing ASan redzone reports with HWASan tag mismatch reports for the same bug.",
+    "It does not quantify runtime overhead or coverage differences on a target device."
+  ],
+  "discovered_connections": [
+    "Day 37's ASan report workflow maps cleanly onto HWASan when redzone/shadow evidence is replaced by pointer tag and memory tag evidence.",
+    "Day 36's UAF and OOB taxonomy remains the interpretation layer for tag mismatch reports.",
+    "Day 35's tombstone and symbolization workflow remains necessary because HWASan reports may still be collected through crash logs.",
+    "Day 39 should explain how GWP-ASan, Scudo, and MTE provide lower-overhead or production-adjacent alternatives.",
+    "Later system memory chapters can reuse HWASan whole-device boundaries when discussing native system components."
+  ],
+  "suggest_future_topics": [
+    "Day 39 should compare GWP-ASan, Scudo, and MTE against ASan/HWASan for overhead, coverage, deployment, and report quality.",
+    "A future lab should capture the same UAF with ASan and HWASan to compare report readability.",
+    "A later incident checklist should require device fingerprint, ABI, build id, and symbol path for sanitizer reports.",
+    "Future system-component articles should revisit HWASan system-image workflows."
+  ],
+  "knowledge_gaps": [
+    "Need real HWASan reports with tag mismatch fields, stack traces, build ids, and symbolized lines.",
+    "Need validated setup instructions for the repository's actual Gradle/CMake/NDK configuration.",
+    "Need hardware, emulator, and ROM compatibility notes for HWASan.",
+    "Need performance and flakiness comparison with ASan, GWP-ASan, Scudo, and MTE."
+  ],
+  "applied_reflections": [
+    "Applied Day 37's next-run instruction by focusing on HWASan report structure, tag mismatch interpretation, Android 64-bit requirements, and setup boundaries.",
+    "Applied Day 37's ASan workflow by comparing redzone/shadow evidence with HWASan pointer tag, memory tag, access stack, allocation stack, and reuse clues.",
+    "Applied Day 36's taxonomy by mapping HWASan tag mismatch back to UAF, OOB, stack-use-after-scope, and reuse models.",
+    "Applied the standing more-diagrams-less-prose feedback by using four Mermaid diagrams, compact comparison tables, decision matrices, command blocks, and today's checklist."
+  ],
+  "visible_changes": [
+    "Added four Mermaid diagrams because of the more-diagrams-less-prose feedback: HWASan tag structure, ASan-to-HWASan workflow, Android support decision flow, and troubleshooting flow.",
+    "Added ASan versus HWASan comparison table, report-field table, Android boundary table, best-fit scenario matrix, tool-selection matrix, command templates, and today's checklist.",
+    "Added explicit boundaries for 64-bit support, system image availability, app instrumentation, symbol matching, fallback tools, and same-scenario validation."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 38 is marked complete and Day 39 remains pending.",
+    "Update progress.json so current_day becomes 39 and last_generated is refreshed.",
+    "Day 39 should focus on GWP-ASan, Scudo, and MTE as low-overhead detection and runtime protection mechanisms.",
+    "Day 39 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 39 should carry forward Day 38's tool-boundary comparison by explaining overhead, coverage, sampled detection, allocator hardening, hardware tagging, deployment scope, and report interpretation.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}

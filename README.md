@@ -57,7 +57,7 @@
 | Day 35 | Native Crash 与 tombstone：从 signal 到 backtrace | ✅[2026-08-25](docs/week-05/day35-native-crash-tombstone.md) |
 | Day 36 | 内存越界、内存踩踏、UAF 与 double free 问题模型 | ✅[2026-08-25](docs/week-06/day36-memory-corruption-model.md) |
 | Day 37 | ASan 检测 Native 内存错误：构建、运行与报告解读 | ✅[2026-08-25](docs/week-06/day37-asan-native-memory-error.md) |
-| Day 38 | HWASan 与 Android 整机内存错误定位 | ⏳待生成 |
+| Day 38 | HWASan 与 Android 整机内存错误定位 | ✅[2026-08-25](docs/week-06/day38-hwasan-native-memory-error.md) |
 | Day 39 | GWP-ASan、Scudo 与 MTE：低开销检测和运行时防护 | ⏳待生成 |
 | Day 40 | KASAN 与 KFENCE：Kernel 内存越界和 UAF 定位 | ⏳待生成 |
 | Day 41 | Bitmap 内存模型：Android 8.0 前后的变化 | ⏳待生成 |

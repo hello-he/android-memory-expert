@@ -402,3 +402,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain when HWASan finds UAF/OOB more effectively, how to read reports, and how to validate fixes against the Day 36 taxonomy.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 37 -> Day 38
+- Applied reflection: carried forward Day 37's ASan workflow by replacing redzone/shadow evidence with HWASan pointer tag, memory tag, tag mismatch, access stack, allocation stack, and reuse clues.
+- Visible change: added four Mermaid diagrams, ASan-versus-HWASan comparison, report-field table, Android support boundary table, decision flow, tool-selection matrix, command templates, and today's checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real HWASan reports, setup validation, compatibility notes, runnable paired ASan/HWASan samples, and overhead data.
+
+## Next Run: Day 39
+- Keep the visual-first format.
+- Focus on GWP-ASan, Scudo, and MTE as low-overhead detection and runtime protection mechanisms.
+- Carry forward Day 38's tool-boundary comparison by explaining overhead, coverage, sampled detection, allocator hardening, hardware tagging, deployment scope, and report interpretation.
+- Compare these mechanisms against ASan/HWASan and explain where each fits in debug, dogfood, beta, production-adjacent, and platform builds.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
