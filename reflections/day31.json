@@ -1,0 +1,60 @@
+{
+  "day": 31,
+  "title": "Native Heap 分配器：jemalloc、Scudo 与 malloc 调试",
+  "key_conclusions": [
+    "Native Heap growth must be diagnosed through allocator behavior, mappings, and allocation stacks rather than as a Java-style object graph.",
+    "Leak, fragmentation, cache retention, and allocator-retained pages can all look like Native Heap or PSS growth, so they need separate evidence.",
+    "dumpsys meminfo provides the Native Heap bucket, showmap/smaps explain mappings, and heapprofd or malloc_debug provides native allocation call stacks.",
+    "Scudo, jemalloc, malloc_debug, and heapprofd have different goals and overheads; target Android version, build type, and configuration must be validated before relying on exact output."
+  ],
+  "shallow_points": [
+    "The article does not include real heapprofd or malloc_debug traces from a target device.",
+    "It does not validate exact jemalloc versus Scudo defaults across Android versions, process types, or vendor builds.",
+    "It does not include a runnable native leak, fragmentation, cache, and DirectByteBuffer sample app.",
+    "It does not provide a parser that joins Native Heap bucket deltas, showmap rows, smaps_rollup, and heapprofd stack totals."
+  ],
+  "discovered_connections": [
+    "Day 30's DirectByteBuffer native-byte ownership becomes allocator-visible only when paired with Native Heap, showmap, smaps, and heapprofd evidence.",
+    "Day 28's mapping view is required to distinguish heap, anon, mmap, ashmem, memfd, and shared file mappings before blaming malloc.",
+    "Day 27's PSS/RSS/USS boundaries still matter because native RSS growth can be shared or privately retained.",
+    "Day 32 should deepen maps and smaps reading for native memory layouts and mapping names.",
+    "Day 34 should reuse the leak-versus-fragmentation-versus-cache model when explaining heapprofd, malloc_debug, and Perfetto workflows."
+  ],
+  "suggest_future_topics": [
+    "Day 32 should focus on /proc/<pid>/maps, smaps, smaps_rollup, mapping names, and native memory layout attribution.",
+    "Day 34 should build a full heapprofd and malloc_debug native leak workflow with trace interpretation.",
+    "Day 36 should connect allocator metadata, UAF, double free, and overwrite symptoms to memory corruption models.",
+    "Day 39 should compare Scudo hardening, GWP-ASan sampling, and MTE protections.",
+    "A later automation article should generate before/after reports from meminfo, showmap, smaps_rollup, and heapprofd outputs."
+  ],
+  "knowledge_gaps": [
+    "Need target-branch validation for Android allocator selection, Scudo integration, jemalloc usage, malloc_debug options, and bionic malloc behavior.",
+    "Need real artifacts for heapprofd traces, malloc_debug backtraces, showmap deltas, and DirectByteBuffer native allocation cases.",
+    "Need quantitative examples showing when allocator retained memory is acceptable versus a product regression.",
+    "Need runnable samples that reproduce native leak, fragmentation, cache retention, and wrapper/native lifetime mismatch."
+  ],
+  "applied_reflections": [
+    "Applied Day 30's next-run instruction by focusing on Native Heap allocators, jemalloc, Scudo, malloc_debug, allocator arenas, fragmentation, and native allocation evidence.",
+    "Applied Day 30's native byte ownership boundary by showing how native buffers appear in malloc_debug, heapprofd, showmap, smaps, Native Heap, and allocator metadata.",
+    "Applied Day 30's DirectByteBuffer wrapper/native split by requiring both HPROF Java-owner evidence and native allocation/mapping evidence.",
+    "Applied the standing more-diagrams-less-prose feedback by using three Mermaid diagrams, compact allocator/evidence/diagnosis matrices, command blocks, and short checklists."
+  ],
+  "visible_changes": [
+    "Added three Mermaid diagrams because of the more-diagrams-less-prose feedback: Native Heap allocator evidence structure, Native Heap troubleshooting decision flow, and same-scenario evidence loop.",
+    "Added allocator/tool comparison table, Day 30 carry-forward table, leak-versus-fragmentation-versus-cache matrix, acceptance matrix, diagnosis matrix, command templates, and AOSP/app source-search commands.",
+    "Added explicit boundaries for leak, fragmentation, cache retention, allocator-retained pages, Java wrapper ownership, and native bytes so the prior request for stronger evidence and clearer boundaries was visibly applied."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 31 is marked complete and Day 32 remains pending.",
+    "Update progress.json so current_day becomes 32 and last_generated is refreshed.",
+    "Day 32 should focus on /proc/<pid>/maps, smaps, smaps_rollup, and native memory mapping layout attribution.",
+    "Day 32 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 32 should carry forward Day 31's allocator evidence by mapping Native Heap, anon mmap, ashmem, memfd, stack, code, and file mappings to meminfo/showmap/smaps evidence.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}

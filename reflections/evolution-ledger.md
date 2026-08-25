@@ -311,3 +311,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain allocator-level symptoms, leak versus fragmentation versus cache, and before/after validation.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 30 -> Day 31
+- Applied reflection: carried forward Day 30's native byte ownership into Native Heap allocators by showing how buffers appear in malloc_debug, heapprofd, showmap, smaps, Native Heap, and allocator metadata.
+- Visible change: added three Mermaid diagrams, allocator/tool comparison, leak-versus-fragmentation-versus-cache matrix, same-scenario evidence loop, command templates, diagnosis matrix, and AOSP/app source-search paths because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real heapprofd/malloc_debug traces, target allocator/version validation, runnable native samples, and a parser joining meminfo/showmap/smaps/heapprofd.
+
+## Next Run: Day 32
+- Keep the visual-first format.
+- Focus on `/proc/<pid>/maps`, `smaps`, `smaps_rollup`, and native memory mapping layout attribution.
+- Carry forward Day 31's allocator evidence by mapping Native Heap, anon mmap, ashmem, memfd, stack, code, and file mappings to `meminfo`/`showmap`/`smaps` evidence.
+- Explain mapping names, permissions, PSS/private dirty/swap fields, before/after mapping deltas, and owner evidence boundaries.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
