@@ -1,0 +1,59 @@
+{
+  "day": 41,
+  "title": "Bitmap 内存模型：Android 8.0 前后的变化",
+  "key_conclusions": [
+    "Bitmap memory must be separated into Java wrapper, native object, pixel storage, hardware/Graphics buffer, and image-library cache layers.",
+    "Android version and Bitmap configuration determine whether pixel cost is observed in Java Heap, Native Heap, Graphics, ashmem, or dma-buf evidence.",
+    "A single meminfo bucket is insufficient; Bitmap cases require HPROF retained paths plus meminfo/showmap/smaps or Graphics evidence.",
+    "Decode peaks, intentional caches, BitmapPool reuse, and real leaks must be separated before optimization."
+  ],
+  "shallow_points": [
+    "The article does not include real Android 7.x, 8.x, and modern device before/after samples.",
+    "It does not validate exact Bitmap pixel accounting across vendor ROMs, Skia versions, and hardware bitmap paths.",
+    "It does not include a runnable image loading sample with software and hardware Bitmap variants.",
+    "It does not compare Glide, Coil, Picasso, and platform decoder cache behavior with real artifacts."
+  ],
+  "discovered_connections": [
+    "Day 40's boundary discipline applies to Bitmap by separating wrapper ownership from pixel storage and Graphics buffers.",
+    "Day 33's dma-buf ownership model is needed for hardware Bitmap and GPU buffer attribution.",
+    "Day 34's native tooling can identify software Bitmap native pixel growth when stack capture is available.",
+    "Day 42 should deepen pixel storage attribution across Native Heap, Graphics, and dma-buf.",
+    "Day 44 should connect image library cache design to these buckets."
+  ],
+  "suggest_future_topics": [
+    "Day 42 should focus on Bitmap pixel data, Native Heap, Graphics, and dma-buf attribution.",
+    "Day 43 should cover BitmapFactory.Options, inSampleSize, inBitmap, and decode peak control.",
+    "Day 44 should explain Glide memory cache, LruCache, BitmapPool, lifecycle, and trim behavior.",
+    "A future lab should collect real meminfo, HPROF, showmap, and dmabuf artifacts for software and hardware bitmaps."
+  ],
+  "knowledge_gaps": [
+    "Need real device artifacts across Android versions for software and hardware Bitmap memory accounting.",
+    "Need source-level validation for current Skia/platform Bitmap ownership paths.",
+    "Need image-library specific cache and pool metrics.",
+    "Need automated before/after parser joining HPROF retained wrappers with meminfo buckets."
+  ],
+  "applied_reflections": [
+    "Applied Day 40's next-run instruction by separating Java object wrappers, native pixel storage, Graphics/dma-buf paths, allocator evidence, and Android version differences.",
+    "Applied Day 39's evidence-boundary comparison by requiring multiple buckets rather than a single memory field.",
+    "Applied Day 33's shared-buffer boundary by including hardware Bitmap, Graphics, and dma-buf ownership paths.",
+    "Applied the standing more-diagrams-less-prose feedback by using four Mermaid diagrams, compact attribution tables, command blocks, and today's checklist."
+  ],
+  "visible_changes": [
+    "Added four Mermaid diagrams because of the more-diagrams-less-prose feedback: Bitmap memory structure, Android 8.0 before/after accounting flow, troubleshooting flow, and decode peak sequence.",
+    "Added wrapper/native/pixel/Graphics attribution table, version matrix, symptom table, decode peak table, command templates, source-search commands, and today's checklist.",
+    "Added explicit boundaries between Java retained wrappers, native pixel bytes, Graphics/dma-buf buffers, caches, pools, and decode peaks."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 41 is marked complete and Day 42 remains pending.",
+    "Update progress.json so current_day becomes 42 and last_generated is refreshed.",
+    "Day 42 should focus on Bitmap pixel data, Native Heap, Graphics, and dma-buf attribution.",
+    "Day 42 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 42 should carry forward Day 41's split between wrapper ownership and pixel accounting, adding stronger evidence paths for meminfo, showmap, smaps, heapprofd, HardwareBuffer, and dma-buf.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}

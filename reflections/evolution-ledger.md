@@ -441,3 +441,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain how Bitmap memory appears in Java Heap, Native Heap, Graphics, ashmem/dma-buf, meminfo, HPROF, and image library caches across versions.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 40 -> Day 41
+- Applied reflection: carried forward Day 40's boundary discipline by separating Bitmap Java wrappers, native objects, pixel storage, Graphics/dma-buf buffers, caches, pools, and Android version differences.
+- Visible change: added four Mermaid diagrams, Bitmap memory structure, Android 8.0 before/after accounting flow, troubleshooting flow, decode peak sequence, attribution tables, command templates, and today's checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real Android version samples, Skia/platform validation, runnable image-loading variants, and image-library cache artifacts.
+
+## Next Run: Day 42
+- Keep the visual-first format.
+- Focus on Bitmap pixel data, Native Heap, Graphics, and dma-buf attribution.
+- Carry forward Day 41's split between wrapper ownership and pixel accounting, adding stronger evidence paths for meminfo, showmap, smaps, heapprofd, HardwareBuffer, and dma-buf.
+- Explain software versus hardware Bitmap bills, shared buffers, texture upload, decode temporary memory, and before/after attribution.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
