@@ -389,3 +389,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain Android app/native library setup, reproduction commands, report reading, false-boundary cases, and before/after acceptance.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 36 -> Day 37
+- Applied reflection: carried forward Day 36's corruption taxonomy into ASan report reading by mapping OOB, UAF, double free, invalid free, stack overflow, and global overflow to ASan error type, redzone, shadow memory, access stack, allocation stack, and free stack evidence.
+- Visible change: added four Mermaid diagrams, ASan runtime structure, report-to-model mapping, Android setup flow, UAF evidence sequence, report field tables, command templates, false-boundary matrix, and today's checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real device ASan reports, concrete Gradle/CMake flag validation, runnable NDK samples, and symbolization failure examples.
+
+## Next Run: Day 38
+- Keep the visual-first format.
+- Focus on HWASan and Android whole-device or app-focused memory error detection.
+- Carry forward Day 37's ASan workflow by comparing redzone/shadow evidence with HWASan tag mismatch, allocation tag, memory tag, stack traces, and Android 64-bit setup boundaries.
+- Explain when HWASan finds UAF/OOB more effectively, how to read reports, and how to validate fixes against the Day 36 taxonomy.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.

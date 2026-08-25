@@ -1,0 +1,59 @@
+{
+  "day": 37,
+  "title": "ASan 检测 Native 内存错误：构建、运行与报告解读",
+  "key_conclusions": [
+    "ASan turns memory corruption models into concrete evidence by reporting access stack, allocation stack, free stack, redzones, shadow bytes, and symbolized source lines.",
+    "Day 36's OOB, UAF, double free, and invalid free taxonomy maps directly to ASan error types and report fields.",
+    "The first engineering step is to verify target shared library, ABI, build variant, runtime loading, and symbol directory before interpreting any report.",
+    "Fix acceptance requires replaying the same scenario with no ASan report, no tombstone, and stable related memory evidence."
+  ],
+  "shallow_points": [
+    "The article does not include a real Android ASan report captured from a device.",
+    "It does not validate concrete Gradle, CMake, or ndk-build ASan flags across NDK and Android Gradle Plugin versions.",
+    "It does not include a runnable project that demonstrates heap overflow, UAF, double free, invalid free, stack overflow, and global overflow.",
+    "It does not show symbolization failures caused by mismatched build ids or stripped shared libraries."
+  ],
+  "discovered_connections": [
+    "Day 36's corruption taxonomy becomes the ASan report reading checklist.",
+    "Day 35's tombstone structure remains useful as a fallback when ASan aborts and debuggerd produces a crash artifact.",
+    "Day 34's allocator and heapprofd boundaries explain why ASan reports corruption while heapprofd may only show growth.",
+    "Day 38 should compare HWASan tag mismatch evidence against ASan redzone and quarantine evidence.",
+    "Day 39 should explain when lower-overhead GWP-ASan, Scudo, or MTE is preferable to full ASan builds."
+  ],
+  "suggest_future_topics": [
+    "Day 38 should cover HWASan report structure, tag mismatch interpretation, Android 64-bit requirements, and device setup.",
+    "Day 39 should compare GWP-ASan, Scudo, and MTE for low-overhead and production-adjacent detection.",
+    "A later lab should include real ASan reports with preserved symbols and build ids.",
+    "A future checklist should standardize sanitizer artifact capture for CI and incident response."
+  ],
+  "knowledge_gaps": [
+    "Need target-version validation for ASan runtime packaging and activation across Android releases and ROMs.",
+    "Need real reports for each corruption model, including shadow byte examples and symbolized source lines.",
+    "Need CI guidance for preserving unstripped symbols and matching build ids.",
+    "Need comparison data for ASan overhead versus HWASan, GWP-ASan, Scudo, and MTE."
+  ],
+  "applied_reflections": [
+    "Applied Day 36's next-run instruction by focusing on ASan build setup, runtime setup, redzones, shadow memory, report fields, alloc/free/use stacks, symbolization, and validation.",
+    "Applied Day 36's taxonomy by mapping ASan report text to OOB, UAF, double free, invalid free, stack overflow, and global overflow models.",
+    "Applied Day 35's tombstone evidence boundary by keeping raw logcat, tombstone, symbols, ABI, and build id as required artifacts.",
+    "Applied the standing more-diagrams-less-prose feedback by using four Mermaid diagrams, compact report/tool/triage matrices, command blocks, and today's checklist."
+  ],
+  "visible_changes": [
+    "Added four Mermaid diagrams because of the more-diagrams-less-prose feedback: ASan runtime structure, report-to-model mapping, Android setup flow, and UAF evidence sequence.",
+    "Added ASan component table, report field matrix, Android setup boundary table, reading-order table, false-boundary matrix, command templates, and today's checklist.",
+    "Added explicit boundaries for ABI, build variant, runtime loading, symbolization, access stack versus root cause, and same-scenario validation."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 37 is marked complete and Day 38 remains pending.",
+    "Update progress.json so current_day becomes 38 and last_generated is refreshed.",
+    "Day 38 should focus on HWASan and Android whole-device or app-focused memory error detection.",
+    "Day 38 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 38 should carry forward Day 37's ASan report workflow by comparing redzone/shadow evidence with HWASan tag mismatch, allocation tag, memory tag, and stack traces.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}
