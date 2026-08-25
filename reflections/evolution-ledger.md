@@ -467,3 +467,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain decode bounds pass, sample-size math, reuse constraints, hardware Bitmap limits, before/after meminfo, and HPROF validation.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 42 -> Day 43
+- Applied reflection: carried forward Day 42's attribution workflow into BitmapFactory.Options by showing how bounds pass, inSampleSize, inBitmap reuse, temporary buffers, transforms, and cache insertion affect Native Heap and Graphics peaks.
+- Visible change: added four Mermaid diagrams, decode peak path, inSampleSize decision flow, inBitmap reuse sequence, troubleshooting flow, option/evidence tables, command templates, and today's checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real decoder traces, compatibility validation, runnable samples, and image quality tradeoff data.
+
+## Next Run: Day 44
+- Keep the visual-first format.
+- Focus on Glide memory cache architecture: LruCache, BitmapPool, EngineResource, ActiveResources, lifecycle, and trim behavior.
+- Carry forward Day 43's decode peak controls by mapping Glide request, decode, transform, cache insertion, pool reuse, and lifecycle release to Java Heap, Native Heap, and Graphics evidence.
+- Explain how to distinguish cache policy, pool reuse, lifecycle leak, and decode peak in Glide-based apps.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.

@@ -1,0 +1,58 @@
+{
+  "day": 43,
+  "title": "BitmapFactory.Options：inSampleSize、inBitmap 与解码峰值",
+  "key_conclusions": [
+    "Bitmap decode optimization should target peak memory, not only final retained memory.",
+    "Bounds pass and inSampleSize reduce pixel allocation before decode, while inBitmap and BitmapPool reduce repeated allocations.",
+    "Transforms can temporarily hold source and target Bitmaps at the same time, so they must be included in peak analysis.",
+    "Validation requires before/after Native Heap, Graphics, HPROF, and cache plateau evidence."
+  ],
+  "shallow_points": [
+    "The article does not include real decoder traces or meminfo timelines.",
+    "It does not validate inBitmap compatibility rules across Android versions and decoder paths.",
+    "It does not include runnable samples for large image, transform, hardware Bitmap, and BitmapPool reuse cases.",
+    "It does not quantify visual quality tradeoffs for RGB_565 or aggressive sampling."
+  ],
+  "discovered_connections": [
+    "Day 42's attribution workflow makes decode optimization measurable across Native Heap and Graphics.",
+    "Day 41's cache-versus-leak boundary is needed because BitmapPool and MemoryCache intentionally retain memory.",
+    "Day 44 should map Glide MemoryCache and BitmapPool to these decode peak controls.",
+    "Day 45 should extend sampling into Region Decode and tile strategies for very large images."
+  ],
+  "suggest_future_topics": [
+    "Day 44 should focus on Glide MemoryCache, BitmapPool, EngineResource, lifecycle, and trim behavior.",
+    "Day 45 should cover Region Decode, tile loading, and peak control for very large images.",
+    "A future lab should compare original decode, sampled decode, inBitmap reuse, and transform peak timelines.",
+    "A later checklist should define image decode budgets by screen size and device class."
+  ],
+  "knowledge_gaps": [
+    "Need real device before/after artifacts for sampling, reuse, transform, and cache insertion.",
+    "Need version-specific decoder compatibility validation.",
+    "Need image quality and memory tradeoff samples.",
+    "Need library-specific traces for Glide, Coil, and platform decoders."
+  ],
+  "applied_reflections": [
+    "Applied Day 42's next-run instruction by focusing on BitmapFactory.Options, inSampleSize, inBitmap, and decode peak control.",
+    "Applied Day 42's attribution workflow by connecting sampling, reuse, temporary buffers, transforms, and cache insertion to Native Heap and Graphics peaks.",
+    "Applied Day 41's cache boundary by separating leak, cache plateau, BitmapPool reuse, and decode peak.",
+    "Applied the standing more-diagrams-less-prose feedback by using four Mermaid diagrams, compact option/peak/evidence matrices, command blocks, and today's checklist."
+  ],
+  "visible_changes": [
+    "Added four Mermaid diagrams because of the more-diagrams-less-prose feedback: decode peak path, inSampleSize decision flow, inBitmap reuse sequence, and troubleshooting flow.",
+    "Added options table, sample-size example matrix, inBitmap boundary table, optimization evidence table, command templates, source-search commands, and today's checklist.",
+    "Added explicit boundaries between final retained memory, decode peak, transform double-buffering, reuse safety, software/native pixels, and hardware/Graphics pixels."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 43 is marked complete and Day 44 remains pending.",
+    "Update progress.json so current_day becomes 44 and last_generated is refreshed.",
+    "Day 44 should focus on Glide memory cache architecture: LruCache, BitmapPool, EngineResource, ActiveResources, lifecycle, and trim behavior.",
+    "Day 44 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 44 should carry forward Day 43's decode peak controls by mapping Glide request, decode, transform, cache insertion, pool reuse, and lifecycle release to Java Heap, Native Heap, and Graphics evidence.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}
