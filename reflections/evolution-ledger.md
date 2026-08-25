@@ -350,3 +350,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain when to use heapprofd versus malloc_debug, how to capture traces, how to connect stacks to `meminfo`/`showmap`, and how to validate fixes.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 33 -> Day 34
+- Applied reflection: carried forward Day 33's owner-proof boundary into native leak tooling by joining heapprofd stacks, malloc_debug reports, Perfetto timelines, shared mappings, fd diffs, dmabuf/System buffer evidence, and `meminfo`/`showmap`/`smaps` bills.
+- Visible change: added three Mermaid diagrams, tool responsibility table, tool-selection matrix, heapprofd/malloc_debug reading tables, before/after validation sequence, acceptance matrix, and source-search commands because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real heapprofd/malloc_debug/Perfetto artifacts, version-specific config validation, runnable leak samples, and automated stack/bucket/mapping/fd comparison.
+
+## Next Run: Day 35
+- Keep the visual-first format.
+- Focus on Native Crash and tombstone: from signal to backtrace.
+- Carry forward Day 34's memory ownership and native tool evidence by connecting signal, tombstone, fault address, registers, backtrace, memory map, allocator/sanitizer evidence, symbols, and ownership path.
+- Explain how to decide whether the crash is null dereference, UAF, double free, buffer overflow, abort, or resource/lifetime misuse.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.

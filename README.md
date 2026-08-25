@@ -53,7 +53,7 @@
 | Day 31 | Native Heap 分配器：jemalloc、Scudo 与 malloc 调试 | ✅[2026-08-25](docs/week-05/day31-native-heap-allocator.md) |
 | Day 32 | /proc/&lt;pid&gt;/maps、smaps 与 native 内存映射全貌 | ✅[2026-08-25](docs/week-05/day32-proc-maps-smaps-layout.md) |
 | Day 33 | mmap、ashmem、memfd 与 dma-buf 的内存账单 | ✅[2026-08-25](docs/week-05/day33-mmap-ashmem-dmabuf.md) |
-| Day 34 | Native 内存泄漏工具链：heapprofd、malloc_debug、Perfetto | ⏳待生成 |
+| Day 34 | Native 内存泄漏工具链：heapprofd、malloc_debug、Perfetto | ✅[2026-08-25](docs/week-05/day34-native-memory-leak-tools.md) |
 | Day 35 | Native Crash 与 tombstone：从 signal 到 backtrace | ⏳待生成 |
 | Day 36 | 内存越界、内存踩踏、UAF 与 double free 问题模型 | ⏳待生成 |
 | Day 37 | ASan 检测 Native 内存错误：构建、运行与报告解读 | ⏳待生成 |

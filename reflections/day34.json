@@ -1,0 +1,60 @@
+{
+  "day": 34,
+  "title": "Native 内存泄漏工具链：heapprofd、malloc_debug、Perfetto",
+  "key_conclusions": [
+    "heapprofd is the first-line native allocation profiler for sampled stack growth and timeline analysis.",
+    "malloc_debug is stronger but heavier, so it should be used for targeted reproduction, exact backtraces, guard checks, or cases where heapprofd is insufficient.",
+    "Perfetto connects native allocation growth with scenario markers, threads, frames, GC, and system pressure, while meminfo/showmap/smaps/fd provide the memory bill.",
+    "Native leak acceptance requires allocation stack, Native Heap bucket, mapping delta, fd/shared-buffer state, and replayed product behavior to improve together."
+  ],
+  "shallow_points": [
+    "The article does not include a real heapprofd trace or malloc_debug leak report from a target device.",
+    "It does not validate concrete heapprofd config syntax or malloc_debug properties across Android versions and ROMs.",
+    "It does not include a runnable native leak sample with before/after traces.",
+    "It does not show a real Perfetto timeline correlating native allocation growth with jank, GC, or pressure."
+  ],
+  "discovered_connections": [
+    "Day 33's owner-proof boundary is essential because fd and dma-buf leaks may not appear as malloc stacks.",
+    "Day 32's mapping classes decide whether heapprofd, malloc_debug, fd diff, dmabuf, or HPROF is the next tool.",
+    "Day 31's leak-versus-fragmentation-versus-cache model is the interpretation layer after native stacks are found.",
+    "Day 35 should connect native leak tooling to crash/tombstone evidence when a memory issue becomes signal or abort.",
+    "Day 36 should reuse malloc_debug and allocator evidence when explaining UAF, double free, and memory corruption."
+  ],
+  "suggest_future_topics": [
+    "Day 35 should focus on native crash and tombstone, from signal to backtrace, with memory ownership and allocator evidence carried forward.",
+    "Day 36 should classify out-of-bounds, UAF, double free, and memory stomping using allocator and sanitizer evidence.",
+    "Day 37 should show ASan workflows for native memory errors.",
+    "Day 39 should compare Scudo, GWP-ASan, and MTE low-overhead protection.",
+    "A later lab should provide real heapprofd/malloc_debug/Perfetto artifacts and parser-backed before/after reports."
+  ],
+  "knowledge_gaps": [
+    "Need real heapprofd traces, malloc_debug backtraces, Perfetto timelines, and matching meminfo/showmap/smaps/fd snapshots.",
+    "Need version-specific validation for heapprofd config fields, malloc_debug activation, symbols, and permissions.",
+    "Need a runnable sample that reproduces native leak, fd leak, shared buffer leak, cache retention, and allocator fragmentation.",
+    "Need automated comparison tooling for stack totals, Native Heap bucket deltas, mapping deltas, and fd changes."
+  ],
+  "applied_reflections": [
+    "Applied Day 33's next-run instruction by focusing on heapprofd, malloc_debug, Perfetto, maps, smaps, meminfo, and fd evidence.",
+    "Applied Day 33's owner-proof boundary by showing how native allocation stacks, shared mappings, fd diffs, and system buffer evidence must be joined into one workflow.",
+    "Applied Day 31's leak-versus-fragmentation-versus-cache caution by keeping leak, cache, fragmentation, and allocator retention as separate outcomes.",
+    "Applied the standing more-diagrams-less-prose feedback by using three Mermaid diagrams, compact tool/decision/acceptance matrices, command blocks, and a short checklist."
+  ],
+  "visible_changes": [
+    "Added three Mermaid diagrams because of the more-diagrams-less-prose feedback: native leak toolchain structure, troubleshooting decision flow, and before/after validation sequence.",
+    "Added tool responsibility table, Day 33 carry-forward table, tool-selection table, heapprofd reading table, malloc_debug reading table, acceptance matrix, source-search commands, and today's checklist.",
+    "Added explicit boundaries for sampled stacks, debug allocator overhead, shared-buffer leaks, mapping bills, owner proof, and replay validation so prior requests for stronger evidence and clearer boundaries were visibly applied."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 34 is marked complete and Day 35 remains pending.",
+    "Update progress.json so current_day becomes 35 and last_generated is refreshed.",
+    "Day 35 should focus on Native Crash and tombstone, from signal to backtrace, carrying forward Day 34's memory ownership and native tool evidence.",
+    "Day 35 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 35 should explain signal, abort, tombstone sections, registers, backtrace, memory map, fault address, allocator/sanitizer evidence, symbols, and how to connect crash evidence to native memory ownership.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}
