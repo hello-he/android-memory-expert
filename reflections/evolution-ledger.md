@@ -415,3 +415,16 @@ This file records how each run should improve on the previous one. It is not par
 - Compare these mechanisms against ASan/HWASan and explain where each fits in debug, dogfood, beta, production-adjacent, and platform builds.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 38 -> Day 39
+- Applied reflection: carried forward Day 38's tool-boundary comparison into GWP-ASan, Scudo, and MTE by contrasting sampled detection, allocator hardening, hardware tagging, overhead, deployment scope, and report interpretation.
+- Visible change: added four Mermaid diagrams, three-layer protection structure, decision flow, GWP-ASan sampled sequence, Scudo check flow, mechanism comparison tables, MTE mode table, command templates, and today's checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real GWP-ASan/Scudo/MTE artifacts, property/setup validation, overhead data, and rollout policy.
+
+## Next Run: Day 40
+- Keep the visual-first format.
+- Focus on KASAN and KFENCE for kernel memory out-of-bounds and UAF detection.
+- Carry forward Day 39's low-overhead versus strong-detection comparison into kernel heap, slab, page allocator, reports, overhead, and deployment boundaries.
+- Explain how kernel memory reports differ from user-space ASan/HWASan/GWP-ASan/Scudo/MTE evidence and how to preserve symbols, config, console logs, and repro steps.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
