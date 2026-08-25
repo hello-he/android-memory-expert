@@ -1,0 +1,58 @@
+{
+  "day": 47,
+  "title": "Android 进程内存限制：memoryClass、largeHeap 与进程上限",
+  "key_conclusions": [
+    "memoryClass and largeHeap primarily describe Java heap headroom, not total process PSS, Native Heap, Graphics, or shared-buffer limits.",
+    "largeHeap can hide Java heap pressure but does not reduce native, graphics, dma-buf, mmap, or system-wide low-memory pressure.",
+    "LMKD risk depends on process state, oom_score_adj, PSS/RSS, and system pressure, not only app-level heap limits.",
+    "OOM and kill triage must first classify Java Heap, Native Heap, Graphics/dma-buf, shared mappings, or system pressure."
+  ],
+  "shallow_points": [
+    "The article does not include real memoryClass values from multiple devices.",
+    "It does not validate ActivityManager behavior and heap limit changes across Android versions and OEM configurations.",
+    "It does not include real LMKD kill logs or oom_score_adj samples.",
+    "It does not quantify largeHeap tradeoffs for startup, GC, LMKD risk, and system pressure."
+  ],
+  "discovered_connections": [
+    "Day 46's Graphics/dma-buf boundary explains why largeHeap is ineffective for hardware bitmap, Surface, and GPU memory cases.",
+    "Day 42's Bitmap pixel attribution helps distinguish Java wrapper pressure from native or Graphics pixel pressure.",
+    "Day 48 should expand process-local buckets into system RAM, ZRAM, reclaim, PSI, and LMKD behavior.",
+    "Later low-memory chapters should reuse the distinction between app heap limits and system-wide pressure."
+  ],
+  "suggest_future_topics": [
+    "Day 48 should introduce Android low-memory overview: RAM, ZRAM, kswapd, PSI, and LMKD.",
+    "Day 54 should deepen LMKD architecture and kill strategy.",
+    "Day 55 should explain ActivityManager OomAdjuster and oom_score_adj.",
+    "A future lab should correlate app meminfo, oom_score_adj, PSI, and LMKD kill logs."
+  ],
+  "knowledge_gaps": [
+    "Need device-specific memoryClass and largeMemoryClass data.",
+    "Need real LMKD logs with process state, adj, RSS/PSS, and kill reason.",
+    "Need measured impact of largeHeap on GC and system pressure.",
+    "Need examples separating Java OOM, native OOM, and LMKD kills."
+  ],
+  "applied_reflections": [
+    "Applied Day 46's next-run instruction by focusing on memoryClass, largeHeap, process ceilings, LMKD risk, and bucket-specific growth.",
+    "Applied Day 46's Graphics/dma-buf boundary by explaining why largeHeap does not solve Graphics, native, or shared-buffer pressure.",
+    "Applied Day 42's Bitmap attribution boundary by separating wrapper Java heap pressure from native and graphics pixel memory.",
+    "Applied the standing more-diagrams-less-prose feedback by using four Mermaid diagrams, compact bucket/risk matrices, command blocks, and today's checklist."
+  ],
+  "visible_changes": [
+    "Added four Mermaid diagrams because of the more-diagrams-less-prose feedback: process memory bill, memoryClass/largeHeap flow, LMKD risk path, and troubleshooting flow.",
+    "Added bucket table, misconception matrix, LMKD risk table, command templates, source-search commands, and today's checklist.",
+    "Added explicit boundaries between Java heap headroom, native heap, Graphics/dma-buf, shared mappings, process state, oom_score_adj, and system pressure."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 47 is marked complete and Day 48 remains pending.",
+    "Update progress.json so current_day becomes 48 and last_generated is refreshed.",
+    "Day 48 should focus on Android low-memory overview: RAM, ZRAM, kswapd, PSI, and LMKD.",
+    "Day 48 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 48 should carry forward Day 47's process bucket boundaries into system-wide pressure by connecting PSS/RSS, reclaim, swap, PSI, and kill decisions.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}

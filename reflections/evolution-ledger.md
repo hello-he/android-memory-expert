@@ -519,3 +519,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain Java heap limit, native heap growth, graphics/shared buffers, process state, oom_score_adj, and before/after evidence.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 46 -> Day 47
+- Applied reflection: carried forward Day 46's Graphics/dma-buf boundary into process memory limits by explaining why `largeHeap` only affects Java heap headroom and does not solve native, Graphics, shared-buffer, or LMKD pressure.
+- Visible change: added four Mermaid diagrams, process memory bill, memoryClass/largeHeap flow, LMKD risk path, troubleshooting flow, bucket tables, command templates, and today's checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real memoryClass data, ActivityManager validation, LMKD logs, and largeHeap tradeoff measurements.
+
+## Next Run: Day 48
+- Keep the visual-first format.
+- Focus on Android low-memory overview: RAM, ZRAM, kswapd, PSI, and LMKD.
+- Carry forward Day 47's process bucket boundaries into system-wide pressure by connecting PSS/RSS, reclaim, swap, PSI, and kill decisions.
+- Explain how app-local Java/Native/Graphics growth becomes system pressure and how to collect meminfo, vmstat, PSI, zram, and lmkd evidence.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.

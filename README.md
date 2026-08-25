@@ -66,7 +66,7 @@
 | Day 44 | Glide 内存缓存架构：LruCache、BitmapPool 与生命周期 | ✅[2026-08-25](docs/week-07/day44-glide-memory-cache.md) |
 | Day 45 | 大图加载策略：Region Decode、Tile 与峰值控制 | ✅[2026-08-25](docs/week-07/day45-large-image-region-decoder.md) |
 | Day 46 | 硬件加速、RenderThread、GPU 内存与 dma-buf | ✅[2026-08-25](docs/week-07/day46-hardware-acceleration-gpu-memory.md) |
-| Day 47 | Android 进程内存限制：memoryClass、largeHeap 与进程上限 | ⏳待生成 |
+| Day 47 | Android 进程内存限制：memoryClass、largeHeap 与进程上限 | ✅[2026-08-25](docs/week-07/day47-process-memory-limit.md) |
 | Day 48 | Android 低内存全景：RAM、ZRAM、kswapd、PSI 与 LMKD | ⏳待生成 |
 | Day 49 | Linux Page Reclaim：file/anon 页、LRU 与 MGLRU | ⏳待生成 |
 | Day 50 | 内存水位机制：zone、min/low/high watermark 与保留页 | ⏳待生成 |
