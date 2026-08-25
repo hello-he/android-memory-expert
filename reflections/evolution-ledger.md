@@ -571,3 +571,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain UI thread allocation, RenderThread stalls, order allocation, compaction cost, vmstat evidence, Perfetto alignment, and before/after validation.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 50 -> Day 51
+- Applied reflection: carried forward Day 50's watermark boundaries by showing how low/min breaches become background reclaim, direct reclaim, compaction, PSI, and UI frame drops.
+- Visible change: added four Mermaid diagrams, watermark-to-jank flow, UI/RenderThread sequence, reclaim-versus-compaction classifier, troubleshooting decision flow, evidence tables, command templates, and today's checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real Perfetto traces, device-specific vmstat validation, PSI thresholds, and runnable low-RAM workloads.
+
+## Next Run: Day 52
+- Keep the visual-first format.
+- Focus on PSI memory pressure: `some/full`, `avg10/60/300`, stall interpretation, and thrashing judgment.
+- Carry forward Day 51's jank model by using PSI to decide whether reclaim, compaction, or swap pressure is user-visible and sustained.
+- Explain instantaneous versus averaged PSI, correlation with frame misses, reclaim/refault/swap evidence, and alert thresholds.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
