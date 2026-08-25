@@ -480,3 +480,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain how to distinguish cache policy, pool reuse, lifecycle leak, and decode peak in Glide-based apps.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 43 -> Day 44
+- Applied reflection: carried forward Day 43's decode peak controls into Glide by mapping request, decode, transform, cache insertion, pool reuse, lifecycle release, and trim behavior to Java Heap, Native Heap, and Graphics evidence.
+- Visible change: added four Mermaid diagrams, Glide memory path, cache-versus-leak troubleshooting flow, BitmapPool reuse sequence, lifecycle/trim flow, role tables, validation matrix, command templates, and today's checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real Glide metrics, version-specific source validation, runnable feed samples, and Coil/Picasso comparison.
+
+## Next Run: Day 45
+- Keep the visual-first format.
+- Focus on large image loading strategies: Region Decode, Tile loading, subsampling, viewport-driven memory, and peak control.
+- Carry forward Day 44's cache/pool/lifecycle boundaries by showing how large image viewers avoid full decode and manage tiles, caches, and native/graphics memory.
+- Explain tile lifecycle, visible-window decode, cache eviction, gestures/zoom, and before/after memory evidence.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.

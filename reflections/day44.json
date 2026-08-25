@@ -1,0 +1,59 @@
+{
+  "day": 44,
+  "title": "Glide 内存缓存架构：LruCache、BitmapPool 与生命周期",
+  "key_conclusions": [
+    "Glide memory analysis must distinguish ActiveResources, MemoryCache, BitmapPool, DecodeJob, Transform, and RequestManager lifecycle roles.",
+    "A stable memory plateau can be an intentional cache policy, while linear growth after navigation is more likely a lifecycle leak or cache-key explosion.",
+    "BitmapPool reduces repeated native pixel allocations only when size, config, mutability, and lifecycle constraints match.",
+    "Validation needs HPROF retained paths plus meminfo Java Heap, Native Heap, Graphics, cache plateau, and decode peak evidence."
+  ],
+  "shallow_points": [
+    "The article does not include real Glide internal metrics, HPROF retained paths, or meminfo timelines.",
+    "It does not validate current Glide source internals and configuration APIs against a specific Glide version.",
+    "It does not include runnable RecyclerView or image feed samples with cache, pool, transform, and lifecycle variants.",
+    "It does not compare Glide behavior with Coil or Picasso."
+  ],
+  "discovered_connections": [
+    "Day 43's decode peak controls map directly to Glide decode, transform, cache insertion, and BitmapPool reuse.",
+    "Day 42's Native Heap and Graphics attribution is required to separate software Bitmap pool reuse from hardware Bitmap or texture cost.",
+    "Day 41's cache-versus-leak boundary becomes the main Glide triage decision.",
+    "Day 45 should extend these ideas to Region Decode and Tile for large images.",
+    "Day 70 should revisit these cache and pool patterns for RecyclerView memory optimization."
+  ],
+  "suggest_future_topics": [
+    "Day 45 should focus on Region Decode, Tile loading, and peak control for large images.",
+    "Day 70 should revisit RecyclerView prefetch, ViewHolder reuse, image request lifecycle, and BitmapPool behavior.",
+    "A future lab should collect Glide HPROF, meminfo, cache stats, and allocation traces for scroll and navigation scenarios.",
+    "A later comparison should cover Coil and Picasso memory cache and bitmap pool behavior."
+  ],
+  "knowledge_gaps": [
+    "Need real Glide artifacts from a target app or sample feed.",
+    "Need version-specific validation against current Glide source code and APIs.",
+    "Need quantitative cache-hit, pool-hit, and allocation-frequency metrics.",
+    "Need comparison with other image loading libraries."
+  ],
+  "applied_reflections": [
+    "Applied Day 43's next-run instruction by focusing on Glide MemoryCache, LruCache, BitmapPool, EngineResource, ActiveResources, lifecycle, and trim behavior.",
+    "Applied Day 43's decode peak controls by mapping Glide request, decode, transform, cache insertion, pool reuse, and lifecycle release to Java Heap, Native Heap, and Graphics evidence.",
+    "Applied Day 42's attribution workflow by requiring HPROF, meminfo, Native Heap, Graphics, and hardware Bitmap evidence.",
+    "Applied the standing more-diagrams-less-prose feedback by using four Mermaid diagrams, compact role/triage/reuse/validation tables, command blocks, and today's checklist."
+  ],
+  "visible_changes": [
+    "Added four Mermaid diagrams because of the more-diagrams-less-prose feedback: Glide memory path, cache-versus-leak troubleshooting flow, BitmapPool reuse sequence, and lifecycle/trim flow.",
+    "Added Glide component table, symptom table, reuse failure table, trim/lifecycle table, validation matrix, command templates, source-search commands, and today's checklist.",
+    "Added explicit boundaries between ActiveResources, MemoryCache plateau, BitmapPool reuse, lifecycle leaks, decode/transform peaks, Native Heap, and Graphics evidence."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 44 is marked complete and Day 45 remains pending.",
+    "Update progress.json so current_day becomes 45 and last_generated is refreshed.",
+    "Day 45 should focus on large image loading strategies: Region Decode, Tile loading, subsampling, viewport-driven memory, and peak control.",
+    "Day 45 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 45 should carry forward Day 44's cache/pool/lifecycle boundaries by showing how large image viewers avoid full decode and manage tiles, caches, and native/graphics memory.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}
