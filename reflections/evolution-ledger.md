@@ -506,3 +506,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain app process, RenderThread, GPU driver, SurfaceFlinger, HardwareBuffer, texture cache, and before/after evidence.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 45 -> Day 46
+- Applied reflection: carried forward Day 45's CPU/GPU tile boundary into hardware acceleration by explaining texture upload, RenderThread ownership, SurfaceFlinger visibility, dma-buf producer-consumer ownership, and Graphics meminfo validation.
+- Visible change: added four Mermaid diagrams, hardware acceleration memory path, Graphics evidence chain, troubleshooting flow, RenderThread/GPU/SurfaceFlinger sequence, evidence tables, command templates, and today's checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real SurfaceFlinger/fd/dmabuf/Perfetto artifacts, vendor GPU validation, runnable surface samples, and texture/layer cost data.
+
+## Next Run: Day 47
+- Keep the visual-first format.
+- Focus on Android process memory limits: memoryClass, largeHeap, per-process ceilings, LMKD risk, and bucket-specific growth.
+- Carry forward Day 46's Graphics/dma-buf boundary by explaining why largeHeap does not solve Graphics/native/shared-buffer pressure.
+- Explain Java heap limit, native heap growth, graphics/shared buffers, process state, oom_score_adj, and before/after evidence.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.

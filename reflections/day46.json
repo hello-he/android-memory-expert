@@ -1,0 +1,59 @@
+{
+  "day": 46,
+  "title": "硬件加速、RenderThread、GPU 内存与 dma-buf",
+  "key_conclusions": [
+    "Graphics memory growth must be attributed across UI thread, RenderThread, HWUI/Skia, GPU driver, gralloc, dma-buf, and SurfaceFlinger.",
+    "Java Heap and Native Heap can stay stable while hardware Bitmap, texture, layer, or Surface buffers increase Graphics memory.",
+    "dma-buf ownership requires producer-consumer evidence; process-local PSS does not prove who must release a shared buffer.",
+    "Validation requires before/after meminfo Graphics, fd/dma-buf evidence, SurfaceFlinger state, lifecycle release, and workload replay."
+  ],
+  "shallow_points": [
+    "The article does not include real SurfaceFlinger dumps, fd listings, dmabuf data, or Perfetto render traces.",
+    "It does not validate vendor GPU driver visibility or debugfs permissions across devices and ROMs.",
+    "It does not provide runnable TextureView, SurfaceView, hardware Bitmap, or layer leak samples.",
+    "It does not quantify texture cache, layer cache, or upload costs on target hardware."
+  ],
+  "discovered_connections": [
+    "Day 45's CPU/GPU tile boundary maps directly to texture upload and visible tile Graphics cost.",
+    "Day 42's hardware Bitmap attribution needs this RenderThread, Graphics, and dma-buf chain.",
+    "Day 33's producer-consumer ownership boundary remains central for dma-buf and SurfaceFlinger imports.",
+    "Day 47 should use Graphics and native bucket growth when explaining process memory ceilings and largeHeap misconceptions.",
+    "Day 48 should connect Graphics/dma-buf growth to system-wide low-memory pressure."
+  ],
+  "suggest_future_topics": [
+    "Day 47 should focus on process memory limits, memoryClass, largeHeap, and process ceilings.",
+    "Day 48 should connect app memory buckets to RAM, ZRAM, kswapd, PSI, and LMKD.",
+    "A future lab should collect meminfo, SurfaceFlinger, fd, dmabuf, and Perfetto artifacts for hardware Bitmap and Surface cases.",
+    "Day 70 should revisit RenderThread and GPU costs in RecyclerView image feeds."
+  ],
+  "knowledge_gaps": [
+    "Need real Graphics and dma-buf artifacts from target devices.",
+    "Need vendor-specific GPU memory visibility validation.",
+    "Need Perfetto render trace examples that correlate texture upload with memory growth and jank.",
+    "Need lifecycle samples for TextureView, SurfaceView, HardwareBuffer, and hardware Bitmap release."
+  ],
+  "applied_reflections": [
+    "Applied Day 45's next-run instruction by focusing on hardware acceleration, RenderThread, GPU memory, and dma-buf.",
+    "Applied Day 45's CPU/GPU tile boundary by explaining texture upload, RenderThread ownership, SurfaceFlinger visibility, dma-buf producer-consumer ownership, and Graphics meminfo validation.",
+    "Applied Day 33's shared-buffer ownership boundary by separating process-local Graphics cost from producer-consumer release responsibility.",
+    "Applied the standing more-diagrams-less-prose feedback by using four Mermaid diagrams, compact evidence/source matrices, command blocks, and today's checklist."
+  ],
+  "visible_changes": [
+    "Added four Mermaid diagrams because of the more-diagrams-less-prose feedback: hardware acceleration memory path, Graphics evidence attribution chain, troubleshooting flow, and RenderThread/GPU/SurfaceFlinger sequence.",
+    "Added layer table, evidence boundary table, source matrix, command templates, source-search commands, and today's checklist.",
+    "Added explicit boundaries between Java wrappers, native rendering objects, GPU textures, gralloc/HardwareBuffer, dma-buf sharing, SurfaceFlinger imports, and lifecycle release."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 46 is marked complete and Day 47 remains pending.",
+    "Update progress.json so current_day becomes 47 and last_generated is refreshed.",
+    "Day 47 should focus on Android process memory limits: memoryClass, largeHeap, per-process ceilings, LMKD risk, and bucket-specific growth.",
+    "Day 47 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 47 should carry forward Day 46's Graphics/dma-buf boundary by explaining why largeHeap does not solve Graphics/native/shared-buffer pressure.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}
