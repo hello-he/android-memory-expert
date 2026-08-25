@@ -584,3 +584,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain instantaneous versus averaged PSI, correlation with frame misses, reclaim/refault/swap evidence, and alert thresholds.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 51 -> Day 52
+- Applied reflection: carried forward Day 51's jank model by using PSI `some/full` and `avg10/60/300` to decide whether reclaim, compaction, or swap pressure is user-visible and sustained.
+- Visible change: added four Mermaid diagrams, PSI readout structure, stall-to-PSI sequence, thrashing decision flow, evidence graph, PSI pattern tables, command templates, and today's checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real PSI samples, RAM-class thresholds, vendor/version validation, and before/after traces.
+
+## Next Run: Day 53
+- Keep the visual-first format.
+- Focus on memory waterline growth attribution using `meminfo`, `vmstat`, slab, dma-buf, and memcg.
+- Carry forward Day 52's PSI model by using pressure windows to decide which growing memory bucket is actually causing stalls.
+- Explain bucket attribution, global versus per-process views, kernel slab growth, dma-buf producers/consumers, memcg evidence, and before/after validation.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.

@@ -1,0 +1,58 @@
+{
+  "day": 52,
+  "title": "PSI 内存压力：some/full、avg10/60/300 与 thrashing 判断",
+  "key_conclusions": [
+    "PSI measures memory stall time, so it proves whether reclaim, compaction, or swap pressure is user-visible only when aligned with workload timelines.",
+    "some and full describe different impact scopes: some means at least one task is stalled, full means all non-idle tasks are stalled.",
+    "avg10, avg60, and avg300 separate interaction spikes, sustained scene pressure, and chronic background pressure.",
+    "Thrashing should be diagnosed with PSI plus refault, swap-in, vmstat, and Perfetto evidence, not PSI alone."
+  ],
+  "shallow_points": [
+    "The article does not include real PSI samples from Android devices under controlled workloads.",
+    "It does not define numeric alert thresholds for different RAM classes or product latency targets.",
+    "It does not validate PSI availability and formatting across all Android versions and vendor kernels.",
+    "It does not include a worked before/after trace proving a fix reduced PSI and frame misses."
+  ],
+  "discovered_connections": [
+    "Day 51's direct reclaim and compaction stalls become measurable through PSI some/full windows.",
+    "Day 50's watermark breaches are upstream triggers, while PSI is the downstream stall symptom.",
+    "Day 49's refault and swap evidence is required to distinguish healthy reclaim from thrashing.",
+    "PSI can bridge kernel VM counters and Android user experience when aligned with FrameTimeline."
+  ],
+  "suggest_future_topics": [
+    "Day 53 should attribute rising memory waterlines with meminfo, vmstat, slab, dma-buf, and memcg evidence.",
+    "Day 54 should connect PSI thresholds to lmkd kill strategy and pressure monitoring.",
+    "Day 61 should build a low-memory lab that samples PSI once per second while recording Perfetto and vmstat.",
+    "Day 64 should use PSI to prove watermark-too-low jank in a case study."
+  ],
+  "knowledge_gaps": [
+    "Need real PSI baselines from low, mid, and high RAM devices.",
+    "Need practical thresholds for avg10, avg60, avg300, and full pressure by app scenario.",
+    "Need vendor/version validation for PSI file availability and lmkd integration.",
+    "Need trace examples that align PSI with frame timeline, direct reclaim, compaction, refault, and swap-in."
+  ],
+  "applied_reflections": [
+    "Applied Day 51's next-run instruction by focusing on PSI some/full, avg10/60/300, stall interpretation, and thrashing judgment.",
+    "Applied Day 51's jank model by using PSI to decide whether reclaim, compaction, or swap pressure is user-visible and sustained.",
+    "Applied Day 49's knowledge gap by requiring refault and swap-in evidence before calling a case thrashing.",
+    "Applied the standing more-diagrams-less-prose feedback by using four Mermaid diagrams, compact matrices, command templates, and today's checklist."
+  ],
+  "visible_changes": [
+    "Added four Mermaid diagrams because of the more-diagrams-less-prose feedback: PSI readout structure, Day 51 stall-to-PSI sequence, thrashing decision flow, and evidence graph.",
+    "Added PSI field table, pattern matrix, root-cause evidence matrix, collection commands, and minimum evidence closure table.",
+    "Added a today's checklist requiring PSI windows, one-second sampling, Perfetto frame alignment, vmstat, ZRAM, root-cause separation, and before/after validation."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 52 is marked complete and Day 53 remains pending.",
+    "Update progress.json so current_day becomes 53 and last_generated is refreshed.",
+    "Day 53 should focus on memory waterline growth attribution using meminfo, vmstat, slab, dma-buf, and memcg.",
+    "Day 53 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 53 should carry forward Day 52's PSI model by using pressure windows to decide which growing memory bucket is actually causing stalls.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "source": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url",
+    "details": "GitHub CLI is not authenticated. gh reported: To get started with GitHub CLI, please run gh auth login. Alternatively, populate the GH_TOKEN environment variable with a GitHub API authentication token."
+  }
+}
