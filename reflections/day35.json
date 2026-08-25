@@ -1,0 +1,60 @@
+{
+  "day": 35,
+  "title": "Native Crash 与 tombstone：从 signal 到 backtrace",
+  "key_conclusions": [
+    "Native crash analysis should start from signal or abort reason, then combine fault address, registers, backtrace, memory map, allocator evidence, symbols, and reproduction context.",
+    "Backtrace is the current execution path, not always the root memory-corruption site; UAF and overflow often require sanitizer or malloc_debug evidence.",
+    "Fault address interpretation requires maps and registers because null, heap, guard, code, stack, mmap, and unmapped addresses imply different next steps.",
+    "Reliable acceptance requires replaying the crash scenario with no tombstone, no allocator or sanitizer report, and stable related memory evidence."
+  ],
+  "shallow_points": [
+    "The article does not include a real tombstone decoded line by line.",
+    "It does not validate tombstone formats, debuggerd fields, or signal details across Android versions, ABIs, and vendor ROMs.",
+    "It does not include a runnable crashing native sample for null dereference, UAF, double free, overflow, SIGBUS, and stack overflow.",
+    "It does not show a real symbolication workflow with unstripped symbols and source-line mapping."
+  ],
+  "discovered_connections": [
+    "Day 34's heapprofd and malloc_debug workflow becomes stronger when a memory bug produces SIGABRT or allocator corruption evidence.",
+    "Day 33's fd and mmap owner boundary is needed for SIGBUS and shared-buffer lifecycle crashes.",
+    "Day 32's maps and smaps mapping view is required to interpret fault addresses and mapping ownership.",
+    "Day 36 should classify memory corruption models using this tombstone evidence structure.",
+    "Day 37 and Day 38 should use ASan/HWASan to find earlier writes or frees when tombstone backtraces are insufficient."
+  ],
+  "suggest_future_topics": [
+    "Day 36 should focus on out-of-bounds, memory stomping, UAF, double free, stack corruption, and allocator metadata corruption models.",
+    "Day 37 should build an ASan workflow for native memory error detection and report interpretation.",
+    "Day 38 should cover HWASan and device-wide Android memory error location.",
+    "Day 39 should compare GWP-ASan, Scudo, and MTE runtime protection and low-overhead detection.",
+    "A later crash lab should store real tombstones, symbols, sanitizer reports, and reproduction scripts."
+  ],
+  "knowledge_gaps": [
+    "Need real tombstones with symbols for null dereference, UAF, double free, overflow, SIGBUS, and stack overflow.",
+    "Need Android version and ABI validation for tombstone sections, debuggerd behavior, memory map formatting, and abort messages.",
+    "Need sanitizer-backed examples that show where the true write/free site differs from the crash backtrace.",
+    "Need a repeatable symbolication and artifact collection workflow for CI or incident response."
+  ],
+  "applied_reflections": [
+    "Applied Day 34's next-run instruction by focusing on native crash and tombstone evidence from signal to backtrace.",
+    "Applied Day 34's memory ownership boundary by connecting tombstone signal, fault address, registers, memory map, allocator/sanitizer evidence, symbols, and ownership path.",
+    "Applied Day 33's mmap/fd boundary by including SIGBUS, bad mmap, file/fd lifecycle, and shared-buffer owner paths.",
+    "Applied the standing more-diagrams-less-prose feedback by using three Mermaid diagrams, compact signal/address/evidence matrices, command blocks, and today's checklist."
+  ],
+  "visible_changes": [
+    "Added three Mermaid diagrams because of the more-diagrams-less-prose feedback: tombstone evidence structure, native crash troubleshooting decision flow, and tombstone-to-owner sequence.",
+    "Added tombstone section table, Day 34 carry-forward table, signal table, fault-address table, evidence requirements matrix, collection/symbolication commands, source-search commands, and today's checklist.",
+    "Added explicit boundaries between current backtrace, root corruption site, fault address ownership, symbol availability, allocator/sanitizer evidence, and replay validation."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 35 is marked complete and Day 36 remains pending.",
+    "Update progress.json so current_day becomes 36 and last_generated is refreshed.",
+    "Day 36 should focus on memory corruption models: out-of-bounds, memory stomping, UAF, double free, stack corruption, and allocator metadata corruption.",
+    "Day 36 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 36 should carry forward Day 35's tombstone evidence by mapping each corruption type to signal, fault address, allocator/sanitizer clues, reproduction strategy, and fix pattern.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}

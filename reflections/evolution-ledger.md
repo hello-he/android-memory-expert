@@ -363,3 +363,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain how to decide whether the crash is null dereference, UAF, double free, buffer overflow, abort, or resource/lifetime misuse.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 34 -> Day 35
+- Applied reflection: carried forward Day 34's native tool evidence into tombstone analysis by connecting signal, abort reason, fault address, registers, backtrace, memory map, allocator/sanitizer evidence, symbols, and ownership path.
+- Visible change: added three Mermaid diagrams, tombstone section table, signal and fault-address matrices, tombstone-to-owner sequence, collection/symbolication commands, and source-search paths because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real tombstones, Android/ABI format validation, runnable crash samples, and full symbolication examples.
+
+## Next Run: Day 36
+- Keep the visual-first format.
+- Focus on memory corruption models: out-of-bounds, memory stomping, UAF, double free, stack corruption, and allocator metadata corruption.
+- Carry forward Day 35's tombstone evidence by mapping each corruption type to signal, fault address, allocator/sanitizer clues, reproduction strategy, and fix pattern.
+- Explain how ASan/HWASan/GWP-ASan/Scudo/malloc_debug evidence differs and when tombstone alone is insufficient.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
