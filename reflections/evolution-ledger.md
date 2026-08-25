@@ -545,3 +545,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain clean file cache reclaim, dirty writeback, anon swap/ZRAM, kswapd/direct reclaim, and thrashing boundaries.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 48 -> Day 49
+- Applied reflection: carried forward Day 48's system pressure chain into Linux page reclaim by separating file pages, anon pages, LRU/MGLRU selection, kswapd, direct reclaim, ZRAM, PSI, and refault evidence.
+- Visible change: added four Mermaid diagrams, reclaim overview, LRU/MGLRU comparison, kswapd/direct reclaim sequence, evidence flow, metric tables, command templates, and today's checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real reclaim traces, MGLRU validation, controlled workloads, and practical thrashing thresholds.
+
+## Next Run: Day 50
+- Keep the visual-first format.
+- Focus on memory watermarks: zone, min/low/high watermark, lowmem reserves, and allocation/reclaim triggers.
+- Carry forward Day 49's reclaim model by showing how watermarks decide kswapd wakeup, direct reclaim, allocation failure, and LMKD pressure.
+- Explain zone watermarks, watermark boost/scale, min_free_kbytes, reserves, vmstat evidence, and before/after tuning risks.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.

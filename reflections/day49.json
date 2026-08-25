@@ -1,0 +1,58 @@
+{
+  "day": 49,
+  "title": "Linux Page Reclaim：file/anon 页、LRU 与 MGLRU",
+  "key_conclusions": [
+    "Page reclaim cost depends on page type: clean file pages are cheap, dirty file pages require writeback, and anonymous pages may require ZRAM swap.",
+    "LRU and MGLRU are page-selection mechanisms; vmstat, PSI, and Perfetto are needed to judge whether reclaim is healthy or harmful.",
+    "Direct reclaim is more user-visible than background kswapd reclaim because allocation threads pay the stall cost.",
+    "Refault and PSI evidence are required to distinguish useful cache reclaim from thrashing."
+  ],
+  "shallow_points": [
+    "The article does not include real vmstat, PSI, ZRAM, or Perfetto samples from a device.",
+    "It does not validate MGLRU availability and metrics across Android kernels.",
+    "It does not include a controlled workload showing clean file reclaim versus anon swap pressure.",
+    "It does not quantify practical thresholds for healthy reclaim versus thrashing."
+  ],
+  "discovered_connections": [
+    "Day 48's system pressure chain becomes concrete when file and anon pages are separated.",
+    "Day 47's process buckets explain where anon and shared pressure originates.",
+    "Day 50 should explain watermarks as the trigger boundary for kswapd and direct reclaim.",
+    "Day 52 should deepen PSI some/full interpretation for reclaim stalls."
+  ],
+  "suggest_future_topics": [
+    "Day 50 should cover zone watermarks: min, low, high, and reserve pages.",
+    "Day 51 should connect kswapd, direct reclaim, compaction, and UI jank.",
+    "Day 52 should focus on PSI memory pressure and thrashing judgment.",
+    "A future lab should collect synchronized meminfo, vmstat, PSI, zram, and Perfetto data."
+  ],
+  "knowledge_gaps": [
+    "Need real reclaim traces across device RAM classes.",
+    "Need Android kernel validation for MGLRU fields and behavior.",
+    "Need measured refault and PSI thresholds.",
+    "Need examples mapping app bucket optimization to lower reclaim cost."
+  ],
+  "applied_reflections": [
+    "Applied Day 48's next-run instruction by focusing on file and anon pages, LRU, MGLRU, kswapd/direct reclaim, vmstat, Perfetto, and PSI evidence.",
+    "Applied Day 48's system pressure chain by connecting app buckets to reclaim, ZRAM, PSI, and LMKD risk.",
+    "Applied Day 47's process bucket boundaries by keeping Java, native, graphics, and shared pressure as owner inputs.",
+    "Applied the standing more-diagrams-less-prose feedback by using four Mermaid diagrams, compact reclaim/metric tables, command blocks, and today's checklist."
+  ],
+  "visible_changes": [
+    "Added four Mermaid diagrams because of the more-diagrams-less-prose feedback: reclaim overview, LRU/MGLRU comparison, kswapd/direct reclaim sequence, and evidence flow.",
+    "Added page-type table, LRU/MGLRU matrix, reclaim path table, metric table, command templates, source-search commands, and today's checklist.",
+    "Added explicit boundaries between clean file reclaim, dirty writeback, anon ZRAM swap, direct reclaim stalls, refaults, PSI, and app bucket owners."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 49 is marked complete and Day 50 remains pending.",
+    "Update progress.json so current_day becomes 50 and last_generated is refreshed.",
+    "Day 50 should focus on memory watermarks: zone, min/low/high watermark, lowmem reserves, and allocation/reclaim triggers.",
+    "Day 50 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 50 should carry forward Day 49's reclaim model by showing how watermarks decide kswapd wakeup, direct reclaim, allocation failure, and LMKD pressure.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}
