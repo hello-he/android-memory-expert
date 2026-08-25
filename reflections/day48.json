@@ -1,0 +1,60 @@
+{
+  "day": 48,
+  "title": "Android 低内存全景：RAM、ZRAM、kswapd、PSI 与 LMKD",
+  "key_conclusions": [
+    "Android low-memory analysis connects app bucket growth to process PSS/RSS, system available memory, reclaim, ZRAM, PSI stalls, and LMKD decisions.",
+    "Java Heap, Native Heap, Graphics, dma-buf, and shared mappings can all become system pressure even when only one bucket looks suspicious locally.",
+    "LMKD analysis requires kill reason, adj, RSS/PSS, and pressure context, not only the victim process name.",
+    "Optimization must lower system pressure, reclaim/swap/stall evidence, or kill risk, not just one app heap number."
+  ],
+  "shallow_points": [
+    "The article does not include real meminfo, vmstat, PSI, zram, procrank, or lmkd logs from a device.",
+    "It does not validate metric names and lmkd log formats across Android versions and vendor ROMs.",
+    "It does not include a Perfetto trace showing kswapd, direct reclaim, PSI, and app workload alignment.",
+    "It does not quantify thresholds for low-memory decisions on different RAM classes."
+  ],
+  "discovered_connections": [
+    "Day 47's process bucket boundaries become the input side of system-wide memory pressure.",
+    "Day 46's Graphics/dma-buf boundary is necessary because shared buffers can pressure the system even when Java Heap is stable.",
+    "Day 49 should deepen page reclaim with file pages, anon pages, LRU, and MGLRU.",
+    "Day 54 and Day 57 should reuse the PSI and LMKD evidence chain.",
+    "The low-end memory special track begins here with a system-wide evidence model."
+  ],
+  "suggest_future_topics": [
+    "Day 49 should focus on Linux Page Reclaim: file/anon pages, LRU, and MGLRU.",
+    "Day 50 should explain zone watermarks and min/low/high thresholds.",
+    "Day 52 should deepen PSI memory pressure metrics.",
+    "Day 54 should explain LMKD architecture and kill strategy.",
+    "A future lab should collect synchronized meminfo, vmstat, PSI, zram, lmkd, and Perfetto artifacts."
+  ],
+  "knowledge_gaps": [
+    "Need real low-memory incident artifacts across device RAM classes.",
+    "Need version-specific validation for PSI, lmkd logs, zram stats, and vmstat fields.",
+    "Need Perfetto examples aligning app workload, reclaim, stall, and kill.",
+    "Need practical thresholds for distinguishing healthy cache reclaim from harmful thrashing."
+  ],
+  "applied_reflections": [
+    "Applied Day 47's next-run instruction by focusing on RAM, ZRAM, kswapd, PSI, and LMKD.",
+    "Applied Day 47's process bucket boundaries by connecting Java Heap, Native Heap, Graphics, PSS/RSS, reclaim, swap, PSI, and kill decisions.",
+    "Applied Day 46's Graphics/dma-buf boundary by treating shared graphics buffers as possible system pressure sources.",
+    "Applied the standing more-diagrams-less-prose feedback by using four Mermaid diagrams, compact metric/evidence matrices, command blocks, and today's checklist."
+  ],
+  "visible_changes": [
+    "Added four Mermaid diagrams because of the more-diagrams-less-prose feedback: low-memory system structure, app-to-system pressure flow, troubleshooting flow, and VM/ZRAM/PSI/LMKD sequence.",
+    "Added component table, app-to-system effect table, metric matrix, evidence closure table, command templates, source-search commands, and today's checklist.",
+    "Added explicit boundaries between app buckets, process PSS/RSS, kernel reclaim, ZRAM, PSI stalls, LMKD victim selection, and shared-buffer pressure."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 48 is marked complete and Day 49 remains pending.",
+    "Update progress.json so current_day becomes 49 and last_generated is refreshed.",
+    "Day 49 should focus on Linux Page Reclaim: file/anon pages, LRU, and MGLRU.",
+    "Day 49 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 49 should carry forward Day 48's system pressure chain by explaining how file and anon pages enter reclaim, how LRU/MGLRU selects pages, and how vmstat/Perfetto/PSI evidence proves reclaim cost.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}

@@ -532,3 +532,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain how app-local Java/Native/Graphics growth becomes system pressure and how to collect meminfo, vmstat, PSI, zram, and lmkd evidence.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 47 -> Day 48
+- Applied reflection: carried forward Day 47's process bucket boundaries into Android low-memory overview by connecting Java Heap, Native Heap, Graphics, PSS/RSS, reclaim, ZRAM, PSI, and LMKD decisions.
+- Visible change: added four Mermaid diagrams, low-memory system structure, app-to-system pressure flow, troubleshooting flow, VM/ZRAM/PSI/LMKD sequence, metric tables, command templates, and today's checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real low-memory artifacts, metric/log format validation, Perfetto traces, and device-class thresholds.
+
+## Next Run: Day 49
+- Keep the visual-first format.
+- Focus on Linux Page Reclaim: file/anon pages, LRU, and MGLRU.
+- Carry forward Day 48's system pressure chain by explaining how file and anon pages enter reclaim, how LRU/MGLRU selects pages, and how vmstat/Perfetto/PSI evidence proves reclaim cost.
+- Explain clean file cache reclaim, dirty writeback, anon swap/ZRAM, kswapd/direct reclaim, and thrashing boundaries.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
