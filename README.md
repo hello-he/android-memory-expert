@@ -59,7 +59,7 @@
 | Day 37 | ASan 检测 Native 内存错误：构建、运行与报告解读 | ✅[2026-08-25](docs/week-06/day37-asan-native-memory-error.md) |
 | Day 38 | HWASan 与 Android 整机内存错误定位 | ✅[2026-08-25](docs/week-06/day38-hwasan-native-memory-error.md) |
 | Day 39 | GWP-ASan、Scudo 与 MTE：低开销检测和运行时防护 | ✅[2026-08-25](docs/week-06/day39-gwp-asan-scudo-mte.md) |
-| Day 40 | KASAN 与 KFENCE：Kernel 内存越界和 UAF 定位 | ⏳待生成 |
+| Day 40 | KASAN 与 KFENCE：Kernel 内存越界和 UAF 定位 | ✅[2026-08-25](docs/week-06/day40-kasan-kfence-kernel-memory.md) |
 | Day 41 | Bitmap 内存模型：Android 8.0 前后的变化 | ⏳待生成 |
 | Day 42 | Bitmap 像素数据、Native Heap 与 Graphics 归因 | ⏳待生成 |
 | Day 43 | BitmapFactory.Options：inSampleSize、inBitmap 与解码峰值 | ⏳待生成 |

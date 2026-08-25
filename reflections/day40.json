@@ -1,0 +1,63 @@
+{
+  "day": 40,
+  "title": "KASAN 与 KFENCE：Kernel 内存越界和 UAF 定位",
+  "key_conclusions": [
+    "KASAN is the kernel-side strong detection path for OOB and UAF, while KFENCE is the lower-overhead sampled detection path.",
+    "Kernel memory reports must be interpreted with kernel config, symbols, dmesg/console context, task/cpu context, and reproducible workload steps.",
+    "Day 39's strong-versus-low-overhead distinction maps directly to KASAN versus KFENCE.",
+    "Kernel memory bug triage must distinguish slab object, page allocator, stack/global, and driver DMA or buffer lifetime failures."
+  ],
+  "shallow_points": [
+    "The article does not include real KASAN or KFENCE reports from an Android kernel.",
+    "It does not validate exact kernel config options, build steps, or availability across vendor kernels and Android versions.",
+    "It does not include runnable kernel modules that reproduce slab OOB, slab UAF, double free, page UAF, or DMA stale-buffer bugs.",
+    "It does not show a complete symbolization workflow using vmlinux and module debug symbols."
+  ],
+  "discovered_connections": [
+    "Day 39's low-overhead versus strong-detection comparison maps well to KASAN and KFENCE.",
+    "Day 36's corruption taxonomy still applies, but addresses now belong to slab, page allocator, vmalloc, stack, modules, or driver buffers.",
+    "Day 33's dma-buf and shared-buffer lifecycle boundary reappears as driver DMA and buffer lifetime evidence.",
+    "Day 41 should return to app-visible Bitmap memory and reuse the native/system attribution discipline from earlier days.",
+    "Later low-memory chapters should keep kernel reports separate from memory pressure symptoms such as reclaim and lmkd."
+  ],
+  "suggest_future_topics": [
+    "Day 41 should focus on Bitmap memory model changes before and after Android 8.0.",
+    "Day 42 should connect Bitmap pixel memory to Native Heap, Graphics, dma-buf, and shared-buffer accounting.",
+    "A future kernel lab should collect real KASAN/KFENCE reports, vmlinux symbols, module symbols, config, and repro workloads.",
+    "Later low-memory articles should separate kernel memory corruption reports from reclaim, compaction, PSI, and lmkd evidence."
+  ],
+  "knowledge_gaps": [
+    "Need real Android kernel KASAN and KFENCE artifacts with full dmesg, config, symbols, and repro steps.",
+    "Need validated config and build instructions for target vendor kernels.",
+    "Need examples showing workqueue, timer, refcount, RCU, and DMA lifetime UAF patterns.",
+    "Need guidance on overhead, stability, and rollout boundaries for kernel debug features."
+  ],
+  "applied_reflections": [
+    "Applied Day 39's next-run instruction by focusing on KASAN and KFENCE for kernel memory out-of-bounds and UAF detection.",
+    "Applied Day 39's low-overhead versus strong-detection comparison by contrasting KASAN strong instrumentation with KFENCE sampled guarded allocations.",
+    "Applied Day 38 and Day 37 sanitizer evidence discipline by requiring symbols, build/config identity, raw reports, and same-workload validation.",
+    "Applied the standing more-diagrams-less-prose feedback by using four Mermaid diagrams, compact kernel object/tool/evidence matrices, command blocks, and today's checklist."
+  ],
+  "visible_changes": [
+    "Added four Mermaid diagrams because of the more-diagrams-less-prose feedback: kernel memory bug structure, KASAN-versus-KFENCE comparison flow, report-reading structure, and kernel troubleshooting flow.",
+    "Added kernel object table, KASAN/KFENCE comparison matrix, report field table, evidence checklist table, repair matrix, command templates, source-search commands, and today's checklist.",
+    "Added explicit boundaries between user-space crash, kernel crash, slab/page/stack/DMA ownership, kernel config, symbolization, and same-workload validation."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 40 is marked complete and Day 41 remains pending.",
+    "Update progress.json so current_day becomes 41 and last_generated is refreshed.",
+    "Day 41 should focus on Bitmap memory model changes before and after Android 8.0.",
+    "Day 41 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 41 should carry forward Day 40's boundary discipline by separating Java object wrappers, native pixel storage, Graphics/dma-buf paths, allocator evidence, and Android version differences.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  },
+  "git_push": {
+    "status": "blocked",
+    "details": "Day 40 commit was created locally as cdaa5e6, but git push failed because the environment could not resolve github.com: ssh: Could not resolve hostname github.com: Name or service not known."
+  }
+}

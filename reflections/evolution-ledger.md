@@ -428,3 +428,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain how kernel memory reports differ from user-space ASan/HWASan/GWP-ASan/Scudo/MTE evidence and how to preserve symbols, config, console logs, and repro steps.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 39 -> Day 40
+- Applied reflection: carried forward Day 39's low-overhead versus strong-detection comparison into kernel memory debugging by contrasting KASAN strong instrumentation with KFENCE sampled guarded allocations.
+- Visible change: added four Mermaid diagrams, kernel memory bug structure, KASAN-versus-KFENCE comparison flow, report-reading structure, troubleshooting flow, kernel object table, report field matrix, evidence checklist, repair matrix, commands, and today's checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real KASAN/KFENCE reports, validated kernel configs, runnable kernel samples, vmlinux/module symbolization, and overhead/stability data. Day 40 push was blocked after local commit because `git push` could not resolve `github.com`.
+
+## Next Run: Day 41
+- Keep the visual-first format.
+- Focus on Bitmap memory model changes before and after Android 8.0.
+- Carry forward Day 40's boundary discipline by separating Java object wrappers, native pixel storage, Graphics/dma-buf paths, allocator evidence, and Android version differences.
+- Explain how Bitmap memory appears in Java Heap, Native Heap, Graphics, ashmem/dma-buf, meminfo, HPROF, and image library caches across versions.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
