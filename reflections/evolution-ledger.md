@@ -285,3 +285,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain local references, global references, weak global references, reference table overflow, `DeleteLocalRef`, `DeleteGlobalRef`, thread attach/detach, native owner cleanup, and before/after validation.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 28 -> Day 29
+- Applied reflection: carried forward Day 28's system/mapping view into JNI by correlating Java retained paths, JNI reference tables, native owner lifetime, `meminfo`, `showmap`, HPROF, and heapprofd/fd evidence.
+- Visible change: added three Mermaid diagrams, JNI reference lifecycle table, cross-boundary leak matrix, code red-line repair table, before/after validation chain, command templates, and ART/app source-search paths because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real HPROF JNI global-root examples, ART branch validation, heapprofd correlation, and a runnable NDK leak/fix sample.
+
+## Next Run: Day 30
+- Keep the visual-first format.
+- Focus on `NewByteArray`, `GetPrimitiveArrayCritical`, `GetByteArrayElements`, release modes, and `DirectByteBuffer` memory ownership.
+- Carry forward Day 29's JNI boundary by distinguishing Java array retention, copied native buffers, pinned/critical arrays, direct buffer native memory, release timing, and `meminfo`/`showmap`/HPROF evidence.
+- Explain where bytes live, who owns release, how stalls or GC blocking can happen, and how to validate before/after.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.

@@ -1,0 +1,60 @@
+{
+  "day": 29,
+  "title": "JNI Local/Global Reference 与跨边界泄漏",
+  "key_conclusions": [
+    "JNI local references are frame-scoped but can still overflow reference tables in loops, so DeleteLocalRef or PushLocalFrame/PopLocalFrame is needed for large batches.",
+    "JNI global references strongly keep Java objects alive until DeleteGlobalRef, making them a common cross-boundary retained-object leak source.",
+    "Weak global references do not prevent GC and must be promoted with NewLocalRef and null-checked before use.",
+    "JNI leak diagnosis requires combining HPROF JNI global roots with meminfo, showmap, heapprofd, fd, thread, and native owner evidence."
+  ],
+  "shallow_points": [
+    "The article does not include a real HPROF showing a JNI global root retained path.",
+    "It does not validate ART IndirectReferenceTable, CheckJNI, or reference-table diagnostics against a target Android branch.",
+    "It does not include a runnable NDK sample that leaks and then fixes a global reference, local reference overflow, and thread detach issue.",
+    "It does not correlate a same-run HPROF with heapprofd and showmap artifacts for a real JNI/native leak."
+  ],
+  "discovered_connections": [
+    "Day 28's showmap mapping view is necessary but insufficient; JNI requires owner evidence from reference tables and native cleanup paths.",
+    "Day 27's meminfo bucket model helps distinguish Java retained objects from Native Heap, Stack, and resource growth after JNI scenarios.",
+    "Day 20's resource close boundary applies directly to Java wrappers around native owners.",
+    "Day 30 should deepen byte array, primitive array critical sections, and DirectByteBuffer ownership because they are common JNI memory transfer paths.",
+    "Day 34 should reuse this JNI owner model when introducing heapprofd, malloc_debug, and Perfetto native leak workflows."
+  ],
+  "suggest_future_topics": [
+    "Day 30 should focus on NewByteArray, GetPrimitiveArrayCritical, GetByteArrayElements, Release* modes, and DirectByteBuffer ownership.",
+    "Day 31 should connect JNI native allocations to jemalloc, Scudo, malloc_debug, and allocator-level evidence.",
+    "Day 32 should show how JNI/native owners appear in maps and smaps when native heap or mmap grows.",
+    "Day 34 should build a native leak workflow that joins heapprofd stacks, JNI global references, and meminfo/showmap deltas.",
+    "A later sample-app article should include reproducible JNI global reference and local reference overflow cases."
+  ],
+  "knowledge_gaps": [
+    "Need real HPROF examples where MAT/LeakCanary/Shark show JNI global roots to Activity, callback, byte array, or wrapper objects.",
+    "Need target-branch ART source validation for IndirectReferenceTable, JNIEnvExt, local/global/weak global implementation details, and CheckJNI logs.",
+    "Need heapprofd traces that identify native owner allocations corresponding to Java wrappers retained by JNI.",
+    "Need a test app that quantifies before/after Java Heap, Native Heap, stack, fd, and showmap changes for JNI reference fixes."
+  ],
+  "applied_reflections": [
+    "Applied Day 28's next-run instruction by correlating Java retained paths, JNI reference tables, native owner lifetime, meminfo, showmap, and HPROF evidence.",
+    "Applied Day 28's unresolved owner-evidence gap by stating that showmap mapping names are only narrowing clues and must be paired with JNI global roots, code search, heapprofd, fd, or lifecycle cleanup proof.",
+    "Applied the standing more-diagrams-less-prose feedback by using three Mermaid diagrams, compact reference-type/mapping/scenario/acceptance matrices, command blocks, and short checklists.",
+    "Applied the source-path and tooling-command requirement by adding adb meminfo/showmap/dumpheap/fd commands and app/AOSP searches for JNI reference APIs and ART reference-table code."
+  ],
+  "visible_changes": [
+    "Added three Mermaid diagrams because of the more-diagrams-less-prose feedback: JNI reference table/object-retention structure, JNI leak troubleshooting decision flow, and before/after validation sequence.",
+    "Added reference-type lifecycle table, Day 28 carry-forward table, cross-boundary leak matrix, code red-line repair table, acceptance matrix, command template, source-search commands, and compact checklist.",
+    "Added explicit Java versus native owner boundaries and JNI reference-table evidence so prior requests for deeper evidence, clearer boundaries, source paths, tooling commands, and stronger engineering case were visibly applied."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 29 is marked complete and Day 30 remains pending.",
+    "Update progress.json so current_day becomes 30 and last_generated is refreshed.",
+    "Day 30 should focus on NewByteArray, GetPrimitiveArrayCritical, GetByteArrayElements, Release* modes, and DirectByteBuffer memory ownership.",
+    "Day 30 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 30 should carry forward Day 29's JNI boundary by distinguishing Java array retention, native copied buffers, pinned/critical arrays, direct buffer native memory, release modes, and meminfo/showmap/HPROF evidence.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}
