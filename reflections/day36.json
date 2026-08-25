@@ -1,0 +1,61 @@
+{
+  "day": 36,
+  "title": "内存越界、内存踩踏、UAF 与 double free 问题模型",
+  "key_conclusions": [
+    "Native memory corruption analysis must separate the final crash site from the first corrupting write, free, or lifetime transfer.",
+    "Day 35 tombstone evidence becomes useful when mapped to corruption models: out-of-bounds, use-after-free, double free, memory stomping, stack corruption, mmap/fd lifetime bugs, and allocator metadata corruption.",
+    "Tombstone alone is often insufficient for UAF, overflow, and stomping; sanitizer or allocator evidence is needed to capture allocation, free, and use stacks.",
+    "A fix is acceptable only when the same scenario produces no crash, no sanitizer or allocator report, and stable related memory or mapping evidence."
+  ],
+  "shallow_points": [
+    "The article does not include real ASan, HWASan, GWP-ASan, Scudo, or malloc_debug reports from a target Android device.",
+    "It does not validate sanitizer support, activation flags, or allocator diagnostics across Android versions, ABIs, ROMs, and build variants.",
+    "It does not include runnable native samples for heap overflow, stack overflow, UAF, double free, invalid free, allocator metadata corruption, or mmap lifecycle bugs.",
+    "It does not show a real case where the tombstone backtrace differs from the first corrupting write or free stack."
+  ],
+  "discovered_connections": [
+    "Day 35's signal, fault address, register, backtrace, memory map, and allocator evidence model is the triage front door for corruption classification.",
+    "Day 34's malloc_debug and heapprofd tooling helps distinguish leak-like growth from corruption and allocator abort scenarios.",
+    "Day 33's mmap, fd, and shared-buffer ownership boundary remains necessary for SIGBUS, unmapped access, and fd-backed buffer lifetime errors.",
+    "Day 37 should turn this taxonomy into an ASan workflow that explains redzones, shadow memory, symbolization, report fields, and build/run steps.",
+    "Day 39 should compare low-overhead runtime defenses when full sanitizer builds are too expensive for broad deployment."
+  ],
+  "suggest_future_topics": [
+    "Day 37 should focus on ASan detection of Native memory errors, including build setup, runtime deployment, redzone reports, stack interpretation, and symbolization.",
+    "Day 38 should cover HWASan tag-based detection and Android whole-device or app-focused workflows.",
+    "Day 39 should compare GWP-ASan, Scudo, and MTE for lower-overhead detection and production-adjacent protection.",
+    "A later lab should include runnable NDK corruption samples and archived tombstone/sanitizer/allocator artifacts.",
+    "A future automation should add a compact incident template joining tombstone, sanitizer report, maps, symbols, owner path, and validation result."
+  ],
+  "knowledge_gaps": [
+    "Need real device artifacts showing alloc stack, free stack, use stack, tombstone, maps, and symbolized source lines for each corruption model.",
+    "Need version-specific validation for sanitizer support, Scudo abort messages, malloc_debug properties, GWP-ASan availability, and HWASan requirements.",
+    "Need sample apps that reproduce cross-thread UAF, JNI native handle misuse, fd/mmap lifetime errors, and allocator metadata corruption.",
+    "Need CI or incident-response automation that preserves symbols and links crash reports to sanitizer evidence."
+  ],
+  "applied_reflections": [
+    "Applied Day 35's next-run instruction by focusing on memory corruption models: out-of-bounds, memory stomping, UAF, double free, stack corruption, and allocator metadata corruption.",
+    "Applied Day 35's tombstone evidence boundary by mapping signal, fault address, registers, backtrace, memory map, allocator messages, and sanitizer evidence to each corruption type.",
+    "Applied Day 34's native tool evidence by explaining when tombstone must be supplemented with ASan, HWASan, GWP-ASan, Scudo, malloc_debug, Perfetto, heapprofd, maps, and fd evidence.",
+    "Applied Day 33's mmap/fd ownership boundary by keeping SIGBUS, unmapped access, fd-backed buffers, and mmap lifecycle separate from ordinary heap corruption.",
+    "Applied the standing more-diagrams-less-prose feedback by using four Mermaid diagrams, compact model/tool/repair matrices, command blocks, and a short today's checklist."
+  ],
+  "visible_changes": [
+    "Added four Mermaid diagrams because of the more-diagrams-less-prose feedback: corruption taxonomy structure, Day 35 evidence mapping flow, troubleshooting decision flow, UAF lifecycle sequence, and symptom-to-fix evidence loop.",
+    "Added corruption type matrix, Day 35 carry-forward table, OOB comparison table, UAF evidence table, double-free signal table, stomping table, tool evidence matrix, closure evidence table, repair strategy matrix, source-search commands, and today's checklist.",
+    "Added explicit boundaries between final crash site, first corrupting write, allocation stack, free stack, use stack, allocator detection point, mmap/fd lifecycle, and replay validation."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 36 is marked complete and Day 37 remains pending.",
+    "Update progress.json so current_day becomes 37 and last_generated is refreshed.",
+    "Day 37 should focus on ASan detection of Native memory errors: build configuration, device/runtime setup, redzones, shadow memory, reports, alloc/free/use stacks, symbolization, and validation.",
+    "Day 37 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 37 should carry forward Day 36's taxonomy by showing how ASan report fields confirm OOB, UAF, double free, and invalid free models.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}

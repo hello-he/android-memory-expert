@@ -376,3 +376,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain how ASan/HWASan/GWP-ASan/Scudo/malloc_debug evidence differs and when tombstone alone is insufficient.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 35 -> Day 36
+- Applied reflection: carried forward Day 35's tombstone evidence by mapping signal, fault address, registers, backtrace, memory map, allocator messages, and sanitizer evidence to OOB, UAF, double free, stomping, stack corruption, mmap/fd lifecycle errors, and allocator metadata corruption.
+- Visible change: added four Mermaid diagrams, corruption taxonomy, Day 35 evidence mapping flow, troubleshooting decision flow, UAF sequence, symptom-to-fix evidence loop, tool evidence matrix, repair matrix, command templates, and today's checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real sanitizer/allocator reports, version/ABI validation, runnable native corruption samples, and archived symbolized crash artifacts.
+
+## Next Run: Day 37
+- Keep the visual-first format.
+- Focus on ASan detection of Native memory errors: build configuration, runtime setup, redzones, shadow memory, report fields, alloc/free/use stacks, symbolization, and validation.
+- Carry forward Day 36's taxonomy by showing how ASan report fields confirm OOB, UAF, double free, invalid free, and stack/global overflow models.
+- Explain Android app/native library setup, reproduction commands, report reading, false-boundary cases, and before/after acceptance.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
