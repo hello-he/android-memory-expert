@@ -1,0 +1,60 @@
+{
+  "day": 33,
+  "title": "mmap、ashmem、memfd 与 dma-buf 的内存账单",
+  "key_conclusions": [
+    "File-backed mmap, anonymous mmap, ashmem, memfd, and dma-buf must be separated because their ownership and accounting rules differ.",
+    "maps, showmap, and smaps show what a process maps, but fd holders, producer-consumer relationships, exporter/importer lists, and lifecycle code decide responsibility.",
+    "PSS is useful for shared-cost accounting but does not answer who must release a shared buffer.",
+    "dma-buf analysis often requires system-level graphics, SurfaceFlinger, HAL, and debugfs evidence because process-local mappings can hide the true exporter or owner."
+  ],
+  "shallow_points": [
+    "The article does not include real ashmem, memfd, or dma-buf dumps from a target device.",
+    "It does not validate debugfs dma-buf paths, SurfaceFlinger fields, or permissions across Android versions, kernels, SELinux policies, user/userdebug builds, and vendor ROMs.",
+    "It does not include a runnable sample that leaks memfd or AHardwareBuffer fd references and then proves release with before/after artifacts.",
+    "It does not provide a parser that joins fd diffs, smaps rows, dmabuf exporter/importer data, and meminfo Graphics/PSS deltas."
+  ],
+  "discovered_connections": [
+    "Day 32's mapping-name boundary is central: mapping names narrow shared memory cases but do not prove producer or release responsibility.",
+    "Day 31's allocator evidence applies mainly to anonymous/private mappings; ashmem, memfd, and dma-buf need fd and producer-consumer evidence.",
+    "Day 30's DirectByteBuffer ownership split can be represented as a Java wrapper plus native or mmap-backed bytes, but dma-buf adds cross-process ownership.",
+    "Day 42 should reuse dma-buf and Graphics accounting when explaining Bitmap pixel data and GPU memory.",
+    "Day 46 should deepen RenderThread, GPU memory, HardwareBuffer, SurfaceFlinger, and dma-buf lifecycle evidence."
+  ],
+  "suggest_future_topics": [
+    "Day 34 should integrate heapprofd, malloc_debug, Perfetto, maps, smaps, meminfo, and fd evidence for native memory leak tooling.",
+    "Day 42 should connect Bitmap pixel/native/Graphics attribution to dma-buf and HardwareBuffer evidence.",
+    "Day 46 should focus on hardware acceleration, RenderThread, GPU memory, SurfaceFlinger, and dma-buf lifecycle.",
+    "Day 53 should reuse shared-buffer accounting for memory waterline growth attribution.",
+    "A later automation article should build a parser joining fd diffs, smaps deltas, dmabuf data, and meminfo bucket changes."
+  ],
+  "knowledge_gaps": [
+    "Need real device artifacts for ashmem, memfd, dma-buf, SurfaceFlinger, maps, smaps, fd, and meminfo before/after comparisons.",
+    "Need target-version validation for ASharedMemory, memfd, dma-buf debugfs visibility, and SurfaceFlinger dump formats.",
+    "Need sample apps or traces that demonstrate producer-consumer ownership differing from process-local PSS attribution.",
+    "Need tool support to correlate fd holders and dmabuf exporter/importer records with app lifecycle events."
+  ],
+  "applied_reflections": [
+    "Applied Day 32's next-run instruction by focusing on mmap, ashmem, memfd, and dma-buf accounting with mapping-name and owner-proof boundaries.",
+    "Applied Day 32's owner-proof boundary by emphasizing that maps/showmap/smaps identify mappings while fd holders, producer-consumer relationships, dmabuf exporter/importer data, and lifecycle paths decide responsibility.",
+    "Applied Day 31's leak-versus-cache caution by separating private mmap, shared memory retention, buffer cache, fd leaks, and producer-held buffers.",
+    "Applied the standing more-diagrams-less-prose feedback by using three Mermaid diagrams, compact mmap/shared-buffer/diagnosis matrices, command blocks, and a short checklist."
+  ],
+  "visible_changes": [
+    "Added three Mermaid diagrams because of the more-diagrams-less-prose feedback: shared buffer accounting structure, shared-memory troubleshooting decision flow, and dma-buf producer-consumer sequence.",
+    "Added mmap shape table, ashmem/memfd/dma-buf comparison, Day 32 carry-forward table, diagnosis matrix, command templates, source-search commands, boundaries, and today's checklist.",
+    "Added explicit boundaries between mapped process cost, fd ownership, producer-consumer lifetime, exporter/importer responsibility, and PSS accounting so prior requests for stronger evidence and clearer boundaries were visibly applied."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 33 is marked complete and Day 34 remains pending.",
+    "Update progress.json so current_day becomes 34 and last_generated is refreshed.",
+    "Day 34 should focus on Native memory leak tooling: heapprofd, malloc_debug, Perfetto, maps, smaps, meminfo, and fd evidence.",
+    "Day 34 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 34 should carry forward Day 33's owner-proof boundary by showing how native allocation stacks, shared mappings, fd diffs, and system buffer evidence are joined into one leak workflow.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "details": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url failed because GitHub CLI is not authenticated and GH_TOKEN is not populated.",
+    "incorporated": []
+  }
+}

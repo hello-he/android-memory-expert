@@ -337,3 +337,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain file-backed versus anonymous mmap, ashmem versus memfd, dma-buf producer-consumer ownership, fd paths, shared/private/PSS accounting, and why process-local mapping views can miss real buffer owners.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 32 -> Day 33
+- Applied reflection: carried forward Day 32's mapping-name and owner-proof boundaries into `mmap`, ashmem, memfd, and dma-buf accounting.
+- Visible change: added three Mermaid diagrams, file-backed versus anonymous mmap table, ashmem/memfd/dma-buf comparison, producer-consumer dma-buf sequence, fd/dmabuf capture template, diagnosis matrix, and source-search commands because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real ashmem/memfd/dma-buf artifacts, version/permission validation, runnable shared-buffer leak samples, and a parser joining fd/smaps/dmabuf/meminfo.
+
+## Next Run: Day 34
+- Keep the visual-first format.
+- Focus on Native memory leak tooling: heapprofd, malloc_debug, Perfetto, maps, smaps, meminfo, and fd evidence.
+- Carry forward Day 33's owner-proof boundary by showing how native allocation stacks, shared mappings, fd diffs, and system buffer evidence are joined into one leak workflow.
+- Explain when to use heapprofd versus malloc_debug, how to capture traces, how to connect stacks to `meminfo`/`showmap`, and how to validate fixes.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
