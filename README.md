@@ -78,7 +78,7 @@
 | Day 56 | 为什么 lmkd 会杀看似优先级更高的进程：证据链与误判拆解 | ✅[2026-09-03](docs/week-08/day56-lmkd-kills-higher-priority-process.md) |
 | Day 57 | lmkd 日志、statsd 与 victim 分析：从 kill reason 到 adj/RSS | ✅[2026-09-03](docs/week-09/day57-lmkd-logs-stats-victim-analysis.md) |
 | Day 58 | ZRAM 与 swap 路径：压缩、换入换出、mm_stat 与延迟代价 | ✅[2026-09-03](docs/week-09/day58-zram-swap-metrics.md) |
-| Day 59 | mmd、ZRAM writeback/recompression 与厂商内存拓展 | ⏳待生成 |
+| Day 59 | mmd、ZRAM writeback/recompression 与厂商内存拓展 | ✅[2026-09-03](docs/week-09/day59-mmd-zram-writeback-memory-extension.md) |
 | Day 60 | App Compaction、CachedAppOptimizer、onTrimMemory 与缓存释放 | ⏳待生成 |
 | Day 61 | 低内存复现实验室：stress、trace、logcat 与可重复场景 | ⏳待生成 |
 | Day 62 | 水位与 lmkd 调参：min_free_kbytes、watermark_scale_factor、lmkd 属性与风险 | ⏳待生成 |

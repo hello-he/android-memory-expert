@@ -1,0 +1,58 @@
+{
+  "day": 59,
+  "title": "mmd、ZRAM writeback/recompression 与厂商内存拓展",
+  "key_conclusions": [
+    "ZRAM compression, recompression, writeback, and vendor memory extension are separate mechanisms with separate evidence.",
+    "writeback can reduce RAM pressure but may add storage latency on later fault-in.",
+    "mmd and vendor memory extension features must be treated as ROM-specific policy rather than universal AOSP behavior.",
+    "PSI, mm_stat, bd_stat, vmstat, and logs must be sampled in the same window before tuning conclusions."
+  ],
+  "shallow_points": [
+    "The article does not include real bd_stat samples from devices with ZRAM writeback enabled.",
+    "It does not validate mmd source paths or properties for a specific Android vendor branch.",
+    "It does not quantify storage latency and flash wear tradeoffs.",
+    "It does not include before/after data for recompression policy changes."
+  ],
+  "discovered_connections": [
+    "Day 58's ZRAM cost model expands into CPU compression, denser recompression, and backing-storage writeback.",
+    "Day 57 victim analysis needs writeback state because kill benefit and fault-in latency can change after cold pages move.",
+    "Day 52 PSI remains the user-visible gate for judging whether memory extension is helping or hurting.",
+    "Day 60 should connect system memory pressure with app compaction and trim opportunities before lmkd kills."
+  ],
+  "suggest_future_topics": [
+    "Day 60 should explain App Compaction, CachedAppOptimizer, onTrimMemory, and cache release.",
+    "Day 61 should build a lab that can toggle workloads and collect mm_stat, bd_stat, PSI, vmstat, and app trim callbacks.",
+    "Day 62 should treat ZRAM/writeback properties as tuning inputs only with before/after latency evidence.",
+    "A future vendor appendix should compare mmd behavior across ROMs."
+  ],
+  "knowledge_gaps": [
+    "Need real writeback-enabled devices to validate bd_stat fields and sysfs permissions.",
+    "Need measured fault-in latency for RAM-only ZRAM versus writeback-backed pages.",
+    "Need vendor documentation or source for mmd policies.",
+    "Need examples where memory extension lowers kill rate but worsens interaction latency."
+  ],
+  "applied_reflections": [
+    "Applied Day 58's next-run instruction by focusing on mmd, ZRAM writeback/recompression, and vendor memory extension.",
+    "Applied Day 58's ZRAM cost model by separating RAM-only compression from recompression and writeback paths.",
+    "Applied Day 57's victim worksheet by explaining how writeback changes kill benefit and fault-in latency interpretation.",
+    "Applied the standing more-diagrams-less-prose feedback by using four Mermaid diagrams, compact matrices, command templates, and today's checklist."
+  ],
+  "visible_changes": [
+    "Added four Mermaid diagrams because of the more-diagrams-less-prose feedback: four-layer memory-extension model, evidence boundary graph, troubleshooting flow, and risk graph.",
+    "Added tables for mechanism tradeoffs, evidence boundaries, Day 58 deltas, source paths, risks, and engineering conclusions.",
+    "Added a today's checklist requiring sysfs node discovery, mm_stat/bd_stat/vmstat/PSI sampling, mechanism separation, mmd evidence, IO-latency audit, and before/after validation."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 59 is marked complete and Day 60 remains pending.",
+    "Update progress.json so current_day becomes 60 and last_generated is refreshed.",
+    "Day 60 should focus on App Compaction, CachedAppOptimizer, onTrimMemory, and cache release.",
+    "Day 60 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 60 should carry forward Day 59's system-pressure model by showing where app-side compaction and trim fit before lmkd kill.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "source": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url",
+    "details": "GitHub CLI is not authenticated. gh reported: To get started with GitHub CLI, please run gh auth login. Alternatively, populate the GH_TOKEN environment variable with a GitHub API authentication token."
+  }
+}
