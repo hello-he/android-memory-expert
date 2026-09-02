@@ -662,3 +662,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain compressed pool accounting, `pswpin/pswpout`, refault, PSI alignment, zram writeback boundaries, and before/after validation.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 57 -> Day 58
+- Applied reflection: carried forward Day 57's victim worksheet by adding ZRAM and swap metrics to memory cost, pressure proof, kill benefit, and source bucket interpretation.
+- Visible change: added four Mermaid diagrams, metric tables, `mm_stat` reading matrix, victim worksheet mapping, kernel/source paths, mode classification, command templates, and a today's checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real `mm_stat` samples, vendor column validation, Perfetto swap-in traces, and ZRAM pressure thresholds.
+
+## Next Run: Day 59
+- Keep the visual-first format.
+- Focus on mmd, ZRAM writeback/recompression, and vendor memory extension.
+- Carry forward Day 58's ZRAM cost model by separating RAM-only compression from writeback and recompression paths.
+- Explain backing storage latency, cold-page movement, recompression policy, vendor feature boundaries, `mm_stat`/sysfs evidence, PSI alignment, and before/after validation.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.

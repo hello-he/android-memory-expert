@@ -1,0 +1,58 @@
+{
+  "day": 58,
+  "title": "ZRAM 与 swap 路径：压缩、换入换出、mm_stat 与延迟代价",
+  "key_conclusions": [
+    "ZRAM delays kills by compressing anonymous pages, but hot swap-in can convert memory pressure into user-visible stalls.",
+    "pswpin aligned with PSI is a stronger jank signal than pswpout alone.",
+    "mm_stat must be interpreted with vmstat, meminfo, PSI, and victim worksheet fields.",
+    "Kill benefit depends on RSS, PSS, swap state, memcg, and whether the victim owns the active anonymous working set."
+  ],
+  "shallow_points": [
+    "The article does not validate mm_stat column order on real vendor kernels.",
+    "It does not include measured compression ratios from low-end Android devices.",
+    "It does not include Perfetto traces showing swap-in latency on UI or RenderThread.",
+    "It does not quantify when ZRAM pool pressure should trigger tuning or kill policy changes."
+  ],
+  "discovered_connections": [
+    "Day 57 victim worksheet needs ZRAM fields to interpret kill benefit and pressure recovery.",
+    "Day 52 PSI windows distinguish healthy swap-out from user-visible swap-in stalls.",
+    "Day 53 source bucket attribution matters because anonymous pages are the main swap candidate.",
+    "Day 59 should extend this model to writeback, recompression, and vendor memory expansion."
+  ],
+  "suggest_future_topics": [
+    "Day 59 should explain mmd, ZRAM writeback, recompression, and vendor memory extension boundaries.",
+    "Day 61 should add a sampler that records PSI, vmstat swap counters, mm_stat, and frame timing.",
+    "Day 62 should consider swap-related lmkd properties only after measuring PSI and kill outcomes.",
+    "Day 65 should include ZRAM state in the high-priority kill case study."
+  ],
+  "knowledge_gaps": [
+    "Need real mm_stat samples and column validation across Android kernel versions.",
+    "Need measured swap-in latency and PSI impact under interactive workloads.",
+    "Need device-class thresholds for ZRAM pool pressure and SwapFree risk.",
+    "Need examples where killing a process improves PSI but not swap-in latency because the active working set remains."
+  ],
+  "applied_reflections": [
+    "Applied Day 57's next-run instruction by focusing on ZRAM and swap paths, compression, swap-in/out, mm_stat, and latency cost.",
+    "Applied Day 57's victim worksheet by showing how ZRAM metrics change memory cost, pressure proof, kill benefit, and source bucket interpretation.",
+    "Applied Day 52's PSI model by requiring swap metrics to be aligned with PSI windows before diagnosing jank.",
+    "Applied the standing more-diagrams-less-prose feedback by using four Mermaid diagrams, compact matrices, command templates, and today's checklist."
+  ],
+  "visible_changes": [
+    "Added four Mermaid diagrams because of the more-diagrams-less-prose feedback: ZRAM path, mm_stat interpretation graph, troubleshooting flow, and conclusion classification graph.",
+    "Added tables for metric meanings, mm_stat reading, victim worksheet links, kernel/source paths, mode classification, and engineering conclusions.",
+    "Added a today's checklist requiring PSI/meminfo/vmstat/mm_stat sampling, pswpin alignment, healthy swap-out separation, compression cost estimate, worksheet integration, and before/after validation."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 58 is marked complete and Day 59 remains pending.",
+    "Update progress.json so current_day becomes 59 and last_generated is refreshed.",
+    "Day 59 should focus on mmd, ZRAM writeback/recompression, and vendor memory extension.",
+    "Day 59 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 59 should carry forward Day 58's ZRAM cost model by separating RAM-only compression from writeback and recompression paths.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "source": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url",
+    "details": "GitHub CLI is not authenticated. gh reported: To get started with GitHub CLI, please run gh auth login. Alternatively, populate the GH_TOKEN environment variable with a GitHub API authentication token."
+  }
+}
