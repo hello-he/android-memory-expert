@@ -1,0 +1,59 @@
+{
+  "day": 60,
+  "title": "App Compaction、CachedAppOptimizer、onTrimMemory 与缓存释放",
+  "key_conclusions": [
+    "App-side trim and system-side app compaction are pre-kill pressure reduction opportunities.",
+    "App Compaction changes resident page state and is not equivalent to Java object collection.",
+    "onTrimMemory is useful only when the app releases rebuildable, low-value caches with acceptable restore cost.",
+    "Successful mitigation must reduce memory buckets, PSI, lmkd kills, and preserve recovery experience."
+  ],
+  "shallow_points": [
+    "The article does not include real CachedAppOptimizer logs or dumpsys output from a target Android version.",
+    "It does not quantify restore latency after cache release or compaction.",
+    "It does not validate all trim levels across foreground service, cached, and multi-process apps.",
+    "It does not include a runnable low-memory lab that triggers trim, compaction, and lmkd in one scenario."
+  ],
+  "discovered_connections": [
+    "Day 59's ZRAM/writeback model explains why compaction may reduce RSS but increase compressed-page or restore cost.",
+    "Day 57's victim worksheet should include whether app trim or compaction occurred before kill.",
+    "Day 53 bucket attribution distinguishes app cache growth from slab, dma-buf, or shared system pressure.",
+    "Day 61 should turn the collection commands into a reproducible low-memory lab."
+  ],
+  "suggest_future_topics": [
+    "Day 61 should build a low-memory reproduction lab with stress, Perfetto, logcat, PSI, vmstat, ZRAM, trim, and lmkd evidence.",
+    "Day 62 should tune watermarks and lmkd only after app trim/compaction opportunities are measured.",
+    "Day 63 should revisit critical process protection without using foreground service as a memory-policy escape hatch.",
+    "A future app appendix should compare Glide, bitmap, native buffer, and database cache trim behavior."
+  ],
+  "knowledge_gaps": [
+    "Need real device traces showing CachedAppOptimizer decisions and RSS/PSS deltas.",
+    "Need measured restore latency after trim and compaction.",
+    "Need vendor/version validation for compaction settings and logs.",
+    "Need sample app scenarios for bitmap cache, native buffer, database page cache, and multi-process trim behavior."
+  ],
+  "applied_reflections": [
+    "Applied Day 59's next-run instruction by focusing on App Compaction, CachedAppOptimizer, onTrimMemory, and cache release.",
+    "Applied Day 59's system-pressure model by placing app compaction and trim before lmkd kill in the pressure chain.",
+    "Applied Day 58's ZRAM cost model by noting that compaction can change resident pages and restore latency rather than simply deleting memory.",
+    "Applied Day 57's victim worksheet by requiring trim/compaction evidence before interpreting a kill as unavoidable.",
+    "Applied the standing more-diagrams-less-prose feedback by using four Mermaid diagrams, compact matrices, command templates, and today's checklist."
+  ],
+  "visible_changes": [
+    "Added four Mermaid diagrams because of the more-diagrams-less-prose feedback: pressure-to-app-reclaim structure, compaction sequence, troubleshooting flow, and before/after validation flow.",
+    "Added tables for mechanism boundaries, compaction observations, trim levels, source paths, side effects, and engineering conclusions.",
+    "Added a today's checklist requiring process state, PSS/RSS/Graphics/ZRAM before-after, trim behavior, mechanism separation, PSI alignment, restore latency, and vendor boundary notes."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 60 is marked complete and Day 61 remains pending.",
+    "Update progress.json so current_day becomes 61 and last_generated is refreshed.",
+    "Day 61 should focus on a low-memory reproduction lab: stress, trace, logcat, and repeatable scenarios.",
+    "Day 61 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 61 should carry forward Day 60's missing runnable lab by building a synchronized evidence collection workflow for PSI, vmstat, ZRAM, trim callbacks, app compaction, and lmkd.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "source": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url",
+    "details": "GitHub CLI is not authenticated. gh reported: To get started with GitHub CLI, please run gh auth login. Alternatively, populate the GH_TOKEN environment variable with a GitHub API authentication token."
+  }
+}

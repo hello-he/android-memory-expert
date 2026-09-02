@@ -688,3 +688,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain cached app compaction, anon/file impact, trim levels, cache policy, PSI/lmkd evidence, source paths, and before/after validation.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 59 -> Day 60
+- Applied reflection: carried forward Day 59's system-pressure model by placing App Compaction, CachedAppOptimizer, and `onTrimMemory` before lmkd kill in the pressure chain.
+- Visible change: added four Mermaid diagrams, mechanism-boundary tables, trim-level matrix, source path table, side-effect matrix, command templates, and a today's checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real CachedAppOptimizer logs, restore latency data, trim-level validation, and a runnable lab.
+
+## Next Run: Day 61
+- Keep the visual-first format.
+- Focus on a low-memory reproduction lab: stress, trace, logcat, and repeatable scenarios.
+- Carry forward Day 60's missing runnable lab by building a synchronized evidence collection workflow for PSI, vmstat, ZRAM, trim callbacks, app compaction, and lmkd.
+- Explain workload design, capture scripts, Perfetto/logcat alignment, success criteria, cleanup, and before/after repeatability.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
