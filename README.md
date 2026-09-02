@@ -72,7 +72,7 @@
 | Day 50 | 内存水位机制：zone、min/low/high watermark 与保留页 | ✅[2026-08-25](docs/week-08/day50-memory-watermark-zone.md) |
 | Day 51 | 低端机卡顿根因：kswapd、direct reclaim、compaction 与 UI 抖动 | ✅[2026-08-25](docs/week-08/day51-kswapd-direct-reclaim-jank.md) |
 | Day 52 | PSI 内存压力：some/full、avg10/60/300 与 thrashing 判断 | ✅[2026-08-25](docs/week-08/day52-psi-memory-pressure.md) |
-| Day 53 | 内存水位增长来源追查：meminfo、vmstat、slab、dma-buf、memcg | ⏳待生成 |
+| Day 53 | 内存水位增长来源追查：meminfo、vmstat、slab、dma-buf、memcg | ✅[2026-09-03](docs/week-08/day53-memory-waterline-growth-attribution.md) |
 | Day 54 | lmkd 架构：PSI/vmpressure、kill strategy 与关键属性 | ⏳待生成 |
 | Day 55 | ActivityManager OomAdjuster：进程状态到 oom_score_adj | ⏳待生成 |
 | Day 56 | 为什么 lmkd 会杀看似优先级更高的进程：证据链与误判拆解 | ⏳待生成 |

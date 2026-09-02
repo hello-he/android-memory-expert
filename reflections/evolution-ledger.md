@@ -597,3 +597,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain bucket attribution, global versus per-process views, kernel slab growth, dma-buf producers/consumers, memcg evidence, and before/after validation.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 52 -> Day 53
+- Applied reflection: carried forward Day 52's PSI model by making PSI `avg10/60/300` the window selector before attributing `meminfo`, `vmstat`, slab, dma-buf, or memcg growth.
+- Visible change: added four Mermaid diagrams, bucket attribution matrices, source path tables, command templates, and a today's checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real synchronized device samples, cgroup version validation, dma-buf permission validation, and automated timestamp alignment.
+
+## Next Run: Day 54
+- Keep the visual-first format.
+- Focus on lmkd architecture: PSI/vmpressure, kill strategy, and key properties.
+- Carry forward Day 53's bucket attribution by showing which pressure signals lmkd observes and which source bucket evidence lmkd does not preserve by itself.
+- Explain pressure monitor inputs, kill thresholds, victim selection boundaries, Android properties, log evidence, and before/after validation.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
