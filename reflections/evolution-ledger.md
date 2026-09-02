@@ -610,3 +610,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain pressure monitor inputs, kill thresholds, victim selection boundaries, Android properties, log evidence, and before/after validation.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 53 -> Day 54
+- Applied reflection: carried forward Day 53's bucket attribution boundary into lmkd by separating pressure response from root-cause attribution.
+- Visible change: added four Mermaid diagrams, lmkd input/stage/property tables, common misread matrix, command templates, and a today's checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real lmkd logs, statsd examples, Android branch property validation, and vendor low-RAM behavior.
+
+## Next Run: Day 55
+- Keep the visual-first format.
+- Focus on ActivityManager OomAdjuster: process state to `oom_score_adj`.
+- Carry forward Day 54's lmkd dependency on `oom_score_adj` by explaining how adj is computed, propagated, and audited before blaming lmkd.
+- Explain process states, binding relationships, foreground service boundaries, cached process ranking, procfs evidence, dumpsys output, and source paths.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.

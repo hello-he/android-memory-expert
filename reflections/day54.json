@@ -1,0 +1,58 @@
+{
+  "day": 54,
+  "title": "lmkd 架构：PSI/vmpressure、kill strategy 与关键属性",
+  "key_conclusions": [
+    "lmkd reacts to pressure and chooses victims, but it is not a complete root-cause attribution system.",
+    "PSI is the preferred modern pressure input, while vmpressure remains a compatibility path on some devices.",
+    "Victim selection depends on oom_score_adj, memory cost, policy properties, and pressure state.",
+    "Day 53 bucket attribution is still required to distinguish victim responsibility from shared or system pressure."
+  ],
+  "shallow_points": [
+    "The article does not validate exact lmkd property names and defaults across Android releases and vendors.",
+    "It does not include real lmkd log lines from devices under controlled PSI pressure.",
+    "It does not quantify kill thresholds for low-RAM and normal-RAM products.",
+    "It does not show a full statsd atom example for low-memory kills."
+  ],
+  "discovered_connections": [
+    "Day 53 explains source buckets, while Day 54 explains the pressure-response daemon that acts after pressure is high.",
+    "Day 52 PSI windows are the bridge between kernel stalls and lmkd pressure callbacks.",
+    "OomAdjuster is the next required topic because lmkd trusts oom_score_adj when selecting victims.",
+    "Shared dma-buf or slab pressure can make lmkd kill a process that did not create the dominant source bucket."
+  ],
+  "suggest_future_topics": [
+    "Day 55 should explain ActivityManager OomAdjuster and how process state becomes oom_score_adj.",
+    "Day 56 should use Day 54's victim-versus-root-cause boundary to explain why a seemingly high-priority process can be killed.",
+    "Day 57 should decode real lmkd logs and statsd victim evidence.",
+    "Day 62 should revisit lmkd property tuning with before/after pressure and kill-risk measurements."
+  ],
+  "knowledge_gaps": [
+    "Need real lmkd log samples with PSI, vmpressure, adj, RSS, and kill reason fields.",
+    "Need Android branch validation for lmkd properties and kill strategy code paths.",
+    "Need vendor-specific behavior for low-RAM devices and swap-heavy configurations.",
+    "Need statsd examples that connect lmkd kill records with app lifecycle and pressure timelines."
+  ],
+  "applied_reflections": [
+    "Applied Day 53's next-run instruction by focusing on lmkd PSI/vmpressure inputs, kill strategy, and key properties.",
+    "Applied Day 53's bucket attribution boundary by explicitly stating which evidence lmkd does not preserve by itself.",
+    "Applied Day 52's PSI model by treating pressure windows as the entry point for lmkd analysis.",
+    "Applied the standing more-diagrams-less-prose feedback by using four Mermaid diagrams, compact matrices, command templates, and today's checklist."
+  ],
+  "visible_changes": [
+    "Added four Mermaid diagrams because of the more-diagrams-less-prose feedback: lmkd architecture, pressure-to-kill sequence, kill troubleshooting flow, and lmkd-to-root-cause evidence graph.",
+    "Added tables for lmkd inputs, kill stages, properties, source paths, common misreads, and engineering conclusions.",
+    "Added a today's checklist requiring lmkd logs, properties, victim adj, memcg, Day 53 bucket attribution, and before/after pressure evidence."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 54 is marked complete and Day 55 remains pending.",
+    "Update progress.json so current_day becomes 55 and last_generated is refreshed.",
+    "Day 55 should focus on ActivityManager OomAdjuster: process state to oom_score_adj.",
+    "Day 55 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 55 should carry forward Day 54's lmkd dependency on oom_score_adj by explaining how adj is computed, propagated, and audited before blaming lmkd.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "source": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url",
+    "details": "GitHub CLI is not authenticated. gh reported: To get started with GitHub CLI, please run gh auth login. Alternatively, populate the GH_TOKEN environment variable with a GitHub API authentication token."
+  }
+}
