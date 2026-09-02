@@ -623,3 +623,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain process states, binding relationships, foreground service boundaries, cached process ranking, procfs evidence, dumpsys output, and source paths.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 54 -> Day 55
+- Applied reflection: carried forward Day 54's lmkd dependency on `oom_score_adj` by making AMS/OomAdjuster state computation and procfs propagation the central evidence chain.
+- Visible change: added four Mermaid diagrams, adj input/output/category tables, source path tables, case audit matrix, command templates, and a today's checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real dumpsys samples, branch-specific adj constants, binding/provider examples, and foreground service transition logs.
+
+## Next Run: Day 56
+- Keep the visual-first format.
+- Focus on why lmkd can kill a seemingly higher-priority process.
+- Carry forward Day 55's adj audit plus Day 53's bucket attribution to distinguish real priority bugs from shared-pressure, stale-evidence, and normal policy cases.
+- Explain pressure timing, stale screenshots, process-state races, shared buffer ownership, RSS/PSS confusion, kill reason logs, and validation.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.

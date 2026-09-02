@@ -1,0 +1,58 @@
+{
+  "day": 55,
+  "title": "ActivityManager OomAdjuster：进程状态到 oom_score_adj",
+  "key_conclusions": [
+    "oom_score_adj is an ActivityManager output derived from component state, bindings, service policy, and cached ranking.",
+    "lmkd victim analysis must audit the adj value before blaming lmkd strategy.",
+    "A victim can have a correct low-protection adj while the pressure source sits elsewhere.",
+    "Process-state constants and adj buckets must be validated against the target Android branch and vendor policy."
+  ],
+  "shallow_points": [
+    "The article does not include real dumpsys activity oom output from a device.",
+    "It does not validate exact adj constants against a specific Android branch.",
+    "It does not show a worked binding/provider example where adj propagation changes the lmkd victim.",
+    "It does not include logs from foreground service policy transitions."
+  ],
+  "discovered_connections": [
+    "Day 54's lmkd victim choice depends directly on the adj value produced by OomAdjuster.",
+    "Day 53 bucket attribution is still needed because adj explains who is killable, not who caused pressure.",
+    "Lifecycle bugs can look like lmkd bugs if AMS state is not audited.",
+    "Foreground service and binding policy connect app architecture choices to low-memory survival."
+  ],
+  "suggest_future_topics": [
+    "Day 56 should combine pressure evidence, adj audit, and source-bucket ownership to explain high-priority kills.",
+    "Day 57 should decode lmkd logs and statsd fields beside OomAdjuster snapshots.",
+    "Day 63 should revisit critical process protection and the abuse boundary around adj design.",
+    "A future lab should generate lifecycle and binding transitions while sampling oom_score_adj once per second."
+  ],
+  "knowledge_gaps": [
+    "Need branch-specific validation for OomAdjuster constants and process-state names.",
+    "Need real dumpsys examples for Activity, Service, Provider, and binding adj propagation.",
+    "Need vendor behavior around foreground service protection and cached process ranking.",
+    "Need reproducible traces that align AMS state transitions, oom_score_adj writes, and lmkd kill decisions."
+  ],
+  "applied_reflections": [
+    "Applied Day 54's next-run instruction by focusing on ActivityManager OomAdjuster and process state to oom_score_adj.",
+    "Applied Day 54's lmkd dependency boundary by making adj audit mandatory before blaming lmkd.",
+    "Applied Day 53's victim-versus-root-cause boundary by keeping pressure bucket attribution separate from killability.",
+    "Applied the standing more-diagrams-less-prose feedback by using four Mermaid diagrams, compact matrices, command templates, and today's checklist."
+  ],
+  "visible_changes": [
+    "Added four Mermaid diagrams because of the more-diagrams-less-prose feedback: adj input structure, AMS-to-procfs sequence, troubleshooting flow, and adj-to-lmkd evidence chain.",
+    "Added tables for adj inputs, outputs, categories, source paths, case audits, and engineering conclusions.",
+    "Added a today's checklist requiring lmkd logs, procfs adj, dumpsys activity, component state, foreground service policy, and Day 53 bucket validation."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 55 is marked complete and Day 56 remains pending.",
+    "Update progress.json so current_day becomes 56 and last_generated is refreshed.",
+    "Day 56 should focus on why lmkd can kill a seemingly higher-priority process.",
+    "Day 56 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 56 should carry forward Day 55's adj audit plus Day 53's bucket attribution to distinguish real priority bugs from shared-pressure or stale-evidence cases.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "source": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url",
+    "details": "GitHub CLI is not authenticated. gh reported: To get started with GitHub CLI, please run gh auth login. Alternatively, populate the GH_TOKEN environment variable with a GitHub API authentication token."
+  }
+}

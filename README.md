@@ -74,7 +74,7 @@
 | Day 52 | PSI 内存压力：some/full、avg10/60/300 与 thrashing 判断 | ✅[2026-08-25](docs/week-08/day52-psi-memory-pressure.md) |
 | Day 53 | 内存水位增长来源追查：meminfo、vmstat、slab、dma-buf、memcg | ✅[2026-09-03](docs/week-08/day53-memory-waterline-growth-attribution.md) |
 | Day 54 | lmkd 架构：PSI/vmpressure、kill strategy 与关键属性 | ✅[2026-09-03](docs/week-08/day54-lmkd-architecture-psi-vmpressure.md) |
-| Day 55 | ActivityManager OomAdjuster：进程状态到 oom_score_adj | ⏳待生成 |
+| Day 55 | ActivityManager OomAdjuster：进程状态到 oom_score_adj | ✅[2026-09-03](docs/week-08/day55-ams-oom-adjuster.md) |
 | Day 56 | 为什么 lmkd 会杀看似优先级更高的进程：证据链与误判拆解 | ⏳待生成 |
 | Day 57 | lmkd 日志、statsd 与 victim 分析：从 kill reason 到 adj/RSS | ⏳待生成 |
 | Day 58 | ZRAM 与 swap 路径：压缩、换入换出、mm_stat 与延迟代价 | ⏳待生成 |
