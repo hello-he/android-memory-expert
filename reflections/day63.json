@@ -1,0 +1,58 @@
+{
+  "day": 63,
+  "title": "关键进程保护：adj 设计、绑定关系、前台服务与滥用边界",
+  "key_conclusions": [
+    "Critical process protection is a business and system tradeoff, not a memory optimization by itself.",
+    "Protection must be audited through ActivityManager state, OomAdjuster output, procfs oom_score_adj, and lmkd kill records.",
+    "Foreground services and bindings are valid only when they represent current user-visible value or a real system-critical path.",
+    "If no lower-value victim exists, the fix is reducing pressure or memory footprint rather than raising every important process."
+  ],
+  "shallow_points": [
+    "The article does not validate exact OomAdjuster constants on a specific Android branch.",
+    "It does not include real dumpsys and lmkd samples for protected process kills.",
+    "It does not quantify memory overhead from different protection strategies.",
+    "It does not include automated lifecycle linting for long-lived bindings or foreground services."
+  ],
+  "discovered_connections": [
+    "Day 62's tuning risk model applies directly to process protection because both move pressure elsewhere.",
+    "Day 61's lab is needed to prove that protection reduces user harm without increasing PSI or ZRAM stalls.",
+    "Day 60's trim model prevents high-priority processes from becoming untouchable cache hoarders.",
+    "Day 65 should reuse this adj audit when explaining lmkd killing a seemingly high-priority process."
+  ],
+  "suggest_future_topics": [
+    "Day 64 should use a case timeline to show why low watermarks create direct reclaim jank before lmkd can help.",
+    "Day 65 should combine adj audit, victim worksheet, and protection boundaries for high-priority kill analysis.",
+    "A future appendix should map OomAdjuster constants and process state labels across Android releases.",
+    "A future tool should flag foreground-service and binding lifetimes that exceed declared user value."
+  ],
+  "knowledge_gaps": [
+    "Need branch-specific OomAdjuster constants and state transition examples.",
+    "Need real incidents where foreground-service protection improved UX and where it caused memory harm.",
+    "Need measured PSS cost of protecting multi-process critical features.",
+    "Need automated detection for leaked service bindings and provider clients."
+  ],
+  "applied_reflections": [
+    "Applied Day 62's next-run instruction by focusing on adj design, binding relationships, foreground services, and abuse boundaries.",
+    "Applied Day 62's risk model by requiring protection requests to include pressure, memory-cost, and user-experience side-effect evidence.",
+    "Applied Day 60's trim and compaction lesson by requiring high-priority processes to release rebuildable caches instead of hiding behind adj.",
+    "Applied the standing more-diagrams-less-prose feedback by using six Mermaid diagrams, compact matrices, command templates, and today's checklist."
+  ],
+  "visible_changes": [
+    "Added six Mermaid diagrams because of the more-diagrams-less-prose feedback: protection path, adj sequence, binding graph, foreground-service decision flow, troubleshooting flow, and review pipeline.",
+    "Added tables for justified versus abusive protection, evidence commands, binding effects, foreground-service abuse signals, conclusion evidence, strategy review fields, and engineering conclusions.",
+    "Added a today's checklist requiring same-window adj evidence, lifecycle audit, Day 61 lab side-effect validation, cache review, and explicit protection exit conditions."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 63 is marked complete and Day 64 remains pending.",
+    "Update progress.json so current_day becomes 64 and last_generated is refreshed.",
+    "Day 64 should focus on a case replay: low-end device jank caused by watermarks that are too low.",
+    "Day 64 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 64 should carry forward Day 61's T0-T5 lab timeline and Day 62's one-knob tuning discipline.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "source": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url",
+    "details": "GitHub CLI is not authenticated. gh reported: To get started with GitHub CLI, please run gh auth login. Alternatively, populate the GH_TOKEN environment variable with a GitHub API authentication token."
+  }
+}

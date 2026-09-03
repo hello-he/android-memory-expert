@@ -82,7 +82,7 @@
 | Day 60 | App Compaction、CachedAppOptimizer、onTrimMemory 与缓存释放 | ✅[2026-09-03](docs/week-09/day60-app-compaction-trim-memory.md) |
 | Day 61 | 低内存复现实验室：stress、trace、logcat 与可重复场景 | ✅[2026-09-04](docs/week-09/day61-low-memory-repro-lab.md) |
 | Day 62 | 水位与 lmkd 调参：min_free_kbytes、watermark_scale_factor、lmkd 属性与风险 | ✅[2026-09-04](docs/week-09/day62-watermark-lmkd-tuning.md) |
-| Day 63 | 关键进程保护：adj 设计、绑定关系、前台服务与滥用边界 | ⏳待生成 |
+| Day 63 | 关键进程保护：adj 设计、绑定关系、前台服务与滥用边界 | ✅[2026-09-04](docs/week-09/day63-protect-critical-processes.md) |
 | Day 64 | 案例复盘：低端机内存水位过低导致卡顿 | ⏳待生成 |
 | Day 65 | 案例复盘：lmkd 查杀高优先级进程的根因定位 | ⏳待生成 |
 | Day 66 | 共享内存与 IPC 内存账单：ashmem、memfd、Binder、dma-buf | ⏳待生成 |

@@ -727,3 +727,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain when protection is justified, how adj is computed, how bindings raise priority, how foreground services can be abused, and how to audit side effects.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 62 -> Day 63
+- Applied reflection: carried forward Day 62's risk model by treating critical-process protection as a pressure tradeoff that needs adj, memory-cost, PSI, ZRAM, and user-experience evidence.
+- Visible change: added six Mermaid diagrams, adj evidence sequence, binding priority graph, foreground-service abuse decision flow, protection review table, and today's checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; protection guidance still needs branch-specific OomAdjuster constants, real kill samples, measured multi-process protection cost, and lifecycle linting.
+
+## Next Run: Day 64
+- Keep the visual-first format.
+- Focus on a case replay: low-end device jank caused by watermarks that are too low.
+- Carry forward Day 61's T0-T5 lab timeline and Day 62's one-knob tuning discipline.
+- Explain baseline evidence, direct reclaim/allocstall path, Perfetto frame impact, why lmkd may be too late, the single tuning change, rollback, and final validation.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
