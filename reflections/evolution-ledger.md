@@ -766,3 +766,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain PSS versus RSS, fd ownership, Binder buffer accounting, graphics buffers, memcg visibility, and owner proof.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 65 -> Day 66
+- Applied reflection: carried forward Day 65's victim ownership ambiguity by separating shared-memory producer, consumer, fd holder, mapper, PSS share, and kill benefit.
+- Visible change: added seven Mermaid diagrams, PSS/RSS split, ashmem/memfd sequence, dma-buf flow, victim attribution flow, troubleshooting decision flow, command tables, and today's checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; shared accounting still needs real fd/smaps/dmabuf samples, vendor permission validation, automated mapper enumeration, and PSS redistribution examples.
+
+## Next Run: Day 67
+- Keep the visual-first format.
+- Focus on memcg and cgroup: per-app memory isolation and system views.
+- Carry forward Day 66's shared accounting ambiguity by showing what memcg can and cannot attribute.
+- Explain cgroup hierarchy, memory.current/stat/events, app uid grouping, shared page charging, lmkd/memcg interaction, and global versus per-app evidence.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
