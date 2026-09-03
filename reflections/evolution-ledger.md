@@ -701,3 +701,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain workload design, capture scripts, Perfetto/logcat alignment, success criteria, cleanup, and before/after repeatability.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 60 -> Day 61
+- Applied reflection: carried forward Day 60's missing runnable lab by turning trim, app compaction, PSI, vmstat, ZRAM, logcat, Perfetto, and lmkd into one synchronized reproduction workflow.
+- Visible change: added five Mermaid diagrams, capture-layer tables, workload control matrix, T0-T5 evidence timeline, repeatability table, script skeleton, and today's checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the lab still needs real device traces, a checked-in Perfetto config, workload fixtures, and quantified run-to-run variance.
+
+## Next Run: Day 62
+- Keep the visual-first format.
+- Focus on watermark and lmkd tuning: `min_free_kbytes`, `watermark_scale_factor`, lmkd properties, and risk boundaries.
+- Carry forward Day 61's synchronized lab by requiring before/after evidence for every tuning change.
+- Explain what each knob changes, what it cannot prove, rollback criteria, RAM-class boundaries, ZRAM side effects, and user-visible validation.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.

@@ -1,0 +1,58 @@
+{
+  "day": 61,
+  "title": "低内存复现实验室：stress、trace、logcat 与可重复场景",
+  "key_conclusions": [
+    "Low-memory diagnosis needs a repeatable workload before tuning conclusions.",
+    "PSI, vmstat, ZRAM, logcat, app callbacks, lmkd, and Perfetto must be sampled in the same window.",
+    "Day 60 trim and compaction evidence belongs before victim analysis, not after the kill.",
+    "Three repeated runs are the minimum bar for treating a pressure curve as actionable."
+  ],
+  "shallow_points": [
+    "The article provides a script skeleton but does not run it on a real low-end device.",
+    "Perfetto configuration remains minimal and needs a checked-in trace config later.",
+    "The stress workload is described as deterministic but still needs sample app fixtures.",
+    "It does not quantify acceptable variance between repeated pressure runs."
+  ],
+  "discovered_connections": [
+    "Day 60's missing runnable lab becomes the synchronization layer for trim, compaction, and lmkd evidence.",
+    "Day 58 and Day 59 ZRAM metrics need to be collected beside vmstat and PSI rather than interpreted as isolated counters.",
+    "Day 57's victim worksheet becomes reliable only when kill records are joined with pre-kill pressure samples.",
+    "Day 62 tuning should only change watermarks or lmkd properties after this lab reproduces the same symptom."
+  ],
+  "suggest_future_topics": [
+    "Day 62 should use the lab output to define safe tuning boundaries for min_free_kbytes, watermark_scale_factor, and lmkd properties.",
+    "Day 64 should include a complete low-watermark jank case replay using the same T0-T5 evidence timeline.",
+    "A future appendix should add a reusable Perfetto config and parser for pressure.tsv plus logcat alignment.",
+    "Day 65 should reuse the three-run repeatability table before judging high-priority victim selection."
+  ],
+  "knowledge_gaps": [
+    "Need real device traces with trim, compaction, PSI, vmstat, ZRAM, and lmkd in one capture.",
+    "Need a robust workload generator for bitmap, Native heap, file cache, and service pressure.",
+    "Need quantified thresholds for run-to-run variance.",
+    "Need validated Perfetto data source availability across Android versions and vendor builds."
+  ],
+  "applied_reflections": [
+    "Applied Day 60's next-run instruction by building a low-memory reproduction lab with stress, trace, logcat, PSI, vmstat, ZRAM, trim, compaction, and lmkd evidence.",
+    "Applied Day 60's shallow point about the missing runnable lab by adding a shell script skeleton and a T0-T5 evidence timeline.",
+    "Applied Day 59's ZRAM/writeback boundary by making mm_stat and vmstat required lab outputs.",
+    "Applied the standing more-diagrams-less-prose feedback by using five Mermaid diagrams, compact matrices, command templates, and today's checklist."
+  ],
+  "visible_changes": [
+    "Added five Mermaid diagrams because of the more-diagrams-less-prose feedback: lab architecture, workload sequence, timestamp alignment, troubleshooting flow, and repeatability flow.",
+    "Added tables for capture layers, workload controls, output interpretation, timeline evidence, diagnosis conclusions, repeated runs, and engineering conclusions.",
+    "Added a today's checklist requiring synchronized PSI/vmstat/ZRAM/logcat/Perfetto capture and explicit Day 60 trim/compaction evidence before lmkd analysis."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 61 is marked complete and Day 62 remains pending.",
+    "Update progress.json so current_day becomes 62 and last_generated is refreshed.",
+    "Day 62 should focus on watermark and lmkd tuning: min_free_kbytes, watermark_scale_factor, lmkd properties, and risk boundaries.",
+    "Day 62 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 62 should carry forward Day 61's synchronized lab by requiring before/after evidence for every tuning change.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "source": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url",
+    "details": "GitHub CLI is not authenticated. gh reported: To get started with GitHub CLI, please run gh auth login. Alternatively, populate the GH_TOKEN environment variable with a GitHub API authentication token."
+  }
+}
