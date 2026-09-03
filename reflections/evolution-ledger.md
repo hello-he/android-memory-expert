@@ -753,3 +753,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain kill timestamp evidence, `oom_score_adj` propagation, process-state races, victim worksheet, pressure source attribution, and fix/rollback choices.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 64 -> Day 65
+- Applied reflection: carried forward Day 63's adj audit and Day 64's timing discipline by requiring pressure, priority, source-bucket, and victim-benefit evidence at the exact lmkd kill timestamp.
+- Visible change: added six Mermaid diagrams, kill evidence sequence, truth taxonomy, victim worksheet, fix matrix, command package, and today's checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the case still needs real lmkd/statsd traces, branch-specific log-field validation, protobuf parsing, and quantitative victim-benefit thresholds.
+
+## Next Run: Day 66
+- Keep the visual-first format.
+- Focus on shared memory and IPC accounting: ashmem, memfd, Binder, and dma-buf.
+- Carry forward Day 65's victim ownership ambiguity by explaining producer-consumer attribution and shared/private accounting.
+- Explain PSS versus RSS, fd ownership, Binder buffer accounting, graphics buffers, memcg visibility, and owner proof.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.

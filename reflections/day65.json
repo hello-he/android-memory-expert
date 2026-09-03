@@ -1,0 +1,58 @@
+{
+  "day": 65,
+  "title": "案例复盘：lmkd 查杀高优先级进程的根因定位",
+  "key_conclusions": [
+    "A high-priority kill claim must be evaluated at the kill timestamp, not from stale UI or notification evidence.",
+    "The minimum evidence set is pressure, priority, source bucket, and victim benefit in the same window.",
+    "lmkd may be behaving correctly when no lower-value victim exists and pressure remains user-visible.",
+    "Fixes must follow the failure type: stale state, lifecycle race, shared pressure, policy bug, or expected tradeoff."
+  ],
+  "shallow_points": [
+    "The article still uses representative worksheets rather than a real incident trace.",
+    "It does not include real statsd atoms or protobuf parsing output.",
+    "It does not validate lmkd log fields across Android branches and vendor builds.",
+    "It does not quantify victim benefit thresholds for PSS, RSS, swap, and PSI recovery."
+  ],
+  "discovered_connections": [
+    "Day 63's adj audit becomes the priority line in the four-line kill evidence model.",
+    "Day 64's timing discipline distinguishes root cause from post-symptom recovery.",
+    "Day 57's victim worksheet is extended with shared buffer and post-kill PSI recovery fields.",
+    "Day 66 should explain shared memory and IPC accounting because victim ownership is often ambiguous."
+  ],
+  "suggest_future_topics": [
+    "Day 66 should focus on shared memory and IPC accounting with ashmem, memfd, Binder, and dma-buf.",
+    "Day 68 should revisit Native/System attribution for shared buckets that app meminfo cannot fully explain.",
+    "A future tool should join lmkd logcat, dumpsys activity, procfs, and pressure.tsv by timestamp.",
+    "A future case library should include real stale-evidence, state-race, and shared-pressure incidents."
+  ],
+  "knowledge_gaps": [
+    "Need real kill traces with procState, oom_score_adj, lmkd reason, statsd atoms, and post-kill PSI.",
+    "Need branch-specific lmkd log field mapping.",
+    "Need quantitative victim-benefit thresholds.",
+    "Need automated stale-evidence detection between UI reports and kill timestamp state."
+  ],
+  "applied_reflections": [
+    "Applied Day 64's next-run instruction by focusing on lmkd killing a seemingly high-priority process.",
+    "Applied Day 63's adj audit by requiring dumpsys, procfs oom_score_adj, binding, foreground service, and lmkd evidence at the kill timestamp.",
+    "Applied Day 64's timing discipline by separating pre-symptom pressure, kill event, and post-kill recovery.",
+    "Applied the standing more-diagrams-less-prose feedback by using six Mermaid diagrams, compact matrices, command templates, and today's checklist."
+  ],
+  "visible_changes": [
+    "Added six Mermaid diagrams because of the more-diagrams-less-prose feedback: case overview, kill evidence sequence, truth taxonomy, victim worksheet flow, troubleshooting decision flow, and fix choice graph.",
+    "Added tables for misread sources, four-line evidence, truth categories, victim worksheet fields, AOSP paths, fix choices, and engineering conclusions.",
+    "Added a today's checklist requiring kill-time adj evidence, Day 63 lifecycle audit, Day 64 timing comparison, victim worksheet completion, and rollback validation."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 65 is marked complete and Day 66 remains pending.",
+    "Update progress.json so current_day becomes 66 and last_generated is refreshed.",
+    "Day 66 should focus on shared memory and IPC accounting: ashmem, memfd, Binder, and dma-buf.",
+    "Day 66 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 66 should carry forward Day 65's victim ownership ambiguity by explaining producer-consumer attribution and shared/private accounting.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "source": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url",
+    "details": "GitHub CLI is not authenticated. gh reported: To get started with GitHub CLI, please run gh auth login. Alternatively, populate the GH_TOKEN environment variable with a GitHub API authentication token."
+  }
+}
