@@ -1,0 +1,58 @@
+{
+  "day": 62,
+  "title": "水位与 lmkd 调参：min_free_kbytes、watermark_scale_factor、lmkd 属性与风险",
+  "key_conclusions": [
+    "Watermark and lmkd tuning must be driven by stable lab evidence, not isolated kill logs.",
+    "Watermark knobs change reclaim timing and reserve pressure, but they do not identify the leaking or growing memory bucket.",
+    "lmkd properties express tradeoffs between stalls and kills; they do not prove root cause.",
+    "A tuning change is acceptable only when PSI, vmstat, ZRAM, lmkd, and user experience improve together."
+  ],
+  "shallow_points": [
+    "The article does not validate property names and defaults on a specific Android branch.",
+    "It does not include measured before/after tuning data from a low-end device.",
+    "It does not provide automated rollback tooling.",
+    "It does not quantify safe ranges for each RAM class."
+  ],
+  "discovered_connections": [
+    "Day 61's lab becomes the acceptance gate for every tuning experiment.",
+    "Day 60's trim and compaction checks must run before lmkd thresholds are changed.",
+    "Day 59's ZRAM model explains why fewer kills can still increase swap-in stalls.",
+    "Day 63 should treat critical process protection as policy evidence, not as a shortcut around pressure reduction."
+  ],
+  "suggest_future_topics": [
+    "Day 63 should explain adj design, binding relationships, foreground services, and abuse boundaries for critical process protection.",
+    "Day 64 should replay a low-watermark jank case with baseline, one-knob change, rollback, and before/after evidence.",
+    "A future appendix should add branch-specific lmkd property defaults and sysctl snapshots.",
+    "Day 65 should use the same one-knob discipline before changing kill thresholds for high-priority victims."
+  ],
+  "knowledge_gaps": [
+    "Need Android-version-specific validation for lmkd properties and kernel watermark behavior.",
+    "Need measured tuning results across 2GB, 3GB, and 4GB devices.",
+    "Need automated scripts to snapshot, modify, validate, and rollback sysctl/property changes.",
+    "Need examples where tuning decreases kill rate but increases PSI or ZRAM hot swap-in."
+  ],
+  "applied_reflections": [
+    "Applied Day 61's next-run instruction by focusing on watermark and lmkd tuning with before/after lab validation.",
+    "Applied Day 61's synchronized lab by requiring stable three-run evidence before any tuning conclusion.",
+    "Applied Day 59's ZRAM/writeback warning by treating ZRAM and hot swap-in as required side-effect checks.",
+    "Applied the standing more-diagrams-less-prose feedback by using five Mermaid diagrams, compact matrices, command templates, and today's checklist."
+  ],
+  "visible_changes": [
+    "Added five Mermaid diagrams because of the more-diagrams-less-prose feedback: tuning gate, watermark structure, lmkd sequence, troubleshooting flow, and risk graph.",
+    "Added tables for preconditions, knob meanings, lmkd property boundaries, experiment acceptance, symptom mapping, risk outcomes, and engineering conclusions.",
+    "Added a today's checklist requiring Day 61 stable reproduction, one-knob changes, side-effect checks, acceptance criteria, rollback criteria, and vendor boundary notes."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 62 is marked complete and Day 63 remains pending.",
+    "Update progress.json so current_day becomes 63 and last_generated is refreshed.",
+    "Day 63 should focus on critical process protection: adj design, binding relationships, foreground services, and abuse boundaries.",
+    "Day 63 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 63 should carry forward Day 62's risk model by requiring protection policy to include memory-pressure and user-experience tradeoff evidence.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "source": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url",
+    "details": "GitHub CLI is not authenticated. gh reported: To get started with GitHub CLI, please run gh auth login. Alternatively, populate the GH_TOKEN environment variable with a GitHub API authentication token."
+  }
+}

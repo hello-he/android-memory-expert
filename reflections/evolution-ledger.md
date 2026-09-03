@@ -714,3 +714,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain what each knob changes, what it cannot prove, rollback criteria, RAM-class boundaries, ZRAM side effects, and user-visible validation.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 61 -> Day 62
+- Applied reflection: carried forward Day 61's synchronized lab by making stable reproduction, one-knob changes, before/after evidence, and rollback criteria mandatory for watermark and lmkd tuning.
+- Visible change: added five Mermaid diagrams, tuning gate, watermark structure, lmkd property boundary table, single-knob experiment matrix, risk graph, and today's checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; tuning still needs real branch property defaults, measured low-end device data, automated rollback tooling, and RAM-class-specific safe ranges.
+
+## Next Run: Day 63
+- Keep the visual-first format.
+- Focus on critical process protection: adj design, binding relationships, foreground services, and abuse boundaries.
+- Carry forward Day 62's risk model by requiring protection policy to include memory-pressure and user-experience tradeoff evidence.
+- Explain when protection is justified, how adj is computed, how bindings raise priority, how foreground services can be abused, and how to audit side effects.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
