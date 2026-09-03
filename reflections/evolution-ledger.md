@@ -792,3 +792,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain attribution workflow, native heap versus mappings, heapprofd stack ownership, smaps/showmap category differences, memcg bucket reconciliation, and false-positive traps.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 67 -> Day 68
+- Applied reflection: carried forward Day 67's global-versus-per-cgroup boundary and Day 66's shared owner proof by requiring smaps, showmap, heapprofd, memcg, fd, lifecycle, and global bucket movement to agree before claiming Native/System ownership.
+- Visible change: added six Mermaid diagrams, attribution workflow, Native heap versus mapping split, four-tool sequence, false-positive trap graph, report template, command tables, and today's checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; Native/System attribution still needs real heapprofd traces, Android-version showmap validation, dma-buf/slab/system samples, and automated reconciliation.
+
+## Next Run: Day 69
+- Keep the visual-first format.
+- Focus on launch memory peaks: cold start, preload, and cache timing.
+- Carry forward Day 68's cross-validation method to distinguish Java heap, Native heap, mmap, dex/oat, bitmap, and graphics growth during startup.
+- Explain startup phase timeline, zygote/preload sharing, dex/oat mappings, image decode timing, cache warmup, Perfetto/meminfo evidence, and peak-reduction validation.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
