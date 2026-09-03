@@ -779,3 +779,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain cgroup hierarchy, memory.current/stat/events, app uid grouping, shared page charging, lmkd/memcg interaction, and global versus per-app evidence.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 66 -> Day 67
+- Applied reflection: carried forward Day 66's shared accounting ambiguity by showing that memcg can reveal current charge but cannot prove producer ownership without fd, smaps, lifecycle, and global bucket evidence.
+- Visible change: added seven Mermaid diagrams, cgroup hierarchy, memory.stat bucket graph, shared page charging sequence, app/system comparison flow, lmkd-memcg relation, evidence tables, and today's checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; memcg guidance still needs real cgroup v1/v2 samples, memory.stat examples, charge redistribution measurements, and automated pid-to-cgroup mapping.
+
+## Next Run: Day 68
+- Keep the visual-first format.
+- Focus on Native/System memory attribution using smaps, showmap, heapprofd, and memcg cross-validation.
+- Carry forward Day 67's global-versus-per-cgroup boundary and Day 66's shared owner proof.
+- Explain attribution workflow, native heap versus mappings, heapprofd stack ownership, smaps/showmap category differences, memcg bucket reconciliation, and false-positive traps.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.

@@ -86,7 +86,7 @@
 | Day 64 | 案例复盘：低端机内存水位过低导致卡顿 | ✅[2026-09-04](docs/week-10/day64-case-watermark-too-low-jank.md) |
 | Day 65 | 案例复盘：lmkd 查杀高优先级进程的根因定位 | ✅[2026-09-04](docs/week-10/day65-case-lmkd-high-priority-kill.md) |
 | Day 66 | 共享内存与 IPC 内存账单：ashmem、memfd、Binder、dma-buf | ✅[2026-09-04](docs/week-10/day66-shared-memory-ipc-accounting.md) |
-| Day 67 | memcg 与 cgroup：每个 App 的内存隔离和系统视图 | ⏳待生成 |
+| Day 67 | memcg 与 cgroup：每个 App 的内存隔离和系统视图 | ✅[2026-09-04](docs/week-10/day67-memcg-cgroup-process-isolation.md) |
 | Day 68 | Native/System 内存归因：smaps、showmap、heapprofd、memcg 交叉验证 | ⏳待生成 |
 | Day 69 | 启动阶段内存控制：冷启动峰值、预加载与缓存时机 | ⏳待生成 |
 | Day 70 | RecyclerView 内存优化：ViewHolder、Prefetch、Pool 与图片峰值 | ⏳待生成 |

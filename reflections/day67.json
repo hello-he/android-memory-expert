@@ -1,0 +1,58 @@
+{
+  "day": 67,
+  "title": "memcg 与 cgroup：每个 App 的内存隔离和系统视图",
+  "key_conclusions": [
+    "memcg provides a per-cgroup charge view that complements but does not replace smaps/PSS.",
+    "Shared page charging can identify who currently carries cost, but it does not prove producer ownership.",
+    "Global memory, app memcg, smaps, fd evidence, and lmkd timelines must be cross-checked.",
+    "Victim usefulness requires post-kill movement in memcg, global buckets, and PSI."
+  ],
+  "shallow_points": [
+    "The article does not validate cgroup v1/v2 paths on real Android devices.",
+    "It does not include real memory.stat samples from app, system_server, and HAL cgroups.",
+    "It does not quantify shared page charge redistribution.",
+    "It does not include tooling to map pid, uid, and cgroup hierarchy automatically."
+  ],
+  "discovered_connections": [
+    "Day 66's shared accounting ambiguity becomes clearer when memcg charge is compared with fd and smaps evidence.",
+    "Day 65's victim worksheet gains a per-cgroup charge and post-kill movement check.",
+    "Day 53's global bucket attribution must be paired with app-local memcg before assigning responsibility.",
+    "Day 68 should combine smaps, showmap, heapprofd, and memcg for Native/System attribution."
+  ],
+  "suggest_future_topics": [
+    "Day 68 should focus on Native/System attribution using smaps, showmap, heapprofd, and memcg cross-validation.",
+    "A future tool should discover Android cgroup layout and collect memory.current/stat/events for all app pids.",
+    "A future appendix should compare cgroup v1, v2, and vendor custom memory nodes.",
+    "Day 71 should reuse memcg when evaluating multi-process app architecture costs."
+  ],
+  "knowledge_gaps": [
+    "Need real device samples for cgroup v1/v2/mixed layouts.",
+    "Need examples of shared page charging and charge migration.",
+    "Need automated pid-to-cgroup and cgroup-to-package mapping.",
+    "Need measured memcg changes after lmkd kills producer versus consumer processes."
+  ],
+  "applied_reflections": [
+    "Applied Day 66's next-run instruction by focusing on memcg and cgroup isolation for apps and system processes.",
+    "Applied Day 66's shared accounting ambiguity by explaining what memcg can and cannot attribute for shared pages.",
+    "Applied Day 65's victim worksheet by adding per-cgroup charge and post-kill memcg movement as benefit checks.",
+    "Applied the standing more-diagrams-less-prose feedback by using seven Mermaid diagrams, compact matrices, command templates, and today's checklist."
+  ],
+  "visible_changes": [
+    "Added seven Mermaid diagrams because of the more-diagrams-less-prose feedback: cgroup view, memory.stat bucket graph, shared page charging sequence, app/system comparison, lmkd-memcg flow, troubleshooting flow, and evidence table flow.",
+    "Added tables for memory views, memory.stat fields, shared charging boundaries, app/system comparisons, cgroup files, evidence questions, and engineering conclusions.",
+    "Added a today's checklist requiring cgroup layout detection, pid-to-cgroup mapping, memory.current/stat/events capture, Day 66 fd alignment, and kill benefit validation."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 67 is marked complete and Day 68 remains pending.",
+    "Update progress.json so current_day becomes 68 and last_generated is refreshed.",
+    "Day 68 should focus on Native/System memory attribution with smaps, showmap, heapprofd, and memcg cross-validation.",
+    "Day 68 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 68 should carry forward Day 67's global-versus-per-cgroup boundary and Day 66's shared owner proof.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "source": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url",
+    "details": "GitHub CLI is not authenticated. gh reported: To get started with GitHub CLI, please run gh auth login. Alternatively, populate the GH_TOKEN environment variable with a GitHub API authentication token."
+  }
+}
