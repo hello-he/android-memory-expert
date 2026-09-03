@@ -740,3 +740,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain baseline evidence, direct reclaim/allocstall path, Perfetto frame impact, why lmkd may be too late, the single tuning change, rollback, and final validation.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 63 -> Day 64
+- Applied reflection: carried forward Day 61's T0-T5 lab timeline and Day 62's one-knob tuning discipline into a low-end watermark-too-low jank case replay, while using Day 63 protection boundaries to exclude adj/FGS abuse before blaming watermarks.
+- Visible change: added seven Mermaid diagrams, case timeline, lmkd-not-root-cause flow, Perfetto signal map, single-knob experiment graph, report template, and today's checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the case still needs real device trace data, numeric RAM-class values, a checked-in Perfetto config, and quantified side-effect thresholds.
+
+## Next Run: Day 65
+- Keep the visual-first format.
+- Focus on a case replay: lmkd killing a seemingly high-priority process.
+- Carry forward Day 63's adj audit plus Day 64's timing discipline to distinguish real priority bugs from normal policy, stale evidence, shared pressure, or victim-benefit tradeoffs.
+- Explain kill timestamp evidence, `oom_score_adj` propagation, process-state races, victim worksheet, pressure source attribution, and fix/rollback choices.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.

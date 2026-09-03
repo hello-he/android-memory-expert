@@ -1,0 +1,58 @@
+{
+  "day": 64,
+  "title": "案例复盘：低端机内存水位过低导致卡顿",
+  "key_conclusions": [
+    "Low watermarks can cause foreground direct reclaim and user-visible jank before lmkd has time to help.",
+    "A kill that lowers PSI after the symptom is a recovery event, not necessarily the root cause.",
+    "The case must prove allocstall, PSI full, and Perfetto frame misses before claiming a watermark timing problem.",
+    "A one-knob watermark experiment is the only defensible way to validate the fix."
+  ],
+  "shallow_points": [
+    "The case uses representative evidence patterns rather than a real captured device trace.",
+    "It does not provide numeric baseline and candidate sysctl values for a specific RAM class.",
+    "It does not include a ready-to-run Perfetto trace config.",
+    "It does not quantify acceptable changes in kill rate, ZRAM, and recovery latency."
+  ],
+  "discovered_connections": [
+    "Day 61's T0-T5 lab timeline gives the case its causal structure.",
+    "Day 62's one-knob tuning discipline prevents the case from becoming unreviewable.",
+    "Day 63's protection boundaries help exclude foreground-service or high-adj abuse before blaming watermarks.",
+    "Day 65 should use the same timing discipline when a high-priority process is killed."
+  ],
+  "suggest_future_topics": [
+    "Day 65 should replay lmkd high-priority kill with pressure, priority, source-bucket, and victim-benefit worksheets.",
+    "A future appendix should add a real trace bundle and numeric low-RAM watermark experiment.",
+    "A future lab tool should generate the case report table automatically from pressure.tsv, logcat, and Perfetto exports.",
+    "Day 68 should revisit this case when attributing Native/System buckets that are invisible in app-only meminfo."
+  ],
+  "knowledge_gaps": [
+    "Need real low-end device traces where allocstall and frame misses precede lmkd kill.",
+    "Need safe candidate ranges for watermark_scale_factor and min_free_kbytes by device class.",
+    "Need validated Perfetto query templates for direct reclaim and frame deadline correlation.",
+    "Need measured side effects on app recovery latency and background process survival."
+  ],
+  "applied_reflections": [
+    "Applied Day 63's next-run instruction by focusing on a low-end watermark-too-low jank case replay.",
+    "Applied Day 61's T0-T5 lab timeline by structuring the case around baseline, pressure start, reclaim lag, jank, lmkd, and recovery.",
+    "Applied Day 62's one-knob discipline by requiring a single watermark change, three before/after runs, acceptance criteria, and rollback.",
+    "Applied the standing more-diagrams-less-prose feedback by using seven Mermaid diagrams, compact evidence matrices, and today's checklist."
+  ],
+  "visible_changes": [
+    "Added seven Mermaid diagrams because of the more-diagrams-less-prose feedback: case summary, T0-T5 sequence, lmkd-not-root-cause flow, Perfetto map, single-knob experiment, troubleshooting flow, and report template flow.",
+    "Added tables for case facts, timeline evidence, lmkd exclusion, Perfetto signals, before/after acceptance, branch handling, report fields, and engineering conclusions.",
+    "Added a today's checklist requiring Day 61 reproduction, direct reclaim proof before lmkd kill, Day 62 single-knob tuning, side-effect validation, and rollback criteria."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 64 is marked complete and Day 65 remains pending.",
+    "Update progress.json so current_day becomes 65 and last_generated is refreshed.",
+    "Day 65 should focus on a case replay: lmkd killing a seemingly high-priority process.",
+    "Day 65 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 65 should carry forward Day 63's adj audit plus Day 64's timing discipline to distinguish real priority bugs from normal policy or stale evidence.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "source": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url",
+    "details": "GitHub CLI is not authenticated. gh reported: To get started with GitHub CLI, please run gh auth login. Alternatively, populate the GH_TOKEN environment variable with a GitHub API authentication token."
+  }
+}
