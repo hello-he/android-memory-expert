@@ -831,3 +831,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain process split motivations, zygote sharing, duplicated runtime/cache/native libs, Binder/shared memory cost, `oom_score_adj`, memcg/PSS evidence, and kill-risk validation.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 70 -> Day 71
+- Applied reflection: carried forward Day 70's per-window peak model and Day 67's memcg boundary into multi-process architecture, requiring all package processes to be summed before claiming a memory win.
+- Visible change: added six Mermaid diagrams, shared-versus-duplicated cost tables, lmkd risk sequence, per-process sampling commands, design matrix, and a today's checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; multi-process guidance still needs real single-vs-multi traces, OomAdjuster branch validation, memcg samples, and Binder/dma-buf cost measurements.
+
+## Next Run: Day 72
+- Keep the visual-first format.
+- Focus on ProGuard/R8 effects on dex, class loading, JIT, and runtime memory.
+- Carry forward Day 71's duplicate per-process cost model when explaining reduced classes, methods, dex layout, and initialization in one or many processes.
+- Explain shrink/optimize/obfuscate/desugar outputs, dex count, class loading, reflection keep rules, startup mmap, JIT/profile interaction, and validation with APK Analyzer, maps, meminfo, startup traces, and method/class counts.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.

@@ -90,7 +90,7 @@
 | Day 68 | Native/System 内存归因：smaps、showmap、heapprofd、memcg 交叉验证 | ✅[2026-09-04](docs/week-10/day68-native-system-attribution.md) |
 | Day 69 | 启动阶段内存控制：冷启动峰值、预加载与缓存时机 | ✅[2026-09-08](docs/week-10/day69-launch-memory-peak.md) |
 | Day 70 | RecyclerView 内存优化：ViewHolder、Prefetch、Pool 与图片峰值 | ✅[2026-09-08](docs/week-10/day70-recyclerview-memory.md) |
-| Day 71 | 多进程架构的内存收益、账单代价与 lmkd 风险 | ⏳待生成 |
+| Day 71 | 多进程架构的内存收益、账单代价与 lmkd 风险 | ✅[2026-09-08](docs/week-11/day71-multi-process-memory-lmkd.md) |
 | Day 72 | ProGuard/R8 对 dex、类加载、JIT 与运行时内存的影响 | ⏳待生成 |
 | Day 73 | 内存优化全局方法论：观测、归因、干预、验证 | ⏳待生成 |
 | Day 74 | AOSP 内存源码阅读路径：ART、AMS、lmkd、kernel、mmd | ⏳待生成 |

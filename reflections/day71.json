@@ -1,0 +1,58 @@
+{
+  "day": 71,
+  "title": "多进程架构的内存收益、账单代价与 lmkd 风险",
+  "key_conclusions": [
+    "Multi-process architecture must be evaluated by total scenario memory, not by main-process PSS alone.",
+    "Zygote and dex/oat mappings can be shared, but Java heap, native heap, caches, and SDK initialization often duplicate.",
+    "lmkd risk expands because each process has its own oom_score_adj, restart behavior, and victim-benefit profile.",
+    "A process split is useful on low-end devices only when it shifts or caps memory away from a critical user-visible window."
+  ],
+  "shallow_points": [
+    "The article does not include measured single-process versus multi-process traces.",
+    "It does not validate ActivityManager OomAdjuster behavior against a specific Android branch.",
+    "It does not include real memcg samples from multiple app processes.",
+    "It does not quantify Binder and dma-buf costs for common split-process patterns."
+  ],
+  "discovered_connections": [
+    "Day 70's per-window peak model is needed to decide whether process splitting moves memory away from a scroll or launch critical window.",
+    "Day 67's memcg boundary prevents treating cgroup charge as producer proof.",
+    "Day 68's cross-validation is required when per-process PSS disagrees with mappings, heapprofd, or shared fd evidence.",
+    "Day 72 should connect R8 and dex/class loading to duplicated per-process startup and runtime costs."
+  ],
+  "suggest_future_topics": [
+    "Day 72 should focus on ProGuard/R8 effects on dex, class loading, JIT, and runtime memory.",
+    "A future lab should compare the same feature implemented as one process versus two processes.",
+    "A future tool should sum PSS, memcg charge, fd owners, and oom_score_adj across all package processes.",
+    "A future case should analyze restart storms after lmkd kills a remote service process."
+  ],
+  "knowledge_gaps": [
+    "Need real multi-process meminfo, smaps, memcg, and lmkd traces.",
+    "Need branch-specific validation for OomAdjuster and service binding adj propagation.",
+    "Need quantified duplicate cache and SDK initialization costs.",
+    "Need Binder/dma-buf examples where killing a consumer process fails to release the producer-owned buffer."
+  ],
+  "applied_reflections": [
+    "Applied Day 70's next-run instruction by focusing on multi-process memory benefits, accounting costs, and lmkd risk.",
+    "Applied Day 70's per-window peak model by judging process splitting against launch, scroll, and feature-specific critical windows.",
+    "Applied Day 67's memcg boundaries and Day 68's cross-validation method to separate per-process charge, mappings, shared fd ownership, and lmkd kill benefit.",
+    "Applied the standing more-diagrams-less-prose feedback by using six Mermaid diagrams, compact matrices, command templates, and today's checklist."
+  ],
+  "visible_changes": [
+    "Added six Mermaid diagrams because of the more-diagrams-less-prose feedback: multi-process bill map, shared/duplicate split, lmkd sequence, sampling flow, troubleshooting decision flow, and validation path.",
+    "Added tables for benefits versus costs, shared versus duplicated memory, lmkd risks, evidence files, process-split design choices, and engineering conclusions.",
+    "Added command templates for per-process meminfo, smaps_rollup, fd, cgroup, oom_score_adj, lmkd logs, manifest process declarations, service bindings, and OomAdjuster source paths."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 71 is marked complete and Day 72 remains pending.",
+    "Update progress.json so current_day becomes 72 and last_generated is refreshed.",
+    "Day 72 should focus on ProGuard/R8 effects on dex, class loading, JIT, and runtime memory.",
+    "Day 72 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 72 should carry forward Day 71's duplicate per-process cost model when explaining reduced classes, methods, dex layout, and initialization.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "source": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url",
+    "details": "GitHub CLI is not authenticated. gh reported: To get started with GitHub CLI, please run gh auth login. Alternatively, populate the GH_TOKEN environment variable with a GitHub API authentication token."
+  }
+}
