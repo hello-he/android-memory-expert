@@ -70,7 +70,7 @@ flowchart LR
 | 关系 | 保护效果 | 审计问题 |
 |---|---|---|
 | visible Activity -> service | service 可被抬高 | Activity 退出后是否释放 |
-| foreground service | adj 提升且用户可见 | 通知是否对应真实任务 |
+| foreground service | 保护增强（adj 数值通常降低）且用户可见 | 通知是否对应真实任务 |
 | provider in use | provider 临时受保护 | 客户端是否长期持有 |
 | persistent/system uid | 更强保护 | 是否真的属于系统关键路径 |
 | isolated process | 通常边界更窄 | 是否误以为主进程受保护 |
@@ -93,9 +93,9 @@ flowchart TD
 | 滥用信号 | 后果 | 修正 |
 |---|---|---|
 | 空通知保活 | 挤压真正关键进程 | 降级为 WorkManager/job |
-| 长期绑定不解绑 | provider/service adj 被错误抬高 | 生命周期解绑 |
+| 长期绑定不解绑 | provider/service 保护被错误加强（adj 数值降低） | 生命周期解绑 |
 | 多进程全部保护 | PSS 总账增加 | 只保护交互链路 |
-| 大缓存伴随高 adj | lmkd 缺少低价值 victim | trim/cache cap |
+| 大缓存伴随强保护（低 adj 数值） | lmkd 缺少低价值 victim | trim/cache cap |
 | 无恢复指标 | 看不到保护收益 | 加入 kill 后恢复体验指标 |
 
 ---
@@ -120,7 +120,7 @@ flowchart TD
 | adj 计算错误 | dumpsys state 与 `/proc` 不一致 |
 | 生命周期错误 | Activity/Service 退出后绑定仍在 |
 | lmkd 策略问题 | 同窗存在更低价值 victim |
-| 保护滥用 | 高 adj 进程持有大量可释放缓存 |
+| 保护滥用 | 低 adj 数值、强保护进程持有大量可释放缓存 |
 | 压力不可承受 | 没有合理 victim，必须降峰值 |
 
 ---
@@ -153,7 +153,7 @@ flowchart LR
 - [ ] 已确认保护对应真实、当前、用户可见或系统关键价值。
 - [ ] 已保存 kill 时间点的 dumpsys、`oom_score_adj`、lmkd log 和 PSI。
 - [ ] 已审计 binding、provider、foreground service 生命周期。
-- [ ] 已确认高 adj 进程没有持有可释放大缓存。
+- [ ] 已确认低 adj 数值、强保护进程没有持有可释放大缓存。
 - [ ] 已用 Day 61 lab 验证保护后的 PSI、kill 率和用户体验副作用。
 - [ ] 已定义保护退出条件，避免永久抬高。
 - [ ] 已记录哪些场景不能用前台服务或绑定关系绕过内存治理。

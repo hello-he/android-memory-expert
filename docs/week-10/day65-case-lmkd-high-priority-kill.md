@@ -1,8 +1,12 @@
-# Day 65: 案例复盘：lmkd 查杀高优先级进程的根因定位
+# Day 65: 教学案例推演：lmkd 查杀高优先级进程的根因定位
 
 > 目标：承接 Day 63 的 adj 审计和 Day 64 的时间线纪律，拆开“看起来高优先级”与“kill 时间点真实优先级”。
 
 ---
+
+> 证据状态：本文是排障模板与教学推演，未附真实设备的 kill 日志、trace 或实验数据，不作为已确认误杀案例。
+
+数值约定：`oom_score_adj` 越低通常保护越强；进程重要性下降通常对应 adj 数值上升。候选选择还要核对当时阈值、存活状态、lmkd 登记状态与目标分支策略，发现更高 adj 的进程只是审计起点。参考 [AOSP Android 12 lmkd 候选扫描](https://android.googlesource.com/platform/system/memory/lmkd/+/refs/tags/android-12.0.0_r21/lmkd.cpp)。
 
 ## 1. 案例总览
 
@@ -68,10 +72,10 @@ flowchart LR
 
 | 分型 | 证据 | 处理 |
 |---|---|---|
-| stale UI evidence | kill 时 `oom_score_adj` 已下降 | 改报告方式，不改 lmkd |
+| stale UI evidence | kill 时重要性已下降，`oom_score_adj` 数值已上升 | 改报告方式，不改 lmkd |
 | state race | Activity stop/service unbind 与 kill 同窗 | 修生命周期或延迟降级 |
 | shared pressure | victim 不拥有 dma-buf/slab 根因 | 找 owner，不责怪 victim |
-| real policy bug | 更低 adj victim 存在却未杀 | 审 lmkd/AMS 传播 |
+| real policy bug | 更高 adj 且符合当时查杀条件的候选存在却被跳过，原因待核验 | 审 lmkd/AMS 传播 |
 | no lower-value victim | 所有候选都重要且压力仍高 | 降峰值、扩回收、调策略 |
 
 ---
@@ -129,10 +133,10 @@ adb logcat -d -v epoch | grep -i 'lmkd\|am_kill\|oom_adj\|lowmemorykiller'
 flowchart TD
     A[High-priority kill report] --> B{kill timestamp captured?}
     B -- no --> C[rerun Day 61 lab]
-    B -- yes --> D{adj high at kill?}
+    B -- yes --> D{strong protection / low numeric adj at kill?}
     D -- no --> E[stale evidence or state race]
-    D -- yes --> F{lower-value victim existed?}
-    F -- yes --> G[policy/propagation bug]
+    D -- yes --> F{eligible higher numeric adj candidate existed?}
+    F -- yes --> G[audit policy and propagation before concluding bug]
     F -- no --> H{victim owned pressure?}
     H -- no --> I[shared/system owner attribution]
     H -- yes --> J{kill recovered PSI?}
@@ -160,7 +164,7 @@ flowchart LR
 
 | 根因 | 首选修复 | 禁忌 |
 |---|---|---|
-| stale state | 修生命周期、延迟释放、补监控 | 盲目抬高 adj |
+| stale state | 修生命周期、延迟释放、补监控 | 盲目降低 adj 数值以加强保护 |
 | FGS 滥用 | 缩短任务、降级调度、释放缓存 | 永久保活 |
 | lmkd 候选错误 | 修 adj 传播或 minfree 策略 | 同时改多个阈值 |
 | shared dma-buf | 找 producer/consumer owner | 杀 consumer 当优化 |

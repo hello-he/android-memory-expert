@@ -106,8 +106,10 @@ adb shell dumpsys meminfo > dumpsys-meminfo.before.txt
 adb shell dumpsys meminfo <package> > app-meminfo.before.txt
 ```
 
+> 以下采样循环在宿主 Bash（Linux/macOS/Git Bash）中运行。单引号将变量和命令替换留给设备 shell；权限不足、节点缺失时应记录错误，不能将缺失值记为 0。 将 `com.example.app` 替换为目标进程名，远程进程需使用完整名称；多个 PID 会逐个读取。
+
 ```bash
-adb shell "for i in $(seq 1 60); do date +%s; cat /proc/pressure/memory; cat /proc/meminfo | egrep 'MemAvailable|AnonPages|Cached|Slab|SReclaimable|SUnreclaim|SwapFree'; sleep 1; done" > waterline-sample.txt
+adb shell 'for i in $(seq 1 60); do date +%s; cat /proc/pressure/memory; cat /proc/meminfo | egrep "MemAvailable|AnonPages|Cached|Slab|SReclaimable|SUnreclaim|SwapFree"; sleep 1; done' > waterline-sample.txt
 adb shell cat /sys/kernel/debug/dma_buf/bufinfo > dmabuf.txt
 adb shell cat /dev/memcg/apps/uid_<uid>/pid_<pid>/memory.stat > memcg.txt
 ```

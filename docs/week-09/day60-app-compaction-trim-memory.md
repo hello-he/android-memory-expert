@@ -59,8 +59,13 @@ sequenceDiagram
 | 回调级别 | app 应对 | 验证 |
 |---|---|---|
 | UI hidden | 释放 UI-only bitmap/view cache | 返回前后 PSS/Graphics |
-| running moderate/low/critical | 降低活跃缓存和预加载 | PSI 与帧稳定性 |
-| background/moderate/complete | 清理可重建缓存 | 恢复耗时和命中率 |
+| running moderate/low/critical（API 33 及以前的历史行为） | 降低活跃缓存和预加载 | 实际回调日志与缓存指标 |
+| background | 清理可重建缓存 | 恢复耗时和命中率 |
+| moderate/complete（API 33 及以前的历史行为） | 清理可重建缓存 | 实际回调日志与恢复耗时 |
+
+API 34 起，RUNNING_MODERATE、RUNNING_LOW、RUNNING_CRITICAL、MODERATE、COMPLETE 不再通知应用；这些常量在 API 35 废弃。UI_HIDDEN 与 BACKGROUND 不属于这组停止通知的级别。`onLowMemory()` 也自 API 34 起不再调用。参见 [ComponentCallbacks2 官方说明](https://developer.android.com/reference/android/content/ComponentCallbacks2)。
+
+新版本应结合生命周期、缓存容量和业务负载主动释放；不能等待上述低内存回调，更不能假设 lmkd kill 前一定会先 trim/compact。
 
 不要把 `onTrimMemory` 写成“收到就清空所有缓存”。正确目标是释放可重建、低命中、非当前交互需要的内存。
 
@@ -96,6 +101,7 @@ adb logcat -d | grep -i 'trim\|compact\|CachedAppOptimizer\|lmkd'
 ```
 
 ```bash
+# 先替换 package；手动注入只验证回调处理逻辑，不证明系统自然触发
 adb shell am send-trim-memory <package> RUNNING_LOW
 adb shell am send-trim-memory <package> BACKGROUND
 adb shell dumpsys meminfo <package> > app-meminfo.after.txt

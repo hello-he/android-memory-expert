@@ -96,8 +96,10 @@ adb shell dumpsys activity processes > activity-processes.after.txt
 adb shell dumpsys activity oom > activity-oom.after.txt
 ```
 
+> 以下采样循环在宿主 Bash（Linux/macOS/Git Bash）中运行。单引号将变量和命令替换留给设备 shell；权限不足、节点缺失时应记录错误，不能将缺失值记为 0。 进程退出会造成读取失败，快照并非原子；kill 当时的 adj 需结合日志核验。 将 `com.example.app` 替换为目标进程名，远程进程需使用完整名称；多个 PID 会逐个读取。
+
 ```bash
-adb shell "for i in $(seq 1 120); do date +%s; pidof <package>; cat /proc/$(pidof <package>)/oom_score_adj 2>/dev/null; cat /proc/pressure/memory; sleep 1; done" > kill-window-sample.txt
+adb shell 'for i in $(seq 1 120); do date +%s; pids=$(pidof com.example.app); if [ -z "$pids" ]; then echo process_not_running; fi; for p in $pids; do printf "pid=%s adj=" "$p"; cat /proc/$p/oom_score_adj || echo unavailable; done; cat /proc/pressure/memory; sleep 1; done' > kill-window-sample.txt
 adb shell dumpsys stats --proto > statsd-after.pb
 adb shell dumpsys dropbox --print > dropbox-after.txt
 ```

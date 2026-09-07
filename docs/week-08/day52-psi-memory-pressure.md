@@ -115,8 +115,10 @@ adb shell cat /proc/zoneinfo > zoneinfo.before.txt
 adb shell cat /sys/block/zram0/mm_stat > zram.before.txt
 ```
 
+> 以下采样循环在宿主 Bash（Linux/macOS/Git Bash）中运行。单引号将变量和命令替换留给设备 shell；权限不足、节点缺失时应记录错误，不能将缺失值记为 0。 将 `com.example.app` 替换为目标进程名，远程进程需使用完整名称；多个 PID 会逐个读取。
+
 ```bash
-adb shell "for i in $(seq 1 30); do date +%s.%N; cat /proc/pressure/memory; sleep 1; done" \
+adb shell 'for i in $(seq 1 30); do date +%s.%N; cat /proc/pressure/memory; sleep 1; done' \
   > psi-sampled.txt
 adb shell dumpsys gfxinfo <package> framestats > framestats.txt
 ```

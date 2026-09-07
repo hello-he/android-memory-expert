@@ -1,6 +1,8 @@
-# Day 64: 案例复盘：低端机内存水位过低导致卡顿
+# Day 64: 教学案例推演：低端机内存水位过低导致卡顿
 
-> 目标：承接 Day 61 的 T0-T5 实验时间线和 Day 62 的单旋钮原则，复盘一次“低水位先卡顿、lmkd 后响应”的问题。
+> 目标：承接 Day 61 的 T0-T5 实验时间线和 Day 62 的单旋钮原则，推演如何验证“回收余量不足先卡顿、lmkd 后响应”的假设。
+
+> 证据状态：以下 2GB 设备、工作负载、时间线和结果方向均为教学设定，未附实机 trace、原始日志或定量 before/after 数据。表格是待验证的假设与验收目标，不能作为调参成功或已定位根因的证据。
 
 ---
 
@@ -9,7 +11,7 @@
 ```mermaid
 flowchart TD
     A[2GB low-end device] --> B[image feed scroll + background sync]
-    B --> C[MemAvailable falls near low watermark]
+    B --> C[eligible zone free pages approach low watermark]
     C --> D[kswapd cannot recover fast enough]
     D --> E[UI allocation enters direct reclaim]
     E --> F[frame miss / input delay]
@@ -17,13 +19,13 @@ flowchart TD
     G --> H[PSI drops but jank already visible]
 ```
 
-| 项 | 观察 |
+| 项 | 教学设定 / 待验证假设 |
 |---|---|
 | 设备 | 2GB RAM，ZRAM 开启，低端 CPU |
 | 场景 | 图片流滑动，同时后台同步和解码 |
 | 症状 | 掉帧、触摸延迟、偶发后台 kill |
 | 初始误判 | “lmkd 杀晚了” |
-| 复盘结论 | 水位太低导致 direct reclaim 提前伤害前台线程 |
+| 待验证假设 | zone 回收余量不足使前台关键线程进入 direct reclaim；还需排除碎片、回收效率、锁与 IO 等原因 |
 
 ---
 
@@ -46,16 +48,16 @@ sequenceDiagram
 
 | 时间点 | 关键证据 | 解释 |
 |---|---|---|
-| T0 baseline | `MemAvailable` 接近但高于 low | 空闲余量小 |
+| T0 baseline | 目标 zone 的 free 与 low 接近（同为页数）；另记全局 `MemAvailable` | 空闲余量小 |
 | T1 pressure starts | `pgscan_kswapd` 上升 | 后台回收启动 |
-| T2 reclaim lag | `pgsteal/pgscan` 比例低 | 回收效率不足 |
-| T3 jank | `allocstall`、PSI full、Perfetto frame miss | 前台分配被 direct reclaim 阻塞 |
-| T4 lmkd | kill log 出现在掉帧后 | kill 是后置缓解，不是首因 |
+| T2 reclaim lag | 同窗口、同回收类别的 Δpgsteal/Δpgscan 偏低（分母非零） | 回收效率不足 |
+| T3 jank | 全局 Δallocstall、PSI 增量与 frame miss 同窗 | 仅支持相关性；需目标 TID 的 direct reclaim begin/end 或内核栈证明关键线程受阻 |
+| T4 lmkd | kill log 出现在掉帧后 | 此次 kill 晚于症状；不能据此排除策略响应时机问题 |
 | T5 recovery | PSI 降低但帧已错过 | 用户已感知卡顿 |
 
 ---
 
-## 3. 为什么不是单纯 lmkd 问题
+## 3. 如何区分水位、回收效率与 lmkd 响应问题
 
 ```mermaid
 flowchart LR
@@ -68,14 +70,30 @@ flowchart LR
     E --> I[jank already happened]
 ```
 
-| 现象 | 如果是 lmkd 问题 | 本案证据 |
+| 待区分因素 | 所需证据 | 不能单独推出 |
 |---|---|---|
-| kill 时间 | kill 前 PSI 长时间高但无 direct reclaim | direct reclaim 先于 kill |
-| victim | 错杀高 adj 或低收益进程 | victim 合理但来得晚 |
-| recovery | kill 后立即避免症状 | kill 后恢复，但掉帧已发生 |
-| root bucket | 某进程持续泄漏 | 场景峰值 + 水位余量不足 |
+| 回收时机 | zone free、水位、分配约束与 kswapd 唤醒时序 | MemAvailable 低就说明 low 配置低 |
+| 回收效率 | 同窗扫描/回收增量、refault、脏页与 swap 状态 | kswapd 活跃就说明唤醒太晚 |
+| lmkd 响应 | 压力触发、阈值、kill reason 与候选状态 | direct reclaim 先发生就排除了 lmkd 问题 |
+| victim 选择 | 被杀进程与合格候选的 adj 数值、状态、收益 | 低 adj 数值进程被杀必然是 bug |
 
 ---
+
+`MemAvailable` 是全系统可用内存估算，包含可回收页等因素；zone 的 min/low/high 是页数阈值，不能直接比较。即使统一单位，也不能把全局估算代替目标 zone 的水位检查。还需核对分配 order、GFP、保留页与内核分支。
+
+采集前记录 build fingerprint、内核版本、页大小以及权限；可在宿主 Bash 中执行：
+
+```bash
+adb shell getprop ro.build.fingerprint > build.txt
+adb shell uname -a > kernel.txt
+adb shell getconf PAGESIZE > page-size.txt
+adb shell cat /proc/zoneinfo > zoneinfo.txt
+adb shell cat /proc/meminfo > meminfo.txt
+```
+
+Perfetto 的 `linux.ftrace` 配置应按设备可用事件加入 `vmscan/mm_vmscan_direct_reclaim_begin`、`vmscan/mm_vmscan_direct_reclaim_end` 和调度事件，再关联 PID/TID 与帧时间线。需检查事件是否可用、权限和丢失事件；无法取得线程级证据时，只能报告“内存压力与卡顿相关”，不能确认主线程 direct reclaim。1 秒 procfs 采样只能补充粗粒度趋势。
+
+参考：[Linux MemAvailable 定义](https://docs.kernel.org/filesystems/proc.html)、[watermark_scale_factor 与回收余量](https://docs.kernel.org/admin-guide/sysctl/vm.html)、[Perfetto Android 采集配置](https://perfetto.dev/docs/learning-more/android)。
 
 ## 4. Perfetto 定位图
 
@@ -96,11 +114,11 @@ flowchart TD
 
 | Trace 信号 | 判断 |
 |---|---|
-| UI thread allocation 后长 blocked | 可能 direct reclaim |
+| UI thread allocation 后长 blocked | 待排查 IO、锁和回收；必须补目标 TID 的回收事件或内核栈 |
 | RenderThread frame deadline miss | 用户可见掉帧 |
 | kswapd 活跃但 recover 慢 | 后台回收启动太晚或效率差 |
 | lmkd slice/log 在掉帧后 | kill 不是第一触发点 |
-| `pswpin` 同窗上升 | ZRAM 热工作集参与卡顿 |
+| `pswpin` 同窗上升 | 存在换入活动；需确认 swap 后端与目标线程延迟后再归因 |
 
 ---
 
@@ -117,6 +135,8 @@ flowchart TD
     G -- no --> F
     G -- yes --> H[keep guarded value]
 ```
+
+以下是验收方向，不是实测数值。实际报告需填原始参数、采样时长、各轮数值及变异情况。
 
 | 项 | Baseline | Candidate | 接受标准 |
 |---|---:|---:|---|
@@ -135,12 +155,12 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    A[Low-end jank case] --> B{allocstall before jank?}
+    A[Low-end jank case] --> B{target thread reclaim overlaps missed frame?}
     B -- no --> C[look at CPU/IO/render/app lock]
     B -- yes --> D{low watermark crossed late?}
     D -- no --> E[inspect reclaim efficiency / bucket growth]
     D -- yes --> F{lmkd kill after jank?}
-    F -- yes --> G[watermark timing case]
+    F -- yes --> G[watermark timing hypothesis]
     F -- no --> H[audit lmkd threshold]
     G --> I[one-knob watermark experiment]
     I --> J{PSI full and frame misses improve?}
@@ -151,7 +171,7 @@ flowchart TD
 | 分支 | 下一步 |
 |---|---|
 | 无 `allocstall` | 不要把所有掉帧都归到内存水位 |
-| low 未被突破 | 查 app 主线程、IO、GPU、锁等待 |
+| 采样未见 low 被突破 | 检查采样是否漏掉瞬时事件、分配 order/GFP/zone 与 memcg 约束，再查 IO、GPU、锁等待 |
 | reclaim 效率低 | 查 file/anon、refault、ZRAM、dirty pages |
 | kill 先于卡顿 | 查 lmkd aggressive 或 victim 选择 |
 | 调参后副作用大 | 回滚并降应用峰值 |
@@ -184,8 +204,8 @@ flowchart LR
 ## 今日检查清单
 
 - [ ] 已用 Day 61 lab 复现三轮低端机场景。
-- [ ] 已证明 `allocstall`、PSI full、Perfetto frame miss 先于 lmkd kill。
-- [ ] 已排除明显 app 泄漏、dma-buf/slab 异常增长和高 adj 保护滥用。
+- [ ] 已记录目标 TID 的回收事件与 missed frame 重叠，并对齐 zone、PSI、全局计数和 kill 时间。
+- [ ] 已排除明显 app 泄漏、dma-buf/slab 异常增长和低 adj 数值对应的强保护滥用。
 - [ ] 已按 Day 62 原则只修改一个水位旋钮。
 - [ ] 已验证 `pswpin`、kill 率、恢复时延没有变差。
 - [ ] 已写明为什么 lmkd 是后置缓解而不是首因。
@@ -199,7 +219,7 @@ flowchart LR
 |---|---|
 | 低水位会先制造卡顿 | direct reclaim 可能比 lmkd 更早伤害前台 |
 | kill 后恢复不代表 kill 是根因 | 要看掉帧前的 PSI 和 allocstall |
-| 单旋钮才有因果 | 多项同时调参无法复盘 |
+| 单变量有助于归因 | 仍需控制负载、冷热状态与运行顺序，并比较重复实验；三轮不是因果保证 |
 | 水位优化要看副作用 | ZRAM、kill、恢复时延都要守住 |
 
 Day 65 进入 lmkd 查杀高优先级进程案例：把 adj 审计、victim worksheet 和压力时间线合在一起。

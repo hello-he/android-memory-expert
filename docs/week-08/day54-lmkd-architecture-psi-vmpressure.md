@@ -91,12 +91,14 @@ flowchart TD
 
 ## 5. 证据命令
 
+> 以下采样循环在宿主 Bash（Linux/macOS/Git Bash）中运行。单引号将变量和命令替换留给设备 shell；权限不足、节点缺失时应记录错误，不能将缺失值记为 0。 进程退出会造成读取失败，快照并非原子；kill 当时的 adj 需结合日志核验。 将 `com.example.app` 替换为目标进程名，远程进程需使用完整名称；多个 PID 会逐个读取。
+
 ```bash
 adb shell getprop | grep -E 'ro.lmk|sys.lmk|ro.config.low_ram'
 adb logcat -b all -d | grep -i 'lowmemorykiller\|lmkd'
 adb shell cat /proc/pressure/memory
 adb shell dumpsys activity processes | grep -E 'ProcessRecord|oom'
-adb shell "for p in /proc/[0-9]*; do printf '%s ' $p; cat $p/oom_score_adj 2>/dev/null; done" > oom-adj.txt
+adb shell 'for p in /proc/[0-9]*; do printf "%s " $p; cat $p/oom_score_adj || echo unavailable; done' > oom-adj.txt
 ```
 
 ```bash

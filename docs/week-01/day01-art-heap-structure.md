@@ -1,19 +1,19 @@
 # Day 1：Java 堆结构：Young/Old Generation 在 ART 上的实现
 
-> 系列第 1 篇。把 “年轻代 / 老年代” 这套 JVM 语言迁移到 Android Runtime（ART）的语境里：在 ART 里它们分别对应哪些内存空间、哪些对象会被 “晋升”，以及你在排查内存问题时应该看哪些证据而不是概念。
+> 系列第 1 篇。把 “年轻代 / 老年代” 这套 JVM 语言迁移到 Android Runtime（ART）的语境里：在 ART 里代际与 space 有什么区别、存活对象如何参与后续回收，以及你在排查内存问题时应该看哪些证据而不是概念。
 
 ## 背景
 
-在 HotSpot 里，“Young / Old Generation” 是一个强约束的堆分代模型：对象先在年轻代分配，经历若干次 Minor GC 后存活的对象被晋升到老年代，最终通过 Major / Full GC 回收。
+HotSpot 的典型分代收集器常用 Young / Old、Eden / Survivor 等术语；具体布局和晋升策略同样取决于收集器，不能推广为所有 JVM 的固定模型。
 
-在 Android（ART）里，你仍然会在面试、性能优化、OOM 排查中听到 “年轻代 / 老年代” 的说法，但它更像一种**经验映射**：用于描述 “新分配对象更容易被回收、长寿命对象应当尽量减少写屏障和搬迁成本” 的设计取向，而不是某个固定的两段式堆布局。
+ART 中确实存在分代回收实现，例如 Android 10 引入的 generational CC。理解它要区分空间布局与回收集合，不能把不可移动空间当作老年代。
 
 要把概念讲清楚，必须把 ART 的堆拆成两个维度：
 
 - **内存空间（space）维度**：对象到底分配在哪些空间里（moving / non-moving / large object / zygote 等），空间的分配器是什么（bump pointer / rosalloc 等）。
 - **回收策略（collector）维度**：当前 GC 选用的收集器是什么（如 Concurrent Copying、CMS），它如何选择回收集合、是否搬迁对象、如何处理跨空间引用。
 
-这篇文章只解决第一步：把 ART 堆空间的结构讲透，并给出“年轻 / 年老”的可操作映射。
+这篇文章只解决第一步：把 ART 堆空间的结构讲透，并说明 space 与代际回收的区别。
 
 ![ART 堆由多个 space 组成，而非一段连续内存](images/art-heap-spaces-overview.png)
 
@@ -32,53 +32,39 @@ space 的实现集中在：
 
 - `art/runtime/gc/space/`：不同 space 的具体实现（是否可移动、是否按 region 管理、是否面向大对象等）。
 
-### 2）把 “年轻代 / 老年代” 映射到 ART：看 “可移动性 + 生命周期”，不要硬套代际名称
+### 2）Space 与代际是两个维度
 
-在实际工程里，可以用下面的映射来指导你做判断（注意：是映射，不是标准命名）：
+| Space | 含义 | 不能推出的结论 |
+|---|---|---|
+| Bump Pointer Space | 线性分配空间，配合相应搬迁收集器 | 使用指针碰撞就一定是年轻代 |
+| Region Space | CC 使用的 region 化空间，支持 RegionTLAB 分配和搬迁 | 其中所有对象都是年轻对象 |
+| Non-moving Space | 满足特定不可移动分配需求 | 它就是老年代，长寿命对象都会进入 |
+| Large Object Space（LOS） | 满足类型、大小等条件的大对象分配路径 | 所有大对象或所有 Bitmap 像素都进入 LOS |
+| Zygote / Image Space | 预加载、映像及共享相关空间 | 共享页都是应用泄漏 |
 
-**更接近“年轻代”的区域（更强调快速分配、可搬迁、倾向于容纳短命对象）**
+LOS 的类型条件、阈值与实现需要绑定 ART 分支核对；不要仅凭对象大小推断 space。JNI global reference 是 GC 可追踪的引用，不是承诺对象地址不变的裸指针，持有时间长不会自动把对象搬到 non-moving。
 
-- **Bump Pointer Space**（典型的 “指针碰撞” 分配，分配极快，常用于可移动对象）
-  - 关键实现：`art/runtime/gc/space/bump_pointer_space.h`
-  - 特点：按块线性分配，几乎没有分配元数据开销；适合配合复制/搬迁式收集器。
-- **Region Space**（把堆切成固定大小 region，支持更细粒度的管理与搬迁）
-  - 关键实现：`art/runtime/gc/space/region_space.h`
-  - 特点：每个 region 可标记为不同状态（如 free、allocated、large 等），收集器可以按 region 组织 evacuation 与 compaction。
+### 3）以 Android 10 的 generational CC 为例理解代际
 
-**更接近“老年代”的区域（更强调稳定地址、避免频繁搬迁、容纳长寿命或特殊对象）**
+Android 10 引入 generational CC，并默认启用 CC 的分代模式。这是具体收集器行为，不是把 moving/non-moving 改名为 young/old；其他版本、收集器和厂商配置应另行确认。
 
-- **Non-moving Space**（不可移动对象的容器）
-  - 常见动机：某些对象（或它们被 native 持有的地址）不适合频繁搬迁；或者为了降低移动成本与屏障开销。
-  - 你可以在 heap 初始化逻辑中看到它与 moving space 并存。
-- **Large Object Space（LOS）**（大对象通常单独管理，避免在常规 space 里导致碎片与复制成本）
-  - 关键实现：`art/runtime/gc/space/large_object_space.h`
-  - 特点：大对象往往按页或大块分配；回收策略与普通对象不同，且 “晋升” 概念通常不适用。
-- **Zygote Space / Image Space**（由 Zygote 预加载与映像共享带来的特殊空间）
-  - 关键意义：这些对象对应用进程而言几乎是 “常驻” 的；你排查内存时需要能区分“共享映射”与“私有脏页”带来的增量。
+- RegionSpace 跟踪新分配 region 等状态，young collection 针对年轻对象缩小回收工作范围。
+- 存活对象可以继续留在 RegionSpace；不能描述为“存活若干轮后必然转入 non-moving”。
+- 跨代引用需要配合写屏障和相应记录机制处理，年轻对象仍可能由老对象保持可达。
+- young 与 full-heap CC 的选择涉及回收吞吐量等策略，不能简化为每次分配都先 young、失败再 full。
 
-因此，如果面试或排查场景里你必须用 “年轻 / 老年代” 语言，建议用下面的句式落地：
+```mermaid
+flowchart TD
+  A[对象分配] --> B{目标 collector 和分配条件}
+  B --> C[RegionSpace 中的普通分配]
+  B --> D[满足条件的 LOS 或 non-moving 分配]
+  C --> E[新分配 region 状态]
+  E --> F[young CC 回收年轻对象]
+  F --> G[存活对象仍可位于 RegionSpace]
+  G --> H[后续 full-heap CC 覆盖更大回收范围]
+```
 
-- “ART 没有固定的两段式年轻代/老年代布局；更准确地说，新分配对象通常进入 moving space（如 bump pointer / region），长寿命或不适合移动的对象可能进入 non-moving 或 LOS；是否发生类似 ‘晋升’ 的行为由收集器与对象特性共同决定。”
-
-### 3）什么情况下会出现类似 “晋升（promotion）” 的现象
-
-在 HotSpot 里 promotion 是从年轻代到老年代的明确拷贝路径；在 ART 里，更接近 promotion 的现象通常表现为：
-
-- 对象最初分配在 **moving space**（便于复制、压缩与并发回收）
-- 经历若干次 GC 后，某类对象被转移到 **non-moving**（减少搬迁成本/降低某些引用处理复杂度）
-- 大对象直接进入 **LOS**，通常绕过 “年轻代” 路径
-
-这里最关键的工程判断是：**对象“生命周期长”并不自动意味着它一定会进入某个 “老年代”**。你需要结合：
-
-- 当前设备/系统上启用的收集器（不同 collector 对 space 的使用方式不同）
-- 对象大小（是否触发 LOS 分配）
-- 对象是否被某些 native 结构长期持有（是否更倾向 non-moving）
-
-把 “晋升” 当成固定规则很容易误判。
-
-![对象从 moving space 分流到 non-moving 或 LOS 的示意](images/art-promotion-flow.png)
-
-> 这张图刻意不画 Eden / Survivor / Tenured，因为那是 HotSpot 的固定分代语言。ART 里更稳妥的判断方式是看 space、collector、allocator、对象大小和目标 Android 版本配置。
+> 图只解释 generational CC 的概念关系，不代表所有 ART 版本的固定调用顺序。存活对象不必迁移到 non-moving。
 
 ### 4）为什么这个结构对性能与 OOM 排查很关键
 
@@ -86,7 +72,7 @@ space 的实现集中在：
    moving space（尤其是 bump pointer）分配快，但短命对象多会提高 GC 触发频率；如果你看到频繁 GC，第一步通常不是“优化 GC”，而是找分配热点。
 
 2. **大对象的 OOM 行为经常与常规对象不同**  
-   大 Bitmap、超大数组直接进入 LOS。你在 Java Heap 看起来还有空间，但 LOS 的可用连续块不足时仍然会 OOM（或触发更激进的回收）。
+   满足分配条件的大型基本类型数组可能进入 LOS；分配失败需要结合请求大小、堆限制和具体 LOS 实现判断。Android 8.0 起普通软件 Bitmap 的像素数据位于 native heap，Java wrapper 与像素必须分开核算；硬件 Bitmap 还要检查 Graphics/buffer 路径，不能用 Java LOS 解释全部图片内存。
 
 3. **“共享内存” 与 “私有脏页” 会掩盖问题**  
    Zygote/Image 相关空间会把一部分内存表现为共享映射。排查时要把 PSS/Private Dirty 分开看，否则容易把系统共享页当成应用泄漏。
@@ -175,7 +161,7 @@ Memory Profiler 的 Allocation 视图能直接定位“是谁在制造短命对�
 ## 面试考点
 
 1. “ART 里有没有年轻代/老年代？”  
-   建议回答：ART 不以固定的两段式分代暴露给开发者；更准确的描述是多个 space 的组合，moving space 更像“年轻代”的承载，non-moving/LOS/zygote/image 更像“年老或特殊对象的承载”，对象迁移由收集器与对象特性决定。
+   建议回答：有具体的分代收集器实现，例如 Android 10 的 generational CC；代际不等同于 space，RegionSpace 可承载不同存活阶段的对象，non-moving 不等于老年代。先明确目标 collector 和版本。
 
 2. “为什么大对象容易导致 OOM，即使看起来 Java Heap 还没满？”  
    建议回答：大对象常进入 LOS，LOS 的分配与碎片约束不同；OOM 可能由连续空间不足或进程整体内存上限触发，而不等价于 Java Heap 总量耗尽。
@@ -195,3 +181,7 @@ Memory Profiler 的 Allocation 视图能直接定位“是谁在制造短命对�
   - `adb shell dumpsys meminfo`
   - Android Studio Memory Profiler
 
+
+- [AOSP：ART GC、generational CC 与吞吐量策略](https://source.android.com/docs/core/runtime/gc-debug)
+- [Android：Bitmap 像素内存的版本变化](https://developer.android.com/topic/performance/graphics/manage-memory)
+- [Android：ART 搬迁 GC 与 JNI 注意事项](https://developer.android.com/guide/practices/verifying-apps-art)

@@ -83,8 +83,8 @@
 | Day 61 | 低内存复现实验室：stress、trace、logcat 与可重复场景 | ✅[2026-09-04](docs/week-09/day61-low-memory-repro-lab.md) |
 | Day 62 | 水位与 lmkd 调参：min_free_kbytes、watermark_scale_factor、lmkd 属性与风险 | ✅[2026-09-04](docs/week-09/day62-watermark-lmkd-tuning.md) |
 | Day 63 | 关键进程保护：adj 设计、绑定关系、前台服务与滥用边界 | ✅[2026-09-04](docs/week-09/day63-protect-critical-processes.md) |
-| Day 64 | 案例复盘：低端机内存水位过低导致卡顿 | ✅[2026-09-04](docs/week-10/day64-case-watermark-too-low-jank.md) |
-| Day 65 | 案例复盘：lmkd 查杀高优先级进程的根因定位 | ✅[2026-09-04](docs/week-10/day65-case-lmkd-high-priority-kill.md) |
+| Day 64 | 教学案例推演：低端机内存水位过低导致卡顿 | ✅[2026-09-04](docs/week-10/day64-case-watermark-too-low-jank.md) |
+| Day 65 | 教学案例推演：lmkd 查杀高优先级进程的根因定位 | ✅[2026-09-04](docs/week-10/day65-case-lmkd-high-priority-kill.md) |
 | Day 66 | 共享内存与 IPC 内存账单：ashmem、memfd、Binder、dma-buf | ✅[2026-09-04](docs/week-10/day66-shared-memory-ipc-accounting.md) |
 | Day 67 | memcg 与 cgroup：每个 App 的内存隔离和系统视图 | ✅[2026-09-04](docs/week-10/day67-memcg-cgroup-process-isolation.md) |
 | Day 68 | Native/System 内存归因：smaps、showmap、heapprofd、memcg 交叉验证 | ✅[2026-09-04](docs/week-10/day68-native-system-attribution.md) |
@@ -132,4 +132,4 @@ commit & push →（可选）关闭已处理 Issues
 写作规范（视觉优先）：
 - 多图少文字：优先 Mermaid 图、表格、对照矩阵、短 checklist；长段落必须拆短。  
 - 每篇文章至少 2 张 Mermaid：一张讲核心结构/执行路径；一张讲排障决策流。  
-- 结论必须落到可观测证据：`dumpsys meminfo`、`/proc/<pid>/maps`、GC 日志、heap dump、allocation 视图、AOSP 路径等。  
+- 结论必须落到可观测证据：`dumpsys meminfo`、`/proc/<pid>/maps`、GC 日志、heap dump、allocation 视图、AOSP 路径等。

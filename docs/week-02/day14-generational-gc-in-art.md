@@ -18,13 +18,13 @@
 flowchart TD
   A["Java/Kotlin allocation"] --> B{"对象大小与分配路径"}
   B -->|普通对象| C["Bump pointer / TLAB\n进入可移动 space"]
-  B -->|大对象| D["Large Object Space\n通常不按年轻代快速搬迁"]
+  B -->|满足 LOS 分配条件| D["Large Object Space\n通常不按年轻代快速搬迁"]
 
   C --> E["RegionSpace / moving space\n按 region 承载对象"]
-  E --> F{"年龄假设成立吗？"}
+  E --> F{"回收吞吐量与策略选择"}
 
-  F -->|大量短命对象| G["Young / partial collection\n优先处理年轻 region"]
-  F -->|存活对象多| H["Full / whole-heap collection\n扩大扫描与移动范围"]
+  F -->|选择 young| G["Young collection\n优先处理年轻 region"]
+  F -->|选择 full-heap| H["Full / whole-heap collection\n扩大扫描与移动范围"]
 
   G --> I["Remembered set / card table\n记录老对象指向年轻对象"]
   H --> J["Root scan + heap graph\n完整可达性判断"]
@@ -41,11 +41,11 @@ flowchart TD
 
 | 结构 | 工程含义 | 证据入口 |
 |---|---|---|
-| young / partial collection | 只处理一部分年轻对象区域，期待短命对象快速死亡 | GC 日志 cause、freed、paused、total |
+| young collection | 只处理一部分年轻对象区域，期待短命对象快速死亡 | GC 日志 cause、freed、paused、total |
 | remembered set / card table | 老对象指向年轻对象时，年轻代 GC 不能只扫年轻对象 | AOSP `card_table`、`remembered_set` 搜索 |
 | RegionSpace | ART CC 常见空间表达，比 Eden/Survivor 更贴近源码 | `art/runtime/gc/space/region_space.*` |
 | Large Object Space | 大对象压力通常不会被“年轻代更快”直接解决 | `dumpsys meminfo`、heap dump、`/proc/<pid>/maps` |
-| full collection | 年轻代回收无法满足目标时，仍要回到全堆可达性 | Perfetto GC slice + heap dump |
+| full collection | 策略选择更大回收范围时，执行全堆回收 | Perfetto GC slice + heap dump |
 
 ---
 
@@ -61,6 +61,8 @@ flowchart TD
 ---
 
 ## 版本与源码入口
+
+已知基线：Android 10 引入 generational CC，CC 默认运行于分代模式。本文图示以该机制为例，不能用“版本差异”替代这项已确认事实，也不外推所有后续 ART 配置。young CC 与 full-heap CC 的选择会比较回收吞吐量（回收字节数 / GC 时间），并涉及 heap footprint 策略，不只是“年轻代没回收够就立即 full”。参考 [AOSP GC 文档](https://source.android.com/docs/core/runtime/gc-debug)。
 
 Day 13 留下的浅点是：pause phase、collector 默认组合、日志字段都没有绑定目标分支。这里直接把 Day 14 的讲法收窄为 **需要目标 Android 分支验证**。
 
@@ -94,21 +96,21 @@ sequenceDiagram
   participant App as App threads
   participant Alloc as Allocator
   participant Heap as ART heap.cc
-  participant YG as Young / partial GC
+  participant YG as Young GC
   participant FG as Full GC
   participant Log as logcat / Perfetto
 
   App->>Alloc: 高频创建短命对象
   Alloc->>Heap: space 或 footprint 接近阈值
-  Heap->>YG: 尝试年轻区域回收
+  Heap->>YG: 示意一次 young collection
   YG->>YG: 扫 roots + remembered set
   YG->>Log: freed / paused / total / cause
-  YG-->>Heap: 回收足够？
-  alt 足够
+  YG-->>Heap: 回收结果与吞吐量
+  alt 策略继续选择 young
     Heap-->>Alloc: 分配恢复
     Log->>Log: 记录为分配峰值问题
-  else 不足
-    Heap->>FG: 扩大为 full / whole-heap work
+  else 策略选择下一次 full-heap
+    Heap->>FG: 后续执行 full / whole-heap work
     FG->>FG: 扫更多对象与 reference
     FG->>Log: 更高 total 或 pause 风险
     Log->>Log: 转 retained path / LOS / Native 排查
@@ -175,8 +177,8 @@ adb logcat -v time | rg -n "GC|young|freed|paused|Alloc|Concurrent|Explicit|Back
 # 内存归属：确认是否真是 Java heap
 adb shell dumpsys meminfo <package> | head -n 180
 
-# Perfetto：把 GC、调度、帧放在同一时间线上
-adb shell perfetto -o /data/misc/perfetto-traces/gc-gen.perfetto-trace -t 20s sched freq idle am wm gfx view dalvik --txt
+# Perfetto 轻量模式：把 GC、调度、帧放在同一时间线上；--txt 仅用于文本配置模式
+adb shell perfetto -o /data/misc/perfetto-traces/gc-gen.perfetto-trace -t 20s sched freq idle am wm gfx view dalvik
 adb pull /data/misc/perfetto-traces/gc-gen.perfetto-trace .
 
 # freed 少：转 retained path，不要反复手动 GC

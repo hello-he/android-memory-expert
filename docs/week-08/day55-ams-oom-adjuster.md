@@ -25,7 +25,7 @@ flowchart TD
 |---|---|---|
 | visible Activity | 用户可见保护 | 是否 pause/stop 后未及时更新 |
 | foreground service | 前台服务保护 | 类型、通知、超时和滥用 |
-| bound service | client 保护传递 | client adj 是否正确提升 server |
+| bound service | client 保护传递 | client 是否按绑定规则加强 server 保护（adj 数值通常降低） |
 | content provider | provider/client 关系 | provider 进程是否被错误降级 |
 | cached rank | 缓存进程排序 | 最近使用和内存成本 |
 
@@ -94,10 +94,12 @@ flowchart TD
 
 ## 5. 证据命令
 
+> 以下采样循环在宿主 Bash（Linux/macOS/Git Bash）中运行。单引号将变量和命令替换留给设备 shell；权限不足、节点缺失时应记录错误，不能将缺失值记为 0。 进程退出会造成读取失败，快照并非原子；kill 当时的 adj 需结合日志核验。 将 `com.example.app` 替换为目标进程名，远程进程需使用完整名称；多个 PID 会逐个读取。
+
 ```bash
 adb shell dumpsys activity processes > activity-processes.txt
 adb shell dumpsys activity oom > activity-oom.txt
-adb shell "for p in /proc/[0-9]*; do printf '%s ' $p; cat $p/oom_score_adj 2>/dev/null; done" > oom-adj-snapshot.txt
+adb shell 'for p in /proc/[0-9]*; do printf "%s " $p; cat $p/oom_score_adj || echo unavailable; done' > oom-adj-snapshot.txt
 adb shell cat /proc/<pid>/status > proc-status.txt
 adb logcat -b events -d | grep -i am_proc
 ```
@@ -106,7 +108,7 @@ adb logcat -b events -d | grep -i am_proc
 adb shell am start -n <package>/<activity>
 adb shell input keyevent HOME
 adb shell dumpsys activity processes | grep -A 20 <package>
-adb shell cat /proc/$(adb shell pidof <package>)/oom_score_adj
+adb shell 'for p in $(pidof com.example.app); do printf "pid=%s adj=" "$p"; cat /proc/$p/oom_score_adj || echo unavailable; done'
 ```
 
 | AOSP 路径 | 看点 |
