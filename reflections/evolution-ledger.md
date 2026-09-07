@@ -818,3 +818,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain adapter item shapes, recycled view pool limits, GapWorker prefetch, image request sizing, bitmap reuse, Perfetto/meminfo/allocation evidence, and rollback criteria.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 69 -> Day 70
+- Applied reflection: carried forward Day 69's launch peak timing model into RecyclerView idle, slow-scroll, fling, image-entry, and recovery windows.
+- Visible change: added six Mermaid diagrams, ViewHolder/pool/image decision tables, command templates, rollback matrix, and a today's checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; RecyclerView guidance still needs real scripted scroll traces, AndroidX version validation, image-loader cache stats, and low-RAM pool measurements.
+
+## Next Run: Day 71
+- Keep the visual-first format.
+- Focus on multi-process architecture: memory benefits, accounting costs, and lmkd risk.
+- Carry forward Day 70's per-window peak model and Day 67's memcg boundaries into per-process accounting.
+- Explain process split motivations, zygote sharing, duplicated runtime/cache/native libs, Binder/shared memory cost, `oom_score_adj`, memcg/PSS evidence, and kill-risk validation.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
