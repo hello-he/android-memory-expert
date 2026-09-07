@@ -1,0 +1,58 @@
+{
+  "day": 72,
+  "title": "ProGuard/R8 对 dex、类加载、JIT 与运行时内存的影响",
+  "key_conclusions": [
+    "R8 can reduce runtime memory indirectly by shrinking classes, methods, dex mappings, class metadata, and initialization paths.",
+    "Broad keep rules cap memory wins because unused classes still remain loadable and may be duplicated across processes.",
+    "Dex size reduction must be validated on device with class loading, maps/showmap, meminfo, startup traces, and correctness tests.",
+    "In multi-process apps, every process needs its own class-loading and JIT validation because runtime costs are partly duplicated."
+  ],
+  "shallow_points": [
+    "The article does not include a real before/after APK Analyzer report.",
+    "It does not validate ART oat/vdex/JIT behavior against a specific Android version.",
+    "It does not include a real broad-keep cleanup case with measured memory deltas.",
+    "It does not compare R8 effects with Baseline Profile effects on startup memory."
+  ],
+  "discovered_connections": [
+    "Day 71's duplicate per-process cost model shows why R8 savings matter more when the same feature loads classes in multiple processes.",
+    "Day 69's startup peak model is required to prove dex/class changes affect first-draw memory rather than only APK size.",
+    "Day 68's cross-validation applies to dex/oat/vdex mappings through maps, showmap, meminfo, and trace agreement.",
+    "Day 73 should convert these per-topic methods into one observation, attribution, intervention, validation loop."
+  ],
+  "suggest_future_topics": [
+    "Day 73 should focus on a global memory optimization methodology: observe, attribute, intervene, and validate.",
+    "A future appendix should include an R8 before/after worksheet with APK Analyzer, maps, meminfo, and startup trace fields.",
+    "A future lab should compare R8 shrink, Baseline Profiles, and lazy initialization on the same app.",
+    "A future checklist should classify keep rules by reflection, serialization, JNI, resource lookup, and SDK constraints."
+  ],
+  "knowledge_gaps": [
+    "Need real APK Analyzer reports and device traces before and after R8 changes.",
+    "Need Android-version-specific evidence for oat/vdex/JIT/profile behavior.",
+    "Need measured impact of broad keep rule cleanup on class metadata and startup mmap.",
+    "Need comparison between R8 optimization and Baseline Profile optimization for memory and startup latency."
+  ],
+  "applied_reflections": [
+    "Applied Day 71's next-run instruction by focusing on ProGuard/R8 effects on dex, class loading, JIT, and runtime memory.",
+    "Applied Day 71's duplicate per-process cost model by explaining how class metadata, static initialization, dex mappings, and JIT costs repeat in multiple processes.",
+    "Applied Day 69's startup peak model and Day 68's cross-validation method by requiring APK Analyzer, startup traces, maps, showmap, meminfo, and correctness tests.",
+    "Applied the standing more-diagrams-less-prose feedback by using six Mermaid diagrams, compact matrices, command templates, and today's checklist."
+  ],
+  "visible_changes": [
+    "Added six Mermaid diagrams because of the more-diagrams-less-prose feedback: R8-to-runtime path, multi-process duplicate cost graph, evidence sequence, keep-rule decision flow, troubleshooting flow, and validation path.",
+    "Added tables for R8 actions, per-process costs, evidence tools, keep-rule boundaries, version/diagnostic boundaries, and engineering conclusions.",
+    "Added command templates for Gradle release build, APK Analyzer dex reports, device install/start, meminfo, showmap, and dex/oat/vdex maps capture."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 72 is marked complete and Day 73 remains pending.",
+    "Update progress.json so current_day becomes 73 and last_generated is refreshed.",
+    "Day 73 should focus on memory optimization methodology: observation, attribution, intervention, and validation.",
+    "Day 73 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 73 should carry forward Day 72's build-to-runtime validation boundary and turn prior workflows into a reusable optimization loop.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "source": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url",
+    "details": "GitHub CLI is not authenticated. gh reported: To get started with GitHub CLI, please run gh auth login. Alternatively, populate the GH_TOKEN environment variable with a GitHub API authentication token."
+  }
+}

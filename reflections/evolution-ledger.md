@@ -844,3 +844,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain shrink/optimize/obfuscate/desugar outputs, dex count, class loading, reflection keep rules, startup mmap, JIT/profile interaction, and validation with APK Analyzer, maps, meminfo, startup traces, and method/class counts.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 71 -> Day 72
+- Applied reflection: carried forward Day 71's duplicate per-process cost model into R8, showing how class metadata, static initialization, dex/oat mappings, JIT/profile work, and broad keep rules can repeat across processes.
+- Visible change: added six Mermaid diagrams, build-to-runtime evidence tables, keep-rule decision flow, command templates, version-boundary matrix, and a today's checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; R8 guidance still needs real APK Analyzer reports, Android-version oat/vdex/JIT validation, measured broad-keep cleanup deltas, and Baseline Profile comparison.
+
+## Next Run: Day 73
+- Keep the visual-first format.
+- Focus on memory optimization methodology: observation, attribution, intervention, and validation.
+- Carry forward Day 72's build-to-runtime validation boundary and turn the prior workflows into a reusable engineering loop.
+- Explain symptom framing, evidence windowing, source-bucket attribution, hypothesis scoring, intervention blast radius, rollback criteria, and report templates.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
