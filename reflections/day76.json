@@ -1,0 +1,58 @@
+{
+  "day": 76,
+  "title": "面试高频：GC、泄漏、OOM 与 Native 内存",
+  "key_conclusions": [
+    "Strong interview answers start by defining version, device, process, memory bucket, and scenario boundaries.",
+    "GC, leaks, OOM, and Native memory should be answered as separate evidence paths, not collapsed into generic memory leak talk.",
+    "Each answer should include mechanism, observable evidence, fix strategy, validation, rollback, and version caveats.",
+    "Android 10/11 lmkd boundaries and Android 17 memory-limiter diagnostics are useful differentiators in senior-level answers."
+  ],
+  "shallow_points": [
+    "The article provides answer frameworks but does not include real interview transcripts or scoring rubrics.",
+    "It does not attach real HPROF, Perfetto, heapprofd, lmkd, or ApplicationExitInfo samples.",
+    "It does not validate Android 17 MessageQueue implementation details against source.",
+    "It does not include a mock interview exercise with expected follow-up questions."
+  ],
+  "discovered_connections": [
+    "Day 75's version-aware evidence model becomes the boundary section for every answer.",
+    "Day 73's observe, attribute, intervene, validate loop becomes the answer structure for incident-style questions.",
+    "Day 74's source-reading discipline appears as source/evidence hooks instead of unsupported textbook claims.",
+    "Day 77 should continue the interview format for Bitmap, LMKD, PSI, watermarks, and ZRAM."
+  ],
+  "suggest_future_topics": [
+    "Day 77 should focus on interview questions for Bitmap, LMKD, PSI, watermarks, and ZRAM.",
+    "A future mock interview should include follow-up traps and model answers scored by evidence depth.",
+    "A future appendix should provide sample HPROF, Perfetto, lmkd, heapprofd, and ApplicationExitInfo snippets.",
+    "A future source note should validate Android 17 MessageQueue behavior on target SDK 37 against AOSP."
+  ],
+  "knowledge_gaps": [
+    "Need real diagnostic artifacts to demonstrate the answer templates with concrete fields.",
+    "Need Android 17 source validation for MessageQueue and memory-limiter internals.",
+    "Need a scoring rubric that distinguishes junior, mid-level, and senior memory answers.",
+    "Need measured examples for Java OOM versus native OOM versus lmkd kill versus memory limiter termination."
+  ],
+  "applied_reflections": [
+    "Applied Day 75's next-run instruction by focusing on interview questions for GC, leaks, OOM, and Native memory.",
+    "Applied Day 75's version-aware evidence model by requiring Android/version/tool boundaries in each answer family.",
+    "Applied Day 73's optimization loop and Day 74's source-reading discipline by adding evidence hooks, commands, validation, rollback, and source-aware caveats.",
+    "Applied the standing more-diagrams-less-prose feedback by using six Mermaid diagrams, answer matrices, command templates, and compact interview checklists."
+  ],
+  "visible_changes": [
+    "Added six Mermaid diagrams because of the more-diagrams-less-prose feedback: answer framework, GC path, leak retained path, OOM decision flow, Native memory sequence, and interview troubleshooting flow.",
+    "Added tables for answer steps, GC questions, leak patterns, OOM paths, Native memory questions, version boundaries, 30-second templates, and interview conclusions.",
+    "Added command templates for meminfo, showmap, maps, fd, and heap dump collection."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 76 is marked complete and Day 77 remains pending.",
+    "Update progress.json so current_day becomes 77 and last_generated is refreshed.",
+    "Day 77 should focus on interview questions for Bitmap, LMKD, PSI, watermarks, and ZRAM.",
+    "Day 77 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 77 should carry forward Day 76's answer framework and Day 75's version-aware evidence model.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "source": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url",
+    "details": "GitHub CLI is not authenticated. gh reported: To get started with GitHub CLI, please run gh auth login. Alternatively, populate the GH_TOKEN environment variable with a GitHub API authentication token."
+  }
+}

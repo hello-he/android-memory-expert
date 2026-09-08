@@ -95,7 +95,7 @@
 | Day 73 | 内存优化全局方法论：观测、归因、干预、验证 | ✅[2026-09-08](docs/week-11/day73-memory-optimization-methodology.md) |
 | Day 74 | AOSP 内存源码阅读路径：ART、AMS、lmkd、kernel、mmd | ✅[2026-09-08](docs/week-11/day74-aosp-source-reading-path.md) |
 | Day 75 | Android 版本演进中的内存变化：5.0 到 17 | ✅[2026-09-08](docs/week-11/day75-android-version-memory-evolution.md) |
-| Day 76 | 面试高频：GC、泄漏、OOM 与 Native 内存 | ⏳待生成 |
+| Day 76 | 面试高频：GC、泄漏、OOM 与 Native 内存 | ✅[2026-09-08](docs/week-11/day76-interview-gc-leak-oom.md) |
 | Day 77 | 面试高频：Bitmap、LMKD、PSI、水位与 ZRAM | ⏳待生成 |
 | Day 78 | 综合实战：一次低端机卡顿和误杀进程的完整排查 | ⏳待生成 |
 | Day 79 | Android 内存评审清单：上线前、灰度中、事故后 | ⏳待生成 |

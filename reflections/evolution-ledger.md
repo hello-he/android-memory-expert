@@ -896,3 +896,16 @@ This file records how each run should improve on the previous one. It is not par
 - Convert common interview questions into answer structures, source/evidence hooks, follow-up traps, and real diagnostic commands.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 75 -> Day 76
+- Applied reflection: carried forward Day 75's version-aware evidence model and converted GC, leak, OOM, and Native memory interview answers into boundary, mechanism, evidence, fix, validation, and caveat structures.
+- Visible change: added six Mermaid diagrams, answer matrices, 30-second templates, version-boundary table, command templates, and interview checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; interview material still needs real diagnostic artifacts, Android 17 MessageQueue/source validation, scoring rubrics, and measured OOM versus lmkd versus limiter examples.
+
+## Next Run: Day 77
+- Keep the visual-first format.
+- Focus on interview questions for Bitmap, LMKD, PSI, watermarks, and ZRAM.
+- Carry forward Day 76's answer framework and Day 75's version-aware evidence model.
+- Convert each system-memory topic into answer structure, evidence commands, source hooks, follow-up traps, and validation boundaries.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
