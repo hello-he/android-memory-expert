@@ -857,3 +857,16 @@ This file records how each run should improve on the previous one. It is not par
 - Explain symptom framing, evidence windowing, source-bucket attribution, hypothesis scoring, intervention blast radius, rollback criteria, and report templates.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 72 -> Day 73
+- Applied reflection: carried forward Day 72's build-to-runtime validation boundary and converted it into a reusable observe, attribute, intervene, validate loop.
+- Visible change: added four Mermaid diagrams, evidence-layer tables, attribution matrix, hypothesis scoring flow, command templates, and report worksheet because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the methodology still needs real before/after traces, branch-specific source validation, RAM-class thresholds, and automated timestamp-aligned evidence capture.
+
+## Next Run: Day 74
+- Keep the visual-first format.
+- Focus on AOSP memory source reading paths: ART, AMS, lmkd, kernel, and mmd.
+- Carry forward Day 73's evidence-to-source mapping so source reading starts from observed symptoms rather than random browsing.
+- Map symptoms and commands to source paths, structs/classes, logs, properties, and validation points.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.

@@ -1,0 +1,58 @@
+{
+  "day": 73,
+  "title": "内存优化全局方法论：观测、归因、干预、验证",
+  "key_conclusions": [
+    "Memory optimization should run as a loop: observe, attribute, intervene, validate, then monitor.",
+    "Every conclusion needs a fixed scenario window and at least two agreeing evidence layers.",
+    "Build-time reductions such as R8 only count when device-side maps, meminfo, traces, and correctness checks agree.",
+    "A memory fix is incomplete unless rollback gates and user-visible side effects are defined."
+  ],
+  "shallow_points": [
+    "The article provides a reusable worksheet but does not fill it with a real app trace.",
+    "It does not include quantified thresholds for every RAM class.",
+    "It does not automate evidence collection into a checked-in script.",
+    "It does not validate source paths against a specific Android branch."
+  ],
+  "discovered_connections": [
+    "Day 72's build-to-runtime boundary becomes the validation stage of the global loop.",
+    "Day 68's cross-validation method maps directly to the evidence layering table.",
+    "Day 71's multi-process duplicate cost model becomes a rule to sum all package processes before claiming a win.",
+    "Day 74 should turn this method into a source-reading map across ART, AMS, lmkd, kernel, and mmd."
+  ],
+  "suggest_future_topics": [
+    "Day 74 should focus on AOSP memory source reading paths and map runtime evidence to source files.",
+    "A future lab should check in an evidence collection script for meminfo, showmap, smaps, fd, PSI, vmstat, and zram.",
+    "A future appendix should provide RAM-class-specific acceptance and rollback thresholds.",
+    "A future case should fill the report template with a real low-end device trace."
+  ],
+  "knowledge_gaps": [
+    "Need real before/after traces to demonstrate the worksheet end to end.",
+    "Need branch-specific validation for source file names, log fields, and tunable defaults.",
+    "Need measured rollback thresholds for CPU, I/O, startup, scrolling, and kill risk.",
+    "Need automation that aligns meminfo, Perfetto, heap dump, fd, memcg, and zram snapshots by timestamp."
+  ],
+  "applied_reflections": [
+    "Applied Day 72's next-run instruction by focusing on observation, attribution, intervention, and validation.",
+    "Applied Day 72's build-to-runtime validation boundary by requiring device-side maps, meminfo, startup trace, and correctness evidence before accepting build-time memory claims.",
+    "Applied Day 68's cross-validation method and Day 71's multi-process accounting boundary in the evidence and attribution sections.",
+    "Applied the standing more-diagrams-less-prose feedback by using four Mermaid diagrams, compact matrices, command templates, and a report worksheet."
+  ],
+  "visible_changes": [
+    "Added four Mermaid diagrams because of the more-diagrams-less-prose feedback: optimization loop, evidence layers, hypothesis scoring, and validation decision flow.",
+    "Added tables for stage outputs, evidence layers, Day 72 carry-forward, attribution buckets, hypothesis scoring, report template, and engineering conclusions.",
+    "Added command templates for meminfo, showmap, smaps_rollup, maps, fd, PSI, vmstat, zram, startup, and heap dump capture."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 73 is marked complete and Day 74 remains pending.",
+    "Update progress.json so current_day becomes 74 and last_generated is refreshed.",
+    "Day 74 should focus on AOSP memory source reading paths: ART, AMS, lmkd, kernel, and mmd.",
+    "Day 74 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 74 should carry forward Day 73's evidence-to-source mapping so source reading starts from observed symptoms rather than random browsing.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "source": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url",
+    "details": "GitHub CLI is not authenticated. gh reported: To get started with GitHub CLI, please run gh auth login. Alternatively, populate the GH_TOKEN environment variable with a GitHub API authentication token."
+  }
+}
