@@ -870,3 +870,16 @@ This file records how each run should improve on the previous one. It is not par
 - Map symptoms and commands to source paths, structs/classes, logs, properties, and validation points.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 73 -> Day 74
+- Applied reflection: carried forward Day 73's evidence-to-source mapping and made runtime evidence the entry point for ART, AMS, lmkd, kernel mm, and mmd source reading.
+- Visible change: added four Mermaid diagrams, source-path matrices, rg command templates, version-boundary table, and source-note worksheet because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; source paths still need validation against a local AOSP checkout, real device logs, Android 5.0-17 version matrix, and user/userdebug permission checks.
+
+## Next Run: Day 75
+- Keep the visual-first format.
+- Focus on Android version evolution in memory behavior from 5.0 to 17.
+- Carry forward Day 74's branch/version/source-boundary discipline and avoid claiming defaults without version scope.
+- Cover ART, lmkd, PSI, MGLRU, ZRAM, app compaction, scoped tooling permissions, and practical migration diagnostics.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.

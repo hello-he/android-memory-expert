@@ -1,0 +1,58 @@
+{
+  "day": 74,
+  "title": "AOSP 内存源码阅读路径：ART、AMS、lmkd、kernel、mmd",
+  "key_conclusions": [
+    "AOSP memory source reading should start from stable runtime evidence and a specific bucket.",
+    "ART, AMS, lmkd, kernel mm, and vendor mmd form a chain; one source module rarely explains the whole incident.",
+    "Every source conclusion needs a target Android branch, kernel version, ROM boundary, and matching observable signal.",
+    "Vendor memory extension and mmd behavior must not be presented as generic AOSP behavior."
+  ],
+  "shallow_points": [
+    "The article lists source paths and search commands but does not validate them against a checked-out AOSP branch.",
+    "It does not include real lmkd, PSI, or mmd logs from a device.",
+    "It does not compare exact code movement across Android 5.0 through 17.",
+    "It does not provide a runnable script that maps evidence buckets to source queries."
+  ],
+  "discovered_connections": [
+    "Day 73's evidence-to-source mapping becomes the organizing principle for all source reading.",
+    "Day 72's branch/version validation gap expands into explicit AOSP tag, kernel version, ROM, and build-type fields.",
+    "Day 68's cross-validation remains necessary before jumping from source code to owner attribution.",
+    "Day 75 should use this source map to explain how memory behavior changed across Android versions."
+  ],
+  "suggest_future_topics": [
+    "Day 75 should focus on Android version evolution from 5.0 to 17 and highlight ART, lmkd, PSI, MGLRU, ZRAM, and tooling shifts.",
+    "A future appendix should validate all source paths against a concrete AOSP checkout and tag.",
+    "A future tool should translate meminfo/smaps/lmkd symptoms into rg commands automatically.",
+    "A future case should attach real device logs to the source-reading template."
+  ],
+  "knowledge_gaps": [
+    "Need a local AOSP checkout to confirm exact paths, symbols, and branch-specific code movement.",
+    "Need real device evidence for lmkd statsd atoms, kernel PSI, zram writeback, and vendor mmd.",
+    "Need Android 5.0 to 17 version matrix with verified feature introduction dates and defaults.",
+    "Need permission-boundary checks for user, userdebug, and eng builds."
+  ],
+  "applied_reflections": [
+    "Applied Day 73's next-run instruction by focusing on ART, AMS, lmkd, kernel, and mmd source-reading paths.",
+    "Applied Day 73's evidence-to-source mapping by organizing source paths around observed symptoms, commands, buckets, and validation points.",
+    "Applied Day 72's version-boundary gap by requiring AOSP tag, kernel version, ROM, and build-type notes before making source-backed claims.",
+    "Applied the standing more-diagrams-less-prose feedback by using four Mermaid diagrams, source matrices, command templates, and a source-note worksheet."
+  ],
+  "visible_changes": [
+    "Added four Mermaid diagrams because of the more-diagrams-less-prose feedback: evidence-to-source map, source-reading path, AMS-lmkd-kernel sequence, and troubleshooting decision flow.",
+    "Added tables for symptoms to source paths, module reading priorities, ART entries, AMS/lmkd entries, kernel/mmd entries, version boundaries, source-note template, and engineering conclusions.",
+    "Added rg command templates for ART GC/class loading, AMS OomAdjuster/compaction/trim, lmkd PSI/kill logic, kernel reclaim/PSI/memcg, and ZRAM writeback."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 74 is marked complete and Day 75 remains pending.",
+    "Update progress.json so current_day becomes 75 and last_generated is refreshed.",
+    "Day 75 should focus on Android version evolution in memory behavior from 5.0 to 17.",
+    "Day 75 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 75 should carry forward Day 74's branch/version/source-boundary discipline and avoid claiming defaults without version scope.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "source": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url",
+    "details": "GitHub CLI is not authenticated. gh reported: To get started with GitHub CLI, please run gh auth login. Alternatively, populate the GH_TOKEN environment variable with a GitHub API authentication token."
+  }
+}

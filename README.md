@@ -93,7 +93,7 @@
 | Day 71 | 多进程架构的内存收益、账单代价与 lmkd 风险 | ✅[2026-09-08](docs/week-11/day71-multi-process-memory-lmkd.md) |
 | Day 72 | ProGuard/R8 对 dex、类加载、JIT 与运行时内存的影响 | ✅[2026-09-08](docs/week-11/day72-proguard-r8-memory.md) |
 | Day 73 | 内存优化全局方法论：观测、归因、干预、验证 | ✅[2026-09-08](docs/week-11/day73-memory-optimization-methodology.md) |
-| Day 74 | AOSP 内存源码阅读路径：ART、AMS、lmkd、kernel、mmd | ⏳待生成 |
+| Day 74 | AOSP 内存源码阅读路径：ART、AMS、lmkd、kernel、mmd | ✅[2026-09-08](docs/week-11/day74-aosp-source-reading-path.md) |
 | Day 75 | Android 版本演进中的内存变化：5.0 到 17 | ⏳待生成 |
 | Day 76 | 面试高频：GC、泄漏、OOM 与 Native 内存 | ⏳待生成 |
 | Day 77 | 面试高频：Bitmap、LMKD、PSI、水位与 ZRAM | ⏳待生成 |
