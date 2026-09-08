@@ -1,0 +1,58 @@
+{
+  "day": 75,
+  "title": "Android 版本演进中的内存变化：5.0 到 17",
+  "key_conclusions": [
+    "Android version, target SDK, kernel version, ROM, and build type are part of every memory conclusion.",
+    "Android 10 and 11 are major lmkd boundaries because PSI mode and the newer PSI/thrashing strategy change diagnosis.",
+    "Android 17 adds app memory limits and memory-limiter diagnostics that must be checked when sessions are terminated.",
+    "AOSP source paths from Day 74 only become evidence when tied to a specific branch or device build."
+  ],
+  "shallow_points": [
+    "The version matrix is diagnostic and does not validate every row against a local AOSP checkout.",
+    "Several Android 12 through 16 entries remain high-level because exact defaults vary by device, kernel, and ROM.",
+    "The article cites official Android pages for Android 10, 11, and 17 but does not include full source diffs.",
+    "It does not include real ApplicationExitInfo or memory-limiter output from an Android 17 device."
+  ],
+  "discovered_connections": [
+    "Day 74's branch/version/source-boundary discipline becomes the central rule for reading version evolution.",
+    "Day 73's observe-attribute-intervene-validate loop remains the migration checklist for every version jump.",
+    "Day 72's build-to-runtime boundary matters more on Android 17 because app memory limits require runtime evidence, not APK-size assumptions.",
+    "Day 76 should convert this version-aware evidence model into interview answers for GC, leaks, OOM, and Native memory."
+  ],
+  "suggest_future_topics": [
+    "Day 76 should focus on interview questions for GC, leaks, OOM, and Native memory using evidence-first answers.",
+    "A future appendix should validate Android 5.0 through 17 rows against AOSP release notes and source tags.",
+    "A future lab should collect ApplicationExitInfo and memory-limiter output on Android 17.",
+    "A future article should compare MessageQueue behavior and Handler leak reasoning before and after Android 17 target SDK 37."
+  ],
+  "knowledge_gaps": [
+    "Need local AOSP tags and kernel configs to verify exact feature defaults across versions.",
+    "Need real Android 17 device output for memory limiter status, manual limits, and trigger-based heap dumps.",
+    "Need source-backed details for Android 12 through 16 memory-related changes by device class.",
+    "Need measured migration cases showing how the same app behaves across Android 10, 11, 14, and 17."
+  ],
+  "applied_reflections": [
+    "Applied Day 74's next-run instruction by focusing on Android version evolution from 5.0 to 17.",
+    "Applied Day 74's branch/version/source-boundary discipline by requiring API level, target SDK, kernel version, ROM, build type, and AOSP tag before claiming defaults.",
+    "Applied Day 73's evidence-to-source loop by making version migration a sequence of symptom evidence, tool support, system capability, and source branch validation.",
+    "Applied the standing more-diagrams-less-prose feedback by using four Mermaid diagrams, version matrices, official-source anchors, command templates, and migration checklists."
+  ],
+  "visible_changes": [
+    "Added four Mermaid diagrams because of the more-diagrams-less-prose feedback: version timeline, version-boundary decision flow, evidence/version sequence, and Android 17 memory-limiter troubleshooting flow.",
+    "Added tables for version stages, non-mixable defaults, Android 5.0-17 matrix, official anchors, evidence changes, Android 17 acceptance signals, and engineering conclusions.",
+    "Added Android 17 `am memory-limiter` command templates and explicit `ApplicationExitInfo` checks."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 75 is marked complete and Day 76 remains pending.",
+    "Update progress.json so current_day becomes 76 and last_generated is refreshed.",
+    "Day 76 should focus on interview questions for GC, leaks, OOM, and Native memory.",
+    "Day 76 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 76 should carry forward Day 75's version-aware evidence model so answers name Android/version/tool boundaries instead of giving generic textbook responses.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "source": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url",
+    "details": "GitHub CLI is not authenticated. gh reported: To get started with GitHub CLI, please run gh auth login. Alternatively, populate the GH_TOKEN environment variable with a GitHub API authentication token."
+  }
+}

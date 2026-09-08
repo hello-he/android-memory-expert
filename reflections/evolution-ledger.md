@@ -883,3 +883,16 @@ This file records how each run should improve on the previous one. It is not par
 - Cover ART, lmkd, PSI, MGLRU, ZRAM, app compaction, scoped tooling permissions, and practical migration diagnostics.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 74 -> Day 75
+- Applied reflection: carried forward Day 74's branch/version/source-boundary discipline and made API level, target SDK, kernel version, ROM, build type, and AOSP tag part of every memory conclusion.
+- Visible change: added four Mermaid diagrams, Android 5.0-17 version matrix, official-source anchors, Android 17 memory-limiter flow, command templates, and migration checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the matrix still needs local AOSP tag validation, Android 17 device output, Android 12-16 source diffs, and measured cross-version migration cases.
+
+## Next Run: Day 76
+- Keep the visual-first format.
+- Focus on interview questions for GC, leaks, OOM, and Native memory.
+- Carry forward Day 75's version-aware evidence model so answers name Android/version/tool boundaries instead of giving generic textbook responses.
+- Convert common interview questions into answer structures, source/evidence hooks, follow-up traps, and real diagnostic commands.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
