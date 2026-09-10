@@ -922,3 +922,16 @@ This file records how each run should improve on the previous one. It is not par
 - Build one timeline that joins frames, PSI, reclaim, ZRAM, lmkd, adj, meminfo, and source-bucket ownership.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 77 -> Day 78
+- Applied reflection: carried forward Day 77's timestamp-aligned evidence commands and Day 73's observe, attribute, intervene, validate loop into one low-end jank plus mistaken-kill case.
+- Visible change: added four Mermaid diagrams, T0-T5 evidence timeline, bucket owner proof, mistaken-kill taxonomy, intervention matrix, and validation gates because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the case still needs real Perfetto/lmkd/statsd/PSI/zram samples, branch-specific lmkd validation, thresholds, and replay tooling.
+
+## Next Run: Day 79
+- Keep the visual-first format.
+- Focus on an Android memory review checklist: pre-launch, canary, and post-incident.
+- Carry forward Day 78's timeline and validation gates into checklist form.
+- Convert common review questions into owner, evidence, risk, rollback, and release-decision gates.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.

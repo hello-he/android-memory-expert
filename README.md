@@ -97,7 +97,7 @@
 | Day 75 | Android 版本演进中的内存变化：5.0 到 17 | ✅[2026-09-08](docs/week-11/day75-android-version-memory-evolution.md) |
 | Day 76 | 面试高频：GC、泄漏、OOM 与 Native 内存 | ✅[2026-09-08](docs/week-11/day76-interview-gc-leak-oom.md) |
 | Day 77 | 面试高频：Bitmap、LMKD、PSI、水位与 ZRAM | ✅[2026-09-10](docs/week-11/day77-interview-bitmap-lmk-system.md) |
-| Day 78 | 综合实战：一次低端机卡顿和误杀进程的完整排查 | ⏳待生成 |
+| Day 78 | 综合实战：一次低端机卡顿和误杀进程的完整排查 | ✅[2026-09-10](docs/week-12/day78-comprehensive-low-end-memory-case.md) |
 | Day 79 | Android 内存评审清单：上线前、灰度中、事故后 | ⏳待生成 |
 | Day 80 | 总结：Android 内存专家知识图谱 | ⏳待生成 |
 

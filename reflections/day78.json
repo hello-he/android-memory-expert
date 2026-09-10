@@ -1,0 +1,58 @@
+{
+  "day": 78,
+  "title": "综合实战：一次低端机卡顿和误杀进程的完整排查",
+  "key_conclusions": [
+    "Low-end memory incidents need one timestamp-aligned timeline that joins frames, bucket growth, reclaim, PSI, ZRAM, lmkd, and adj.",
+    "A high-priority kill claim is not proven without kill-time oom_score_adj, process state, RSS, and lmkd evidence.",
+    "Bitmap decode and Graphics/Native peaks can be the upstream pressure source behind both jank and lmkd kills.",
+    "Watermark, ZRAM, cache, and adj changes should be tested one at a time with explicit rollback lines."
+  ],
+  "shallow_points": [
+    "The case is a teaching reconstruction and does not include a real attached Perfetto trace.",
+    "The article does not include raw lmkd/statsd protobuf output or exact vendor ROM policy source.",
+    "It does not quantify thresholds for PSI, ZRAM swapin, or kill benefit by RAM class.",
+    "It does not provide an executable replay script for the image-heavy scroll workload."
+  ],
+  "discovered_connections": [
+    "Day 77's timestamp-aligned evidence commands become the collection package for a full incident.",
+    "Day 73's observe, attribute, intervene, validate loop becomes the case closure model.",
+    "Day 65's high-priority kill taxonomy and Day 64's timing discipline combine into the mistaken-kill branch.",
+    "Day 79 should turn this case workflow into a review checklist for launch, canary, and incident response."
+  ],
+  "suggest_future_topics": [
+    "Day 79 should focus on an Android memory review checklist for pre-launch, canary, and post-incident stages.",
+    "A future lab should add a checked-in Perfetto config and replay script for the low-end scroll case.",
+    "A future appendix should include real lmkd, statsd, PSI, zram, vmstat, and frame samples.",
+    "A future tool should align meminfo, PSI, vmstat, lmkd, and frame timestamps automatically."
+  ],
+  "knowledge_gaps": [
+    "Need real low-end traces with frame timeline, memory PSI, vmstat, zram, and lmkd logs.",
+    "Need branch-specific lmkd and OomAdjuster field validation for the target Android version.",
+    "Need measured thresholds for acceptable PSI full, swapin, and kill benefit.",
+    "Need automated replay tooling to reproduce the case without manual timing drift."
+  ],
+  "applied_reflections": [
+    "Applied Day 77's next-run instruction by building a comprehensive low-end case around jank and mistaken process kill.",
+    "Applied Day 77's timestamp-aligned evidence commands by adding a T0-T5 collection timeline and command package.",
+    "Applied Day 73's observe, attribute, intervene, validate loop by using one hypothesis, one change, replay, metric check, and rollback.",
+    "Applied the standing more-diagrams-less-prose feedback by using four Mermaid diagrams, timeline tables, attribution matrices, intervention matrices, and validation gates."
+  ],
+  "visible_changes": [
+    "Added four Mermaid diagrams because of the more-diagrams-less-prose feedback: incident sequence, attribution flow, mistaken-kill decision flow, and validation loop.",
+    "Added tables for incident setup, T0-T5 timeline, evidence interpretation, bucket owner proof, mistaken-kill branches, intervention matrix, and validation gates.",
+    "Added concrete meminfo, adj, PSI, vmstat, zram, showmap, and lmkd log command templates."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 78 is marked complete and Day 79 remains pending.",
+    "Update progress.json so current_day becomes 79 and last_generated is refreshed.",
+    "Day 79 should focus on an Android memory review checklist: pre-launch, canary, and post-incident.",
+    "Day 79 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 79 should carry forward Day 78's timeline and validation gates into checklist form.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "source": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url",
+    "details": "GitHub CLI is not authenticated. gh reported: To get started with GitHub CLI, please run gh auth login. Alternatively, populate the GH_TOKEN environment variable with a GitHub API authentication token."
+  }
+}
