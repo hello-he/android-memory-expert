@@ -1,0 +1,58 @@
+{
+  "day": 77,
+  "title": "面试高频：Bitmap、LMKD、PSI、水位与 ZRAM",
+  "key_conclusions": [
+    "Bitmap interview answers should separate decode peak, cache residency, Native/Graphics attribution, and Android version boundaries.",
+    "LMKD answers need kill-time evidence: oom_score_adj, pressure, victim RSS, lmkd reason, and exit/stats signals.",
+    "PSI is a stall signal, not just a low-free-memory proxy, and should be tied to reclaim, ZRAM, frames, and lmkd.",
+    "Watermark and ZRAM tuning are tradeoffs that require rollback metrics for jank, kills, CPU, and swap latency."
+  ],
+  "shallow_points": [
+    "The article provides interview answer templates but does not include real candidate transcripts or scoring rubrics.",
+    "It does not attach real meminfo, showmap, lmkd, PSI, vmstat, or zram mm_stat samples.",
+    "It does not validate Android 17 Bitmap or lmkd source behavior against a local AOSP checkout.",
+    "It does not quantify safe ZRAM or watermark tuning ranges for specific RAM classes."
+  ],
+  "discovered_connections": [
+    "Day 76's answer framework works for system memory questions when each answer starts with boundary, bucket, signal, source hook, fix, and validation.",
+    "Day 75's version-aware evidence model is necessary for Bitmap attribution, lmkd behavior, ZRAM, and Android 17 diagnostics.",
+    "Day 73's observe, attribute, intervene, validate loop becomes the structure for watermark and ZRAM tradeoff answers.",
+    "Day 78 should combine Bitmap/LMKD/PSI/watermark/ZRAM answers into a single low-end incident timeline."
+  ],
+  "suggest_future_topics": [
+    "Day 78 should focus on a comprehensive low-end memory case with one timestamp-aligned timeline.",
+    "A future appendix should include real lmkd, PSI, vmstat, zram, meminfo, and Perfetto snippets.",
+    "A future mock interview should score Bitmap and LMKD answers by evidence depth.",
+    "A future lab should quantify watermark and ZRAM side effects by RAM class."
+  ],
+  "knowledge_gaps": [
+    "Need real diagnostic artifacts to demonstrate Bitmap, lmkd, PSI, watermark, and ZRAM answers.",
+    "Need local AOSP validation for Android 17 memory behavior and branch-specific lmkd fields.",
+    "Need measured low-end device data for ZRAM size, compression ratio, swap latency, and PSI movement.",
+    "Need a scoring rubric that distinguishes generic answers from senior-level system memory reasoning."
+  ],
+  "applied_reflections": [
+    "Applied Day 76's next-run instruction by focusing on interview questions for Bitmap, LMKD, PSI, watermarks, and ZRAM.",
+    "Applied Day 76's answer framework by organizing the article around boundary, bucket, signal, source hook, fix, and validation.",
+    "Applied Day 75's version-aware evidence model by requiring Android version, kernel, ROM, RAM class, and build context before accepting memory conclusions.",
+    "Applied the standing more-diagrams-less-prose feedback by using six Mermaid diagrams, compact answer matrices, command templates, and short checklists."
+  ],
+  "visible_changes": [
+    "Added six Mermaid diagrams because of the more-diagrams-less-prose feedback: answer framework, Bitmap attribution path, LMKD sequence, reclaim/PSI path, ZRAM path, and troubleshooting decision flow.",
+    "Added tables for interview steps, Bitmap questions, evidence commands, lmkd evidence, PSI/watermark concepts, ZRAM questions, 30-second templates, and conclusions.",
+    "Added concrete meminfo, showmap, PSI, vmstat, zram mm_stat, and lmkd log command templates."
+  ],
+  "next_run_instructions": [
+    "Update README so Day 77 is marked complete and Day 78 remains pending.",
+    "Update progress.json so current_day becomes 78 and last_generated is refreshed.",
+    "Day 78 should focus on a comprehensive low-end memory case: one low-end device jank and mistaken process-kill investigation.",
+    "Day 78 should include at least two Mermaid diagrams and keep the visual-first table-heavy format.",
+    "Day 78 should carry forward Day 77's timestamp-aligned evidence commands and Day 73's observe, attribute, intervene, validate loop.",
+    "If GitHub Issues still cannot be read, keep recording the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory."
+  ],
+  "issue_feedback": {
+    "status": "blocked",
+    "source": "gh issue list --repo hello-he/android-memory-expert --state open --limit 50 --json number,title,body,url",
+    "details": "GitHub CLI is not authenticated. gh reported: To get started with GitHub CLI, please run gh auth login. Alternatively, populate the GH_TOKEN environment variable with a GitHub API authentication token."
+  }
+}

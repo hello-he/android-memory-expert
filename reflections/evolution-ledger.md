@@ -909,3 +909,16 @@ This file records how each run should improve on the previous one. It is not par
 - Convert each system-memory topic into answer structure, evidence commands, source hooks, follow-up traps, and validation boundaries.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 76 -> Day 77
+- Applied reflection: carried forward Day 76's answer framework and Day 75's version-aware evidence model into Bitmap, LMKD, PSI, watermark, and ZRAM interview answers.
+- Visible change: added six Mermaid diagrams, Bitmap/LMKD/PSI/ZRAM evidence tables, command templates, 30-second answer templates, and a compact checklist because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the article still needs real meminfo/showmap/lmkd/PSI/vmstat/zram samples, local AOSP validation, and scoring rubrics.
+
+## Next Run: Day 78
+- Keep the visual-first format.
+- Focus on a comprehensive low-end memory case: one low-end device jank and mistaken process-kill investigation.
+- Carry forward Day 77's timestamp-aligned evidence commands and Day 73's observe, attribute, intervene, validate loop.
+- Build one timeline that joins frames, PSI, reclaim, ZRAM, lmkd, adj, meminfo, and source-bucket ownership.
+- If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
+- Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
