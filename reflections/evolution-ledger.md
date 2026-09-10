@@ -948,3 +948,13 @@ This file records how each run should improve on the previous one. It is not par
 - Summarize the full curriculum as linked paths from ART heap, leaks, tools, native, graphics, low-memory system, cases, reviews, and interviews.
 - If GitHub Issues still cannot be read, record the gh auth login or GH_TOKEN blocker in reflection, ledger, and automation memory.
 - Validate JSON before git operations, then attempt `git add`, `git commit`, and `git push` with exact blocker logging on failure.
+
+### Day 79 -> Day 80
+- Applied reflection: carried forward Day 79's release-gate mindset and Day 73's symptom-to-evidence-to-source-to-fix loop into the final Android memory expert knowledge map.
+- Visible change: added four Mermaid diagrams, capability-layer map, symptom-to-evidence table, source-reading map, fix matrix, release gates, final checklist, and future construction table because of the more-diagrams-less-prose feedback.
+- Unresolved: GitHub Issues still require `gh auth login` or `GH_TOKEN`; the final map still needs real sample artifacts, automation, RAM-class thresholds, source validation, and review CI.
+
+## Plan Complete
+- Day 80 completes the current 80-day curriculum.
+- Future runs should not generate Day 81 unless the curriculum is explicitly extended.
+- Good next extensions are sample-artifact libraries, automated timeline alignment, RAM-class gates, AOSP source validation, and release-review CI.
